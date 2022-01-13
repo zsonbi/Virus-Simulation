@@ -277,8 +277,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 625db2a441d361b48a8ba89ac1a08be4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  XSize: 171
-  YSize: 171
+  XSize: 121
+  YSize: 121
   XOffSet: 0
   YOffSet: 0
   CellSize: 5
