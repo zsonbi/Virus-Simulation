@@ -24,7 +24,11 @@ public class World : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        FillWorldWithFamilies(2000);
+        //Cap the fps to 60
+        Application.targetFrameRate = 60;
+        QualitySettings.vSyncCount = 0;
+
+        FillWorldWithFamilies(100);
         pathMaker = new PathMaker((byte)WorldGenerator.XSize, this);
     }
 
