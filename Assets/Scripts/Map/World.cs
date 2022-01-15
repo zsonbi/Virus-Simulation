@@ -6,6 +6,8 @@ public class World : MonoBehaviour
 {
     public GameObject DefaultPerson;
     public WorldGenerator WorldGenerator;
+    public float dayTime = 0f;
+    public ushort DayCounter { get; private set; } = 0;
 
     public int XSize { get => WorldGenerator.XSize; }
     public int YSize { get => WorldGenerator.YSize; }
@@ -28,8 +30,21 @@ public class World : MonoBehaviour
         Application.targetFrameRate = 60;
         QualitySettings.vSyncCount = 0;
 
-        FillWorldWithFamilies(100);
+        FillWorldWithFamilies(2000);
         pathMaker = new PathMaker((byte)WorldGenerator.XSize, this);
+    }
+
+    private void Update()
+    {
+        dayTime += Time.deltaTime;
+
+        if (dayTime >= 86400f / Settings.realTimeToSimulation)
+        {
+            DayCounter++;
+            Debug.Log($"Day {DayCounter} complete");
+
+            dayTime = 0f;
+        }
     }
 
     private void FillWorldWithFamilies(int familyCount)
@@ -42,7 +57,7 @@ public class World : MonoBehaviour
 
         for (int i = 0; i < familyCount; i++)
         {
-            if (WorldGenerator.Houses.Count < i)
+            if (WorldGenerator.Houses.Count <= i)
             {
                 break;
             }

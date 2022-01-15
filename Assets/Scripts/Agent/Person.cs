@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 /// <summary>
 /// A single worthless person
@@ -43,9 +44,10 @@ public class Person : MonoBehaviour
     private List<Vector2> pathToOccupation; //The path to the person's occupation building
     private List<Vector2> pathFromOccupation; //The path to the person's home from the occupation building
     private List<Vector2> path; //Pointer to the currently used path
-    private float moveTargetSwapInterval = 0.1f; //The speed which the moveTargets should be swapped at (sec)
+    private float moveTargetSwapInterval = 20f / Settings.realTimeToSimulation; //The speed which the moveTargets should be swapped at (sec)
     private bool generatedPath = false; //Is there already a generated path
     private short pathIndex = -1; //The index of the cell in the path list
+    private Vector2 realPos;
 
     //**************************************************************************************
     /// <summary>
@@ -64,10 +66,22 @@ public class Person : MonoBehaviour
             throw new Exception("Can't change world or family one of them is already set");
     }
 
+    private async Task Test()
+    {
+        realPos = new Vector2(0, 0);
+        for (int i = 0; i < 10; i++)
+        {
+            realPos = new Vector2(0, i);
+            await Task.Delay(1);
+        }
+    }
+
     //-------------------------------------------------------------------
     //Called just before the first frame
-    public void Start()
+    private void Start()
     {
+        //Test();
+
         //Error detection
         if (world == null)
         {
@@ -92,7 +106,7 @@ public class Person : MonoBehaviour
     }
 
     //Called every frame
-    public void Update()
+    private void Update()
     {
         //Increase the timer by the elapsed time
         time += Time.deltaTime;
@@ -211,7 +225,7 @@ public class Person : MonoBehaviour
 
             case ActionState.GoingToWork:
 
-                currActionTimeLeft = 10f;
+                currActionTimeLeft = 28800 / Settings.realTimeToSimulation;
                 this.transform.position = occupationBuilding.transform.position;
                 currActionState = ActionState.Working;
                 break;
@@ -226,7 +240,7 @@ public class Person : MonoBehaviour
 
             case ActionState.GoingHome:
                 this.transform.position = family.HouseLoc;
-                currActionTimeLeft = 10f;
+                currActionTimeLeft = 28800 / Settings.realTimeToSimulation;
                 currActionState = ActionState.RelaxingAtHome;
                 break;
 
@@ -240,7 +254,7 @@ public class Person : MonoBehaviour
     public void GetPath(ActionState nextActionState)
     {
         generatedPath = true;
-        bool foundPath = false;
+        bool foundPath = true;
         switch (nextActionState)
         {
             case ActionState.GoingHome:
