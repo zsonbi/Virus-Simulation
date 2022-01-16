@@ -137,7 +137,7 @@ public class WorldGenerator : MonoBehaviour
                     CellType cellType;
                     Building tempBuilding;
                     //House
-                    if (noise > 0.15f)
+                    if (noise > 0.2f)
                     {
                         houses.Add(Instantiate(HousePrefab, buildings.transform));
                         houses.Last().transform.position = new Vector2(j + 0.5f, i + 0.5f);
@@ -147,7 +147,7 @@ public class WorldGenerator : MonoBehaviour
                         Houses.Add((House)tempBuilding);
                     }
                     //Market
-                    else if (noise > 0.1f)
+                    else if (noise > 0.15f)
                     {
                         markets.Add(Instantiate(MarketPrefab, buildings.transform));
                         markets.Last().transform.position = new Vector2(j + 0.5f, i + 0.5f);
@@ -156,7 +156,7 @@ public class WorldGenerator : MonoBehaviour
                         worldCells[i / CellSize, j / CellSize].AddBuilding(tempBuilding);
                     }
                     //School
-                    else if (noise > 0.05f)
+                    else if (noise > 0.1f)
                     {
                         schools.Add(Instantiate(SchoolPrefab, buildings.transform));
                         schools.Last().transform.position = new Vector2(j + 0.5f, i + 0.5f);

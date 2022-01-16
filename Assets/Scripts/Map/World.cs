@@ -8,6 +8,7 @@ public class World : MonoBehaviour
 {
     public GameObject DefaultPerson;
     public WorldGenerator WorldGenerator;
+    public SimulationMenu SimulationMenu;
 
     /// <summary>
     /// The time of the day 1 = 1sec
@@ -78,7 +79,7 @@ public class World : MonoBehaviour
         {
             DayCounter++;
             Debug.Log($"Day {DayCounter} complete");
-
+            this.SimulationMenu.UpdateDayText();
             dayTime = 0f;
         }
     }
