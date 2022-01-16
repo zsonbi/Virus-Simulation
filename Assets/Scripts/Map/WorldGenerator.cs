@@ -1,17 +1,30 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+/// <summary>
+/// Generates a new world
+/// </summary>
 public class WorldGenerator : MonoBehaviour
 {
     public int XSize;
     public int YSize;
     public int XOffSet = 0;
     public int YOffSet = 0;
+
+    /// <summary>
+    /// The number cells on the x axis
+    /// </summary>
     public int cellXCount { get; private set; }
+
+    /// <summary>
+    /// The number of cells on the y axis
+    /// </summary>
     public int cellYCount { get; private set; }
 
+    /// <summary>
+    /// The size of a single world cell
+    /// </summary>
     public int CellSize = 5;
 
     public GameObject HousePrefab;
@@ -20,23 +33,35 @@ public class WorldGenerator : MonoBehaviour
     public GameObject SchoolPrefab;
     public GameObject RoadPrefab;
 
+    /// <summary>
+    /// The type of every cell each cell is 1 by 1 size
+    /// </summary>
     public CellType[,] cells;
+
+    /// <summary>
+    /// A bigger cell for better indexing
+    /// </summary>
     public WorldCell[,] worldCells;
 
+    /// <summary>
+    /// All of the houses
+    /// </summary>
     public List<House> Houses { get; private set; }
 
-    public void Awake()
+    //---------------------------------------------------------
+    //Runs when the script is loaded
+    private void Awake()
     {
         cellXCount = XSize / CellSize;
         cellYCount = YSize / CellSize;
         cells = new CellType[YSize, XSize];
+        //Creates the world cells
         worldCells = new WorldCell[cellYCount, cellXCount];
-
         for (int i = 0; i < cellYCount; i++)
         {
             for (int j = 0; j < cellXCount; j++)
             {
-                worldCells[i, j] = new WorldCell(i, j);
+                worldCells[i, j] = new WorldCell(j, i);
             }
         }
 
@@ -54,6 +79,8 @@ public class WorldGenerator : MonoBehaviour
         return (yCoord + YSize / 2) / CellSize;
     }
 
+    //--------------------------------------------------------
+    //Generate the roads
     private void GenerateRoads()
     {
         List<GameObject> roads = new List<GameObject>();
@@ -87,6 +114,8 @@ public class WorldGenerator : MonoBehaviour
         //TODO combine sprites
     }
 
+    //-----------------------------------------------------------
+    //Generate the buildings
     private void GenerateBuildings()
     {
         List<GameObject> houses = new List<GameObject>();
@@ -103,11 +132,12 @@ public class WorldGenerator : MonoBehaviour
             {
                 if (cells[i, j] == CellType.None)
                 {
-                    float noise = Mathf.PerlinNoise(((float)(j / (float)XSize * 5f) + XOffSet) * 10, ((float)(i / (float)YSize * 5f) + YOffSet) * 10 - 3.8f);
+                    //   float noise = Mathf.PerlinNoise(((float)(j / (float)XSize * 5f) + XOffSet) * 10, ((float)(i / (float)YSize * 5f) + YOffSet) * 10 - 3.8f);
+                    float noise = Random.Range(0f, 1f);
                     CellType cellType;
                     Building tempBuilding;
-
-                    if (noise > 0.27f)
+                    //House
+                    if (noise > 0.15f)
                     {
                         houses.Add(Instantiate(HousePrefab, buildings.transform));
                         houses.Last().transform.position = new Vector2(j + 0.5f, i + 0.5f);
@@ -116,7 +146,8 @@ public class WorldGenerator : MonoBehaviour
                         worldCells[i / CellSize, j / CellSize].AddBuilding(tempBuilding);
                         Houses.Add((House)tempBuilding);
                     }
-                    else if (noise > 0.24f)
+                    //Market
+                    else if (noise > 0.1f)
                     {
                         markets.Add(Instantiate(MarketPrefab, buildings.transform));
                         markets.Last().transform.position = new Vector2(j + 0.5f, i + 0.5f);
@@ -124,7 +155,8 @@ public class WorldGenerator : MonoBehaviour
                         tempBuilding = markets.Last().GetComponent<Building>();
                         worldCells[i / CellSize, j / CellSize].AddBuilding(tempBuilding);
                     }
-                    else if (noise > 0.19f)
+                    //School
+                    else if (noise > 0.05f)
                     {
                         schools.Add(Instantiate(SchoolPrefab, buildings.transform));
                         schools.Last().transform.position = new Vector2(j + 0.5f, i + 0.5f);
@@ -132,6 +164,7 @@ public class WorldGenerator : MonoBehaviour
                         tempBuilding = schools.Last().GetComponent<Building>();
                         worldCells[i / CellSize, j / CellSize].AddBuilding(tempBuilding);
                     }
+                    //WorkPlace
                     else
                     {
                         workPlaces.Add(Instantiate(WorkPlacePrefab, buildings.transform));
@@ -141,6 +174,7 @@ public class WorldGenerator : MonoBehaviour
                         worldCells[i / CellSize, j / CellSize].AddBuilding(tempBuilding);
                     }
 
+                    //Get where is the building's enterance
                     if (0 <= i - 1 && cells[i - 1, j] == CellType.Road)
                     {
                         tempBuilding.SetNearestRoadLocation(new Vector2(j, i - 1));

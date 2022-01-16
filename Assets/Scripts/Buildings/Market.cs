@@ -1,20 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+/// <summary>
+/// A market
+/// </summary>
 public class Market : Building
 {
+    /// <summary>
+    /// Enter the market
+    /// </summary>
     public void EnterMarket()
     {
         CurrentSize++;
     }
 
+    //-----------------------------------------------------
+    /// <summary>
+    /// Leave the market
+    /// </summary>
     public void LeaveMarket()
     {
         CurrentSize--;
     }
 
-    public void Start()
+    //------------------------------------------------------------
+    //Runs when the script is loaded
+    private void Awake()
     {
         Capacity = 50;
         CurrentSize = 0;

@@ -1,4 +1,7 @@
-﻿public enum Occupation : byte
+﻿/// <summary>
+/// Where the person works at
+/// </summary>
+public enum Occupation : byte
 {
     None = 0,
     Learning = 1,

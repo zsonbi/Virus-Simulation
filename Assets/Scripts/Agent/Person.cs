@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 /// </summary>
 public class Person : MonoBehaviour
 {
+    public SpriteRenderer AgeCircle;
+    public SpriteRenderer StatusCircle;
+
     /// <summary>
     /// The age of the person
     /// This will determine his occupation mostly
@@ -30,13 +33,13 @@ public class Person : MonoBehaviour
     public float YPos { get => this.gameObject.transform.position.y; }
 
     private World world; //Reference to the world where the 'person' lives
-
     private Family family; //The person's family
     private Building occupationBuilding; //Where the person is working/learning at
     private float time = float.MaxValue; //Timer
     private ActionState currActionState = ActionState.RelaxingAtHome; //Currently what action is the person doing for example going to work
     private Occupation occupation = Occupation.None; //The person occupation
     private float currActionTimeLeft = 0f; //The remaining time from the waiting during actions
+    private WorkTime workTime; //When the person's work start and end
 
     //Movement varriables
 
@@ -44,10 +47,9 @@ public class Person : MonoBehaviour
     private List<Vector2> pathToOccupation; //The path to the person's occupation building
     private List<Vector2> pathFromOccupation; //The path to the person's home from the occupation building
     private List<Vector2> path; //Pointer to the currently used path
-    private float moveTargetSwapInterval = 20f / Settings.realTimeToSimulation; //The speed which the moveTargets should be swapped at (sec)
+    private float moveTargetSwapInterval = 20f; //The speed which the moveTargets should be swapped at (sec)
     private bool generatedPath = false; //Is there already a generated path
     private short pathIndex = -1; //The index of the cell in the path list
-    private Vector2 realPos;
 
     //**************************************************************************************
     /// <summary>
@@ -55,41 +57,28 @@ public class Person : MonoBehaviour
     /// </summary>
     /// <param name="world">Reference to the world class</param>
     /// <param name="family">Reference to the person's family</param>
-    public void SetWorldAndFamily(World world, Family family)
+    public void SetDefaultParameters(World world, Family family, byte age)
     {
         if (this.world == null && this.family == null)
         {
             this.world = world;
             this.family = family;
+            this.Age = age;
         }
         else
             throw new Exception("Can't change world or family one of them is already set");
-    }
-
-    private async Task Test()
-    {
-        realPos = new Vector2(0, 0);
-        for (int i = 0; i < 10; i++)
-        {
-            realPos = new Vector2(0, i);
-            await Task.Delay(1);
-        }
     }
 
     //-------------------------------------------------------------------
     //Called just before the first frame
     private void Start()
     {
-        //Test();
-
         //Error detection
         if (world == null)
         {
             throw new Exception("Please set the world for this poor person");
         }
-
-        //Sets the person's age at random
-        Age = (byte)UnityEngine.Random.Range(6, 90);
+        this.Gender = (Gender)UnityEngine.Random.Range(0, 2);
         //Decide occupation based on age
         if (Age <= 18)
         {
@@ -98,22 +87,26 @@ public class Person : MonoBehaviour
             {
                 FindWorkPlace();
             }
+            this.AgeCircle.color = Color.blue;
         }
         else
         {
             FindWorkPlace();
+
+            this.AgeCircle.color = Color.magenta;
         }
+        currActionTimeLeft = workTime.GetTimeTillWorkStart(world.dayTime);
     }
 
     //Called every frame
     private void Update()
     {
         //Increase the timer by the elapsed time
-        time += Time.deltaTime;
+        time += Time.deltaTime * Settings.RealTimeToSimulationTime;
         //If it's an action which doesn't require movement wait till the currActionTimeLeft goes to 0
         if ((byte)currActionState % 2 == 1)
         {
-            currActionTimeLeft -= Time.deltaTime;
+            currActionTimeLeft -= Time.deltaTime * Settings.RealTimeToSimulationTime;
             if (currActionTimeLeft <= 0f)
             {
                 DecideNextActionState();
@@ -146,6 +139,7 @@ public class Person : MonoBehaviour
             Debug.Log("Found school");
             (occupationBuilding as School).NewStudent(this);
             occupation = Occupation.Learning;
+            workTime = new WorkTime(28800f);
             return true;
         }
     }
@@ -165,6 +159,7 @@ public class Person : MonoBehaviour
             Debug.Log("Found job");
             (occupationBuilding as WorkPlace).GiveJob(this);
             occupation = Occupation.Working;
+            workTime = new WorkTime(Settings.PossibleWorkStartTimes[UnityEngine.Random.Range(0, Settings.PossibleWorkStartTimes.Length)]);
         }
     }
 
@@ -225,8 +220,9 @@ public class Person : MonoBehaviour
 
             case ActionState.GoingToWork:
 
-                currActionTimeLeft = 28800 / Settings.realTimeToSimulation;
-                this.transform.position = occupationBuilding.transform.position;
+                currActionTimeLeft = workTime.GetActionTime();
+                this.transform.position = new Vector2(occupationBuilding.transform.position.x + UnityEngine.Random.Range(-0.5f, 0.5f), occupationBuilding.transform.position.y + UnityEngine.Random.Range(-0.5f, 0.5f));
+
                 currActionState = ActionState.Working;
                 break;
 
@@ -235,12 +231,28 @@ public class Person : MonoBehaviour
                 currActionState = ActionState.GoingHome;
                 break;
 
+            case ActionState.GoingShopping:
+                this.transform.position = this.transform.position = new Vector2(family.MarketLoc.x + UnityEngine.Random.Range(-0.5f, 0.5f), family.MarketLoc.y + UnityEngine.Random.Range(-0.5f, 0.5f));
+                ;
+                currActionTimeLeft = 3600f;
+                currActionState = ActionState.Shopping;
+                break;
+
             case ActionState.Shopping:
+                this.transform.position = family.MarketEnteranceLoc;
+                currActionState = ActionState.GoingHomeFromShopping;
+                break;
+
+            case ActionState.GoingHomeFromShopping:
+                this.transform.position = new Vector2(family.HouseLoc.x + UnityEngine.Random.Range(-0.5f, 0.5f), family.HouseLoc.y + UnityEngine.Random.Range(-0.5f, 0.5f));
+                currActionTimeLeft = workTime.GetTimeTillWorkStart(world.dayTime);
+                currActionState = ActionState.RelaxingAtHome;
+                family.GotSuppliesFromShop();
                 break;
 
             case ActionState.GoingHome:
-                this.transform.position = family.HouseLoc;
-                currActionTimeLeft = 28800 / Settings.realTimeToSimulation;
+                this.transform.position = new Vector2(family.HouseLoc.x + UnityEngine.Random.Range(-0.5f, 0.5f), family.HouseLoc.y + UnityEngine.Random.Range(-0.5f, 0.5f));
+                currActionTimeLeft = workTime.GetTimeTillWorkStart(world.dayTime);
                 currActionState = ActionState.RelaxingAtHome;
                 break;
 
@@ -273,6 +285,14 @@ public class Person : MonoBehaviour
                 path = pathToOccupation;
                 break;
 
+            case ActionState.GoingShopping:
+                path = family.pathToShop;
+                break;
+
+            case ActionState.GoingHomeFromShopping:
+                path = family.pathFromShop;
+                break;
+
             default:
                 break;
         }
@@ -284,6 +304,18 @@ public class Person : MonoBehaviour
             nextMoveTarget = this.transform.position;
             this.gameObject.SetActive(false);
         }
+    }
+
+    public bool SendToTheShop()
+    {
+        if (this.currActionState != ActionState.RelaxingAtHome && this.currActionTimeLeft <= 10800f)
+        {
+            return false;
+        }
+        Debug.Log("Sent for food");
+        this.currActionState = ActionState.GoingShopping;
+        this.transform.position = family.HouseEnteraceLoc;
+        return true;
     }
 
     //-------------------------------------------------------------

@@ -1,28 +1,62 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The world
+/// </summary>
 public class World : MonoBehaviour
 {
     public GameObject DefaultPerson;
     public WorldGenerator WorldGenerator;
+
+    /// <summary>
+    /// The time of the day 1 = 1sec
+    /// </summary>
     public float dayTime = 0f;
+
+    /// <summary>
+    /// The number of days passed
+    /// </summary>
     public ushort DayCounter { get; private set; } = 0;
 
+    /// <summary>
+    /// The X size of the map
+    /// </summary>
     public int XSize { get => WorldGenerator.XSize; }
+
+    /// <summary>
+    /// The Y size of the map
+    /// </summary>
     public int YSize { get => WorldGenerator.YSize; }
 
+    /// <summary>
+    /// The number of cells in the worldcells array on the x axis
+    /// </summary>
     public int cellXCount { get => WorldGenerator.cellXCount; }
+
+    /// <summary>
+    /// The number of cells in the worldcells array on the y axis
+    /// </summary>
     public int cellYCount { get => WorldGenerator.cellYCount; }
 
-    private List<Person> persons;
-    private PathMaker pathMaker;
-
+    /// <summary>
+    /// The cells of the world this can be used to find nearby objects
+    /// </summary>
     public WorldCell[,] worldCells { get => WorldGenerator.worldCells; }
+
+    /// <summary>
+    /// A size of a single world cell
+    /// </summary>
     public int CellSize { get => WorldGenerator.CellSize; }
 
+    /// <summary>
+    /// The type of each of cell
+    /// </summary>
     public CellType[,] Cells { get => WorldGenerator.cells; }
 
+    private PathMaker pathMaker; //The pathmaker algorithm
+
+    //--------------------------------------------------------------------------
     // Start is called before the first frame update
     private void Start()
     {
@@ -30,15 +64,17 @@ public class World : MonoBehaviour
         Application.targetFrameRate = 60;
         QualitySettings.vSyncCount = 0;
 
-        FillWorldWithFamilies(2000);
         pathMaker = new PathMaker((byte)WorldGenerator.XSize, this);
+        FillWorldWithFamilies(2000);
     }
 
+    //----------------------------------------------------------------------------
+    //Called each frame
     private void Update()
     {
-        dayTime += Time.deltaTime;
+        dayTime += Time.deltaTime * Settings.RealTimeToSimulationTime;
 
-        if (dayTime >= 86400f / Settings.realTimeToSimulation)
+        if (dayTime >= 86400f)
         {
             DayCounter++;
             Debug.Log($"Day {DayCounter} complete");
@@ -47,10 +83,10 @@ public class World : MonoBehaviour
         }
     }
 
+    //------------------------------------------------------------------------------
+    //Fills the world with families
     private void FillWorldWithFamilies(int familyCount)
     {
-        persons = new List<Person>();
-
         GameObject families = new GameObject("families");
         families.transform.parent = this.transform;
         int houseIndex = Random.Range(0, WorldGenerator.Houses.Count);
@@ -63,11 +99,21 @@ public class World : MonoBehaviour
             }
             GameObject family = new GameObject("family" + i, typeof(Family));
             family.transform.parent = families.transform;
-            family.GetComponent<Family>().SetDefaultParams(WorldGenerator.Houses[i], 4, this);
+            family.GetComponent<Family>().SetDefaultParams(WorldGenerator.Houses[i], (byte)Random.Range(Settings.MinSizeOfFamily, Settings.MaxSizeOfFamily + 1), this);
+            WorldGenerator.Houses[i].Occupy();
             //  WorldGenerator.Houses.RemoveAt(houseIndex);
         }
     }
 
+    //-------------------------------------------------------------------
+    /// <summary>
+    /// Looks for the nearest building with the specified type
+    /// </summary>
+    /// <param name="xCoord">Start of the search on the x axis</param>
+    /// <param name="yCoord">Start of the search on the y axis</param>
+    /// <param name="maxSearchRange">The maximum search range</param>
+    /// <param name="buildingType">The type of the building</param>
+    /// <returns>The building it found returns with null if it didn't found any</returns>
     public Building LookForBuilding(int xCoord, int yCoord, int maxSearchRange, BuildingType buildingType)
     {
         Direction dir = Direction.Left; //Direction the iteration is going
@@ -117,12 +163,26 @@ public class World : MonoBehaviour
         return null;
     }
 
+    //-------------------------------------------------------------------------------
+    /// <summary>
+    /// Creates a path from the start vector to the goal vector
+    /// </summary>
+    /// <param name="path">The path it will create</param>
+    /// <param name="startCoord">The start of the path (must be on the road)</param>
+    /// <param name="goalCoord">The goal of the path (must be on the road)</param>
+    /// <returns>true if it created a path false if it failed to create</returns>
     public bool CreatePath(out List<Vector2> path, Vector2 startCoord, Vector2 goalCoord)
     {
         Debug.Log("Generated path");
         return pathMaker.CreatePath(out path, startCoord, goalCoord);
     }
 
+    /// <summary>
+    /// Calculates the distance between two vectors
+    /// </summary>
+    /// <param name="coord1">The first vector</param>
+    /// <param name="coord2">The second vector</param>
+    /// <returns>The distance</returns>
     public static float CalcDistance(Vector2 coord1, Vector2 coord2)
     {
         return Mathf.Sqrt(Mathf.Pow((coord1.x - coord2.x), 2) + Mathf.Pow((coord1.y - coord2.y), 2));

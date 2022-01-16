@@ -1,3 +1,6 @@
+/// <summary>
+/// The type of the cell
+/// </summary>
 public enum CellType : byte
 {
     None = 0,
