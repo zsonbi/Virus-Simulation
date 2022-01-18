@@ -50,6 +50,7 @@ public class Person : MonoBehaviour
     private float moveTargetSwapInterval = 20f; //The speed which the moveTargets should be swapped at (sec)
     private bool generatedPath = false; //Is there already a generated path
     private short pathIndex = -1; //The index of the cell in the path list
+    private Vector2 worldCellIndex;
 
     //**************************************************************************************
     /// <summary>
@@ -78,6 +79,7 @@ public class Person : MonoBehaviour
         {
             throw new Exception("Please set the world for this poor person");
         }
+        this.worldCellIndex = new Vector2((int)this.XPos,(int)this.YPos);
         this.Gender = (Gender)UnityEngine.Random.Range(0, 2);
         //Decide occupation based on age
         if (Age <= 18)
@@ -200,6 +202,9 @@ public class Person : MonoBehaviour
             nextMoveTarget = this.transform.position;
             return;
         }
+
+        
+
         nextMoveTarget = path[pathIndex];
         pathIndex--;
     }

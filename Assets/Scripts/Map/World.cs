@@ -164,6 +164,36 @@ public class World : MonoBehaviour
         return null;
     }
 
+    //-----------------------------------------------------------------------
+    /// <summary>
+    /// Adds a person to the world cell
+    /// </summary>
+    /// <param name="xIndex">The x index of the world cell</param>
+    /// <param name="yIndex">The y index of the world cell</param>
+    /// <param name="personToAdd">The person to add</param>
+    public void AddPersonToWorldCell(short xIndex, short yIndex, Person personToAdd)
+    {
+        this.worldCells[yIndex,xIndex].AddPerson(personToAdd);
+    }
+
+    //---------------------------------------------------------------------------
+    /// <summary>
+    /// Moves a person from the old position to the new position int the world cells
+    /// </summary>
+    /// <param name="oldXIndex">The person's old x index in the world cell grid</param>
+    /// <param name="oldYIndex">The person's old y index in the world cell grid</param>
+    /// <param name="newXIndex">The person's new x index in the world cell grid</param>
+    /// <param name="newYIndex">The person's new y index in the world cell grid</param>
+    /// <param name="personToMove">Reference to the person to move</param>
+    public void MovePerson(short oldXIndex, short oldYIndex, short newXIndex, short newYIndex, Person personToMove)
+    {
+        this.worldCells[oldYIndex,oldXIndex].RemovePerson(personToMove);
+
+        this.worldCells[newYIndex,newXIndex].AddPerson(personToMove);
+    }
+
+
+
     //-------------------------------------------------------------------------------
     /// <summary>
     /// Creates a path from the start vector to the goal vector

@@ -78,6 +78,7 @@ public class Family : MonoBehaviour
             peopleInFamily.Add(person.GetComponent<Person>());
             peopleInFamily.Last().SetDefaultParameters(world, this, age);
             person.transform.position = HouseLoc;
+            this.world.AddPersonToWorldCell((short)(person.transform.position.x/world.CellSize),(short)(person.transform.position.y/world.CellSize),peopleInFamily.Last());
         }
     }
 
