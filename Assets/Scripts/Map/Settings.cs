@@ -29,4 +29,9 @@ public static class Settings
     /// The maximum size of the family
     /// </summary>
     public static byte MaxSizeOfFamily = 6;
+
+    /// <summary>
+    /// Sets the rate of how frequently should the method be called
+    /// </summary>
+    public static float InfectionRateInside = RealTimeToSimulationTime * 0.5f;
 }

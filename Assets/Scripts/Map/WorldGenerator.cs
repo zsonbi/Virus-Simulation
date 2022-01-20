@@ -25,7 +25,7 @@ public class WorldGenerator : MonoBehaviour
     /// <summary>
     /// The size of a single world cell
     /// </summary>
-    public int CellSize = 5;
+    public byte CellSize = 5;
 
     public GameObject HousePrefab;
     public GameObject MarketPrefab;
@@ -52,8 +52,8 @@ public class WorldGenerator : MonoBehaviour
     //Runs when the script is loaded
     private void Awake()
     {
-        cellXCount = XSize / CellSize;
-        cellYCount = YSize / CellSize;
+        cellXCount = UnityEngine.Mathf.CeilToInt(XSize / (float)CellSize);
+        cellYCount = UnityEngine.Mathf.CeilToInt(YSize / (float)CellSize);
         cells = new CellType[YSize, XSize];
         //Creates the world cells
         worldCells = new WorldCell[cellYCount, cellXCount];

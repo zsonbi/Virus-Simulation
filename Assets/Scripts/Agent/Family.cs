@@ -9,10 +9,19 @@ public class Family : MonoBehaviour
 {
     private List<Person> peopleInFamily; //Every person in the family
     private World world; //Reference to the world
-    private House house; //Reference to the house of the family
-    private Market favoriteMarket; //Reference to the family's favorite market
+
     private float time = 0f; //Timer
     private bool sentForFood = false; //Had someone gone to the shop
+
+    /// <summary>
+    /// Reference to the family's favorite market
+    /// </summary>
+    public Market FavoriteMarket { get; private set; }
+
+    /// <summary>
+    /// Reference to the house of the family
+    /// </summary>
+    public House House { get; private set; }
 
     /// <summary>
     /// How to get to the shop from the house
@@ -27,22 +36,22 @@ public class Family : MonoBehaviour
     /// <summary>
     /// The house's position
     /// </summary>
-    public Vector2 HouseLoc { get => house.transform.position; }
+    public Vector2 HouseLoc { get => House.transform.position; }
 
     /// <summary>
     /// The market's position
     /// </summary>
-    public Vector2 MarketLoc { get => favoriteMarket.transform.position; }
+    public Vector2 MarketLoc { get => FavoriteMarket.transform.position; }
 
     /// <summary>
     /// Enterance to the market
     /// </summary>
-    public Vector2 MarketEnteranceLoc { get => favoriteMarket.NearestRoad; }
+    public Vector2 MarketEnteranceLoc { get => FavoriteMarket.NearestRoad; }
 
     /// <summary>
     /// Enterance to the house
     /// </summary>
-    public Vector2 HouseEnteraceLoc { get => house.NearestRoad; }
+    public Vector2 HouseEnteraceLoc { get => House.NearestRoad; }
 
     /// <summary>
     /// The size of the family
@@ -64,9 +73,9 @@ public class Family : MonoBehaviour
     public void SetDefaultParams(House house, byte sizeOfFamily, World world)
     {
         this.world = world;
-        this.house = house;
+        this.House = house;
         peopleInFamily = new List<Person>();
-        this.favoriteMarket = (Market)this.world.LookForBuilding((int)HouseLoc.x, (int)HouseLoc.y, 100, BuildingType.Market);
+        this.FavoriteMarket = (Market)this.world.LookForBuilding((int)HouseLoc.x, (int)HouseLoc.y, 100, BuildingType.Market);
 
         world.CreatePath(out pathToShop, HouseEnteraceLoc, MarketEnteranceLoc);
         world.CreatePath(out pathFromShop, MarketEnteranceLoc, HouseEnteraceLoc);
@@ -78,7 +87,19 @@ public class Family : MonoBehaviour
             peopleInFamily.Add(person.GetComponent<Person>());
             peopleInFamily.Last().SetDefaultParameters(world, this, age);
             person.transform.position = HouseLoc;
-            this.world.AddPersonToWorldCell((short)(person.transform.position.x/world.CellSize),(short)(person.transform.position.y/world.CellSize),peopleInFamily.Last());
+        }
+    }
+
+    //-------------------------------------------------------------------
+    /// <summary>
+    /// Get everyone in the family infected
+    /// </summary>
+    /// <param name="virus">The virus they got</param>
+    public void GetInitialInfection(VirusType virus)
+    {
+        foreach (var person in peopleInFamily)
+        {
+            person.StartingInfected(virus);
         }
     }
 

@@ -88,4 +88,20 @@ public class WorldCell
     {
         return persons.Select(x => x).ToList();
     }
+
+    /// <summary>
+    /// Tries to infect everyone who is on the same cell
+    /// </summary>
+    /// <param name="source">The source of the virus</param>
+    /// <param name="virus">The type of the virus</param>
+    public void TryToInfectEveryOneInRange(UnityEngine.Vector2 source, VirusType virus)
+    {
+        foreach (var person in this.persons)
+        {
+            if (person.Infectable() && source.Equals(person.transform.position))
+            {
+                person.InfectedInRange(virus);
+            }
+        }
+    }
 }

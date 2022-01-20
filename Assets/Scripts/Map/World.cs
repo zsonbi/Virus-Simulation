@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 /// <summary>
 /// The world
@@ -48,7 +49,7 @@ public class World : MonoBehaviour
     /// <summary>
     /// A size of a single world cell
     /// </summary>
-    public int CellSize { get => WorldGenerator.CellSize; }
+    public byte CellSize { get => WorldGenerator.CellSize; }
 
     /// <summary>
     /// The type of each of cell
@@ -56,6 +57,8 @@ public class World : MonoBehaviour
     public CellType[,] Cells { get => WorldGenerator.cells; }
 
     private PathMaker pathMaker; //The pathmaker algorithm
+    private List<VirusType> viruses;
+    private List<Family> families;
 
     //--------------------------------------------------------------------------
     // Start is called before the first frame update
@@ -67,6 +70,7 @@ public class World : MonoBehaviour
 
         pathMaker = new PathMaker((byte)WorldGenerator.XSize, this);
         FillWorldWithFamilies(2000);
+        ReadInViruses();
     }
 
     //----------------------------------------------------------------------------
@@ -84,14 +88,40 @@ public class World : MonoBehaviour
         }
     }
 
+    private void ReadInViruses(string nameOfTheFile = "viruses.csv")
+    {
+        viruses = new List<VirusType>();
+        string[] rows = System.IO.File.ReadAllLines(nameOfTheFile);
+        for (int i = 1; i < rows.Length; i++)
+        {
+            string[] splitted = rows[i].Split(';');
+            string nameOfTheVirus = splitted[0].Trim(' ');
+            float rangeInsideBuilding = (float)System.Convert.ToDouble(splitted[1].Trim(' '));
+            float deathRate = (float)(System.Convert.ToDouble(splitted[2].Trim(new char[] { ' ', '%' })) / 100f);
+            int recoveryTime = System.Convert.ToInt32(splitted[3].Trim(' ')) * 86400;
+            int immunityTime = System.Convert.ToInt32(splitted[4].Trim(' ')) * 86400;
+            int startingFamilies = System.Convert.ToInt32(splitted[5].Trim(' '));
+            viruses.Add(new VirusType(nameOfTheVirus, rangeInsideBuilding, deathRate, recoveryTime, immunityTime));
+            InfectRandomFamilies(viruses.Last(), startingFamilies);
+        }
+    }
+
+    private void InfectRandomFamilies(VirusType virus, int numberOfInfections)
+    {
+        for (int i = 0; i < numberOfInfections; i++)
+        {
+            families[Random.Range(0, families.Count)].GetInitialInfection(virus);
+        }
+    }
+
     //------------------------------------------------------------------------------
     //Fills the world with families
     private void FillWorldWithFamilies(int familyCount)
     {
-        GameObject families = new GameObject("families");
-        families.transform.parent = this.transform;
+        GameObject familiesParent = new GameObject("families");
+        familiesParent.transform.parent = this.transform;
         int houseIndex = Random.Range(0, WorldGenerator.Houses.Count);
-
+        families = new List<Family>();
         for (int i = 0; i < familyCount; i++)
         {
             if (WorldGenerator.Houses.Count <= i)
@@ -99,8 +129,9 @@ public class World : MonoBehaviour
                 break;
             }
             GameObject family = new GameObject("family" + i, typeof(Family));
-            family.transform.parent = families.transform;
+            family.transform.parent = familiesParent.transform;
             family.GetComponent<Family>().SetDefaultParams(WorldGenerator.Houses[i], (byte)Random.Range(Settings.MinSizeOfFamily, Settings.MaxSizeOfFamily + 1), this);
+            families.Add(family.GetComponent<Family>());
             WorldGenerator.Houses[i].Occupy();
             //  WorldGenerator.Houses.RemoveAt(houseIndex);
         }
@@ -164,6 +195,33 @@ public class World : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Infect everyone on the same cell
+    /// </summary>
+    /// <param name="worldCellIndex">The index of the world cell</param>
+    /// <param name="personPos">The source of the infection</param>
+    /// <param name="virus">The virus</param>
+    public void InfectInRange(Vector2 worldCellIndex, Vector2 personPos, VirusType virus)
+    {
+        /*  for (int i = (int)worldCellIndex.y - 1; i <= worldCellIndex.y + 1; i++)
+          {
+              if (i < 0 || i >= cellYCount)
+              {
+                  continue;
+              }
+              for (int j = (int)worldCellIndex.x - 1; j < worldCellIndex.x + 1; j++)
+              {
+                  if (j < 0 || i >= cellXCount)
+                  {
+                      continue;
+                  }
+                  this.worldCells[i, j].TryToInfectEveryOneInRange(personPos, range);
+              }
+          }*/
+
+        this.worldCells[(int)worldCellIndex.y, (int)worldCellIndex.x].TryToInfectEveryOneInRange(personPos, virus);
+    }
+
     //-----------------------------------------------------------------------
     /// <summary>
     /// Adds a person to the world cell
@@ -171,28 +229,24 @@ public class World : MonoBehaviour
     /// <param name="xIndex">The x index of the world cell</param>
     /// <param name="yIndex">The y index of the world cell</param>
     /// <param name="personToAdd">The person to add</param>
-    public void AddPersonToWorldCell(short xIndex, short yIndex, Person personToAdd)
+    public void AddPersonToWorldCell(Vector2 indices, Person personToAdd)
     {
-        this.worldCells[yIndex,xIndex].AddPerson(personToAdd);
+        this.worldCells[(int)indices.y, (int)indices.x].AddPerson(personToAdd);
     }
 
     //---------------------------------------------------------------------------
     /// <summary>
     /// Moves a person from the old position to the new position int the world cells
     /// </summary>
-    /// <param name="oldXIndex">The person's old x index in the world cell grid</param>
-    /// <param name="oldYIndex">The person's old y index in the world cell grid</param>
-    /// <param name="newXIndex">The person's new x index in the world cell grid</param>
-    /// <param name="newYIndex">The person's new y index in the world cell grid</param>
     /// <param name="personToMove">Reference to the person to move</param>
-    public void MovePerson(short oldXIndex, short oldYIndex, short newXIndex, short newYIndex, Person personToMove)
+    /// <param name="oldPos">The old worldCell position</param>
+    /// <param name="newPos">The new worldCell position</param>
+    public void MovePerson(Vector2 oldPos, Vector2 newPos, Person personToMove)
     {
-        this.worldCells[oldYIndex,oldXIndex].RemovePerson(personToMove);
+        this.worldCells[(int)oldPos.y, (int)oldPos.x].RemovePerson(personToMove);
 
-        this.worldCells[newYIndex,newXIndex].AddPerson(personToMove);
+        this.worldCells[(int)newPos.y, (int)newPos.x].AddPerson(personToMove);
     }
-
-
 
     //-------------------------------------------------------------------------------
     /// <summary>
