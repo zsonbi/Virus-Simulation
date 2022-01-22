@@ -12,4 +12,8 @@ public class SimulationMenu : MonoBehaviour
     {
         DayText.text = $"Day: {this.world.DayCounter}";
     }
+
+    public void UpdateNumberOfPeople()
+    {
+    }
 }

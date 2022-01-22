@@ -7,7 +7,6 @@ using System.Linq;
 /// </summary>
 public class Family : MonoBehaviour
 {
-    private List<Person> peopleInFamily; //Every person in the family
     private World world; //Reference to the world
 
     private float time = 0f; //Timer
@@ -63,6 +62,11 @@ public class Family : MonoBehaviour
     /// </summary>
     public float SupplyAmount { get; private set; } = Settings.FamilySuppliesStock;
 
+    /// <summary>
+    /// Every person in the family
+    /// </summary>
+    public List<Person> peopleInFamily { get; private set; }
+
     //--------------------------------------------------------------------------
     /// <summary>
     /// Set the default parameters for the family
@@ -111,6 +115,11 @@ public class Family : MonoBehaviour
     {
         SupplyAmount = Settings.FamilySuppliesStock;
         sentForFood = false;
+    }
+
+    public void KillPerson(Person personToKill)
+    {
+        this.peopleInFamily.Remove(personToKill);
     }
 
     //------------------------------------------------------------------

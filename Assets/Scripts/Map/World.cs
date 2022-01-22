@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
 using System.Linq;
 
 /// <summary>
@@ -9,7 +10,7 @@ public class World : MonoBehaviour
 {
     public GameObject DefaultPerson;
     public WorldGenerator WorldGenerator;
-    public SimulationMenu SimulationMenu;
+    public StatusHandler StatusHandler;
 
     /// <summary>
     /// The time of the day 1 = 1sec
@@ -59,6 +60,7 @@ public class World : MonoBehaviour
     private PathMaker pathMaker; //The pathmaker algorithm
     private List<VirusType> viruses;
     private List<Family> families;
+    private List<Person> people;
 
     //--------------------------------------------------------------------------
     // Start is called before the first frame update
@@ -69,7 +71,7 @@ public class World : MonoBehaviour
         QualitySettings.vSyncCount = 0;
 
         pathMaker = new PathMaker((byte)WorldGenerator.XSize, this);
-        FillWorldWithFamilies(2000);
+        FillWorldWithFamilies(WorldGenerator.Houses.Count);
         ReadInViruses();
     }
 
@@ -83,32 +85,28 @@ public class World : MonoBehaviour
         {
             DayCounter++;
             Debug.Log($"Day {DayCounter} complete");
-            this.SimulationMenu.UpdateDayText();
+            StatusHandler.UpdateDayTime(DayCounter);
             dayTime = 0f;
         }
     }
 
-    private void ReadInViruses(string nameOfTheFile = "viruses.csv")
+    //-------------------------------------------------------------------
+    // Reads in the viruses from the json
+    private void ReadInViruses(string nameOfTheFile = "viruses.json")
     {
-        viruses = new List<VirusType>();
-        string[] rows = System.IO.File.ReadAllLines(nameOfTheFile);
-        for (int i = 1; i < rows.Length; i++)
+        viruses = JsonConvert.DeserializeObject<List<VirusType>>(System.IO.File.ReadAllText(nameOfTheFile));
+
+        foreach (var virus in viruses)
         {
-            string[] splitted = rows[i].Split(';');
-            string nameOfTheVirus = splitted[0].Trim(' ');
-            float rangeInsideBuilding = (float)System.Convert.ToDouble(splitted[1].Trim(' '));
-            float deathRate = (float)(System.Convert.ToDouble(splitted[2].Trim(new char[] { ' ', '%' })) / 100f);
-            int recoveryTime = System.Convert.ToInt32(splitted[3].Trim(' ')) * 86400;
-            int immunityTime = System.Convert.ToInt32(splitted[4].Trim(' ')) * 86400;
-            int startingFamilies = System.Convert.ToInt32(splitted[5].Trim(' '));
-            viruses.Add(new VirusType(nameOfTheVirus, rangeInsideBuilding, deathRate, recoveryTime, immunityTime));
-            InfectRandomFamilies(viruses.Last(), startingFamilies);
+            InfectRandomFamilies(virus);
         }
     }
 
-    private void InfectRandomFamilies(VirusType virus, int numberOfInfections)
+    //-----------------------------------------------------------------
+    //Infect families according to the virus's number of families to infect property
+    private void InfectRandomFamilies(VirusType virus)
     {
-        for (int i = 0; i < numberOfInfections; i++)
+        for (int i = 0; i < virus.NumberOfFamiliesToInfectOnStart; i++)
         {
             families[Random.Range(0, families.Count)].GetInitialInfection(virus);
         }
@@ -118,6 +116,7 @@ public class World : MonoBehaviour
     //Fills the world with families
     private void FillWorldWithFamilies(int familyCount)
     {
+        people = new List<Person>();
         GameObject familiesParent = new GameObject("families");
         familiesParent.transform.parent = this.transform;
         int houseIndex = Random.Range(0, WorldGenerator.Houses.Count);
@@ -133,8 +132,11 @@ public class World : MonoBehaviour
             family.GetComponent<Family>().SetDefaultParams(WorldGenerator.Houses[i], (byte)Random.Range(Settings.MinSizeOfFamily, Settings.MaxSizeOfFamily + 1), this);
             families.Add(family.GetComponent<Family>());
             WorldGenerator.Houses[i].Occupy();
+            people.AddRange(families.Last().peopleInFamily);
             //  WorldGenerator.Houses.RemoveAt(houseIndex);
         }
+
+        StatusHandler.SetInitialPeopleCount(people.Count);
     }
 
     //-------------------------------------------------------------------
@@ -271,5 +273,26 @@ public class World : MonoBehaviour
     public static float CalcDistance(Vector2 coord1, Vector2 coord2)
     {
         return Mathf.Sqrt(Mathf.Pow((coord1.x - coord2.x), 2) + Mathf.Pow((coord1.y - coord2.y), 2));
+    }
+
+    public void Infected()
+    {
+        StatusHandler.IncreaseInfectedCount();
+    }
+
+    public void Recovered()
+    {
+        StatusHandler.DecreaseInfectedCount();
+    }
+
+    public void Died(Person person)
+    {
+        if (person.IsInfected)
+        {
+            StatusHandler.DecreaseInfectedCount();
+        }
+
+        this.people.Remove(person);
+        StatusHandler.UpdatePeopleCount(people.Count);
     }
 }

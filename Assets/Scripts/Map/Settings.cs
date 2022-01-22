@@ -34,4 +34,6 @@ public static class Settings
     /// Sets the rate of how frequently should the method be called
     /// </summary>
     public static float InfectionRateInside = RealTimeToSimulationTime * 0.5f;
+
+    public static float VirusVarience = 0.3f;
 }

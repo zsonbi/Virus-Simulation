@@ -36,6 +36,8 @@ public class Person : MonoBehaviour
     /// </summary>
     public bool IsInfected { get; private set; } = false;
 
+    public bool InQuarantine { get; private set; } = false;
+
     private World world; //Reference to the world where the 'person' lives
     private Family family; //The person's family
     private Building occupationBuilding; //Where the person is working/learning at
@@ -59,6 +61,8 @@ public class Person : MonoBehaviour
     private VirusType currentlyInfectedBy; //Reference to the virus which infected him
     private float recoveryTime = 0f; //The remaining time till full recovery
     private float immunityTime = 0f; //The remaining time from the immunity against the specific virus
+    private float virusDiscoveryTime = 0f;
+    private bool willHeDie = false;
 
     //**************************************************************************************
     /// <summary>
@@ -118,14 +122,28 @@ public class Person : MonoBehaviour
         //If the person is infected start recovering
         if (IsInfected)
         {
-            recoveryTime -= Time.deltaTime * Settings.RealTimeToSimulationTime;
-            if (recoveryTime <= 0f)
+            if (virusDiscoveryTime > 0)
             {
-                this.IsInfected = false;
-                this.immunityTime = currentlyInfectedBy.ImmunityTime;
-                this.currentlyInfectedBy = null;
-                this.StatusCircle.color = Color.green;
-                Debug.Log("Recovered");
+                virusDiscoveryTime -= Time.deltaTime * Settings.RealTimeToSimulationTime;
+                if (virusDiscoveryTime <= 0)
+                {
+                    DetectInfection();
+                }
+            }
+            else
+            {
+                recoveryTime -= Time.deltaTime * Settings.RealTimeToSimulationTime;
+                if (recoveryTime <= 0f)
+                {
+                    if (willHeDie)
+                    {
+                        Die();
+                    }
+                    else
+                    {
+                        Recovered();
+                    }
+                }
             }
         }
         //Else decrease his/her immunity
@@ -226,6 +244,14 @@ public class Person : MonoBehaviour
         currentBuilding.InfectInRange(this.transform.position, currentlyInfectedBy.RangeInsideBuilding, currentlyInfectedBy);
     }
 
+    private void Die()
+    {
+        world.Died(this);
+        family.KillPerson(this);
+        this.gameObject.SetActive(false);
+        Debug.Log("Died");
+    }
+
     //---------------------------------------------------------------------
     /// <summary>
     /// Checks if the person can be infected
@@ -234,6 +260,26 @@ public class Person : MonoBehaviour
     public bool Infectable()
     {
         return !this.IsInfected && immunityTime <= 0;
+    }
+
+    private void DetectInfection()
+    {
+        InQuarantine = true;
+        StatusCircle.color = Color.red;
+        this.recoveryTime = currentlyInfectedBy.RecoveryTime * UnityEngine.Random.Range(1f - Settings.VirusVarience, 1f + Settings.VirusVarience);
+        this.willHeDie = currentlyInfectedBy.DeathRate >= UnityEngine.Random.Range(0f, 1f);
+    }
+
+    private void Recovered()
+    {
+        this.IsInfected = false;
+        this.immunityTime = currentlyInfectedBy.ImmunityTime * UnityEngine.Random.Range(1f - Settings.VirusVarience, 1f + Settings.VirusVarience);
+        this.currentlyInfectedBy = null;
+        this.StatusCircle.color = Color.green;
+        this.InQuarantine = false;
+        this.currActionState = ActionState.RelaxingAtHome;
+        world.Recovered();
+        Debug.Log("Recovered");
     }
 
     //---------------------------------------------------------------------
@@ -246,8 +292,9 @@ public class Person : MonoBehaviour
     {
         this.currentlyInfectedBy = virus;
         this.IsInfected = true;
-        StatusCircle.color = Color.red;
-        this.recoveryTime = virus.RecoveryTime;
+        StatusCircle.color = Color.yellow;
+        this.virusDiscoveryTime = virus.TimeToDiscover * UnityEngine.Random.Range(1f - Settings.VirusVarience, 1f + Settings.VirusVarience);
+        world.Infected();
         Debug.Log("Got infected");
     }
 
@@ -298,9 +345,18 @@ public class Person : MonoBehaviour
         switch (currActionState)
         {
             case ActionState.RelaxingAtHome:
-                currActionState = ActionState.GoingToWork;
-                this.transform.position = family.HouseEnteraceLoc;
-                currentBuilding.Leave(this);
+                if (InQuarantine)
+                {
+                    currActionState = ActionState.InQuarantine;
+                    currActionTimeLeft = recoveryTime;
+                }
+                else
+                {
+                    currActionState = ActionState.GoingToWork;
+                    this.transform.position = family.HouseEnteraceLoc;
+                    currentBuilding.Leave(this);
+                }
+
                 break;
 
             case ActionState.Waiting:
@@ -336,8 +392,17 @@ public class Person : MonoBehaviour
 
             case ActionState.GoingHomeFromShopping:
                 this.transform.position = new Vector2(family.HouseLoc.x + UnityEngine.Random.Range(-0.5f, 0.5f), family.HouseLoc.y + UnityEngine.Random.Range(-0.5f, 0.5f));
-                currActionTimeLeft = workTime.GetTimeTillWorkStart(world.dayTime);
-                currActionState = ActionState.RelaxingAtHome;
+
+                if (InQuarantine)
+                {
+                    currActionState = ActionState.InQuarantine;
+                    currActionTimeLeft = recoveryTime;
+                }
+                else
+                {
+                    currActionState = ActionState.RelaxingAtHome;
+                    currActionTimeLeft = workTime.GetTimeTillWorkStart(world.dayTime);
+                }
                 family.GotSuppliesFromShop();
                 currentBuilding = family.House;
                 currentBuilding.Enter(this);
@@ -345,8 +410,17 @@ public class Person : MonoBehaviour
 
             case ActionState.GoingHome:
                 this.transform.position = new Vector2(family.HouseLoc.x + UnityEngine.Random.Range(-0.5f, 0.5f), family.HouseLoc.y + UnityEngine.Random.Range(-0.5f, 0.5f));
-                currActionTimeLeft = workTime.GetTimeTillWorkStart(world.dayTime);
-                currActionState = ActionState.RelaxingAtHome;
+
+                if (InQuarantine)
+                {
+                    currActionState = ActionState.InQuarantine;
+                    currActionTimeLeft = recoveryTime;
+                }
+                else
+                {
+                    currActionState = ActionState.RelaxingAtHome;
+                    currActionTimeLeft = workTime.GetTimeTillWorkStart(world.dayTime);
+                }
                 currentBuilding = family.House;
                 currentBuilding.Enter(this);
                 break;

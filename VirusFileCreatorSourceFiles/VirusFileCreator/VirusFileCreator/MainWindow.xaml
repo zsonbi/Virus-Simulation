@@ -1,0 +1,74 @@
+﻿<Window x:Class="VirusFileCreator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VirusFileCreator"
+        mc:Ignorable="d"
+        Title="Virus file editor" Height="350" Width="400">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid Background="gray">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="150 px" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30px" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="30px" />
+            </Grid.RowDefinitions>
+
+            <!--Field title-->
+            <Label Grid.Row="0" Grid.Column="0" Content="Virus Properties: " HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" />
+
+            <!--Input fields-->
+            <StackPanel Grid.Row="1" Grid.Column="0">
+                <DockPanel Margin="0px,3px">
+                    <Label Content="Name:" />
+                    <TextBox x:Name="NameInput" />
+                </DockPanel>
+                <DockPanel Margin="0px,3px">
+                    <Label Content="Range insideBuilding:" />
+                    <TextBox x:Name="InsideRangeInput" />
+                </DockPanel>
+                <DockPanel Margin="0px,3px">
+                    <Label Content="Death rate (%):" />
+                    <TextBox x:Name="DeathRateInput" />
+                </DockPanel>
+                <DockPanel Margin="0px,3px">
+                    <Label Content="Recovery time (days):" />
+                    <TextBox x:Name="RecoveryTimeInput" />
+                </DockPanel>
+                <DockPanel Margin="0px,3px">
+                    <Label Content="Immunity time (days):" />
+                    <TextBox x:Name="ImmunityTimeInput" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Time to discover (days):" />
+                    <TextBox x:Name="TimeToDiscoverInput" />
+                </DockPanel>
+                <DockPanel>
+                    <Label Content="Number of families to infect on start:" />
+                    <TextBox x:Name="NumberOfFamiliesToInfectOnStartInput" />
+                </DockPanel>
+            </StackPanel>
+
+            <!--Adds a new virus to the list-->
+            <Button Grid.Column="0" Grid.Row="2" Margin="5px" HorizontalAlignment="Center" Content="Add virus" Width="140" Click="AddVirus_Click" />
+
+            <!--Field title-->
+            <Label Content="Recorded viruses" Grid.Row="0" Grid.Column="1" FontSize="16" VerticalAlignment="Bottom" HorizontalAlignment="Center"></Label>
+
+            <!--All of the curently stored viruses-->
+            <ListBox Grid.Column="1" Grid.Row="1" Margin="10px,0px" Background="DarkGray" Name="RecordedVirusesLB">
+            </ListBox>
+            <!--Removes the currently selected virus-->
+            <Button Content="Remove selected" Grid.Column="1" Grid.Row="2" Margin="5px" Click="RemoveSelectedVirus_Click" />
+        </Grid>
+    </Grid>
+</Window>

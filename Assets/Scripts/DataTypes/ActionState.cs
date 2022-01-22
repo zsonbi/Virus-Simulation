@@ -11,4 +11,5 @@ public enum ActionState : byte
     GoingShopping = 6,
     Shopping = 7,
     GoingHomeFromShopping = 8,
+    InQuarantine = 9,
 }
