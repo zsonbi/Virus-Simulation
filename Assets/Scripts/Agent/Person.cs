@@ -38,6 +38,8 @@ public class Person : MonoBehaviour
 
     public bool InQuarantine { get; private set; } = false;
 
+    public bool IsInside { get => (byte)currActionState % 2 == 1; }
+
     private World world; //Reference to the world where the 'person' lives
     private Family family; //The person's family
     private Building occupationBuilding; //Where the person is working/learning at
@@ -63,6 +65,7 @@ public class Person : MonoBehaviour
     private float immunityTime = 0f; //The remaining time from the immunity against the specific virus
     private float virusDiscoveryTime = 0f;
     private bool willHeDie = false;
+    private float infectionAttempts = 0;
 
     //**************************************************************************************
     /// <summary>
@@ -114,6 +117,7 @@ public class Person : MonoBehaviour
         currActionTimeLeft = workTime.GetTimeTillWorkStart(world.dayTime);
         currentBuilding = family.House;
         currentBuilding.Enter(this);
+        this.immunityTime = UnityEngine.Random.Range(-1036800, 2592000);
     }
 
     //Called every frame
@@ -153,6 +157,10 @@ public class Person : MonoBehaviour
             {
                 immunityTime -= Time.deltaTime * Settings.RealTimeToSimulationTime;
             }
+            if (infectionAttempts > 0f)
+            {
+                infectionAttempts -= Time.deltaTime * Settings.InfectionRateInside * 0.01f;
+            }
         }
 
         //Increase the timer by the elapsed time
@@ -191,7 +199,7 @@ public class Person : MonoBehaviour
     //Tries to find a school true-found, false-didn't found
     private bool FindSchool()
     {
-        occupationBuilding = world.LookForBuilding((int)XPos, (int)YPos, 100, BuildingType.School);
+        occupationBuilding = world.GetOccupationBuilding((int)XPos, (int)YPos, 100, BuildingType.School);
         if (occupationBuilding == null)
         {
             Debug.Log("Can't find school");
@@ -211,7 +219,7 @@ public class Person : MonoBehaviour
     //Tries to find a work place
     private void FindWorkPlace()
     {
-        occupationBuilding = world.LookForBuilding((int)XPos, (int)YPos, 100, BuildingType.WorkPlace);
+        occupationBuilding = world.GetOccupationBuilding((int)XPos, (int)YPos, 100, BuildingType.WorkPlace);
         if (occupationBuilding == null)
         {
             Debug.Log("Can't find job");
@@ -233,6 +241,12 @@ public class Person : MonoBehaviour
     private void InfectOutside()
     {
         this.world.InfectInRange(this.worldCellIndex, this.transform.position, currentlyInfectedBy);
+    }
+
+    private bool CalculateIfHeGotInfected(VirusType virus)
+    {
+        infectionAttempts += 1f * (IsInside ? 4f : 1f) * Settings.InfectionRateMultiplier * UnityEngine.Random.Range(0.5f, 5f);
+        return infectionAttempts > virus.InfectionRate;
     }
 
     //------------------------------------------------------------------
@@ -264,7 +278,8 @@ public class Person : MonoBehaviour
 
     private void DetectInfection()
     {
-        InQuarantine = true;
+        //Make it so not everyone is a lawful citizen
+        InQuarantine = UnityEngine.Random.Range(0, 10) <= 1;
         StatusCircle.color = Color.red;
         this.recoveryTime = currentlyInfectedBy.RecoveryTime * UnityEngine.Random.Range(1f - Settings.VirusVarience, 1f + Settings.VirusVarience);
         this.willHeDie = currentlyInfectedBy.DeathRate >= UnityEngine.Random.Range(0f, 1f);
@@ -272,6 +287,7 @@ public class Person : MonoBehaviour
 
     private void Recovered()
     {
+        this.infectionAttempts = 0;
         this.IsInfected = false;
         this.immunityTime = currentlyInfectedBy.ImmunityTime * UnityEngine.Random.Range(1f - Settings.VirusVarience, 1f + Settings.VirusVarience);
         this.currentlyInfectedBy = null;
@@ -290,12 +306,15 @@ public class Person : MonoBehaviour
     /// <param name="virus">The type of virus he caught</param>
     public void InfectedInRange(VirusType virus)
     {
-        this.currentlyInfectedBy = virus;
-        this.IsInfected = true;
-        StatusCircle.color = Color.yellow;
-        this.virusDiscoveryTime = virus.TimeToDiscover * UnityEngine.Random.Range(1f - Settings.VirusVarience, 1f + Settings.VirusVarience);
-        world.Infected();
-        Debug.Log("Got infected");
+        if (CalculateIfHeGotInfected(virus))
+        {
+            this.currentlyInfectedBy = virus;
+            this.IsInfected = true;
+            StatusCircle.color = Color.yellow;
+            this.virusDiscoveryTime = virus.TimeToDiscover * UnityEngine.Random.Range(1f - Settings.VirusVarience, 1f + Settings.VirusVarience);
+            world.Infected();
+            Debug.Log("Got infected");
+        }
     }
 
     //--------------------------------------------------------------------
@@ -305,7 +324,12 @@ public class Person : MonoBehaviour
     /// <param name="virus">The type of virus he caught</param>
     public void StartingInfected(VirusType virus)
     {
-        InfectedInRange(virus);
+        this.currentlyInfectedBy = virus;
+        this.IsInfected = true;
+        StatusCircle.color = Color.yellow;
+        this.virusDiscoveryTime = virus.TimeToDiscover * UnityEngine.Random.Range(1f - Settings.VirusVarience, 1f + Settings.VirusVarience);
+        world.Infected();
+        Debug.Log("Got infected");
     }
 
     //---------------------------------------------------------------------
@@ -487,7 +511,6 @@ public class Person : MonoBehaviour
         {
             return false;
         }
-        Debug.Log("Sent for food");
         this.currActionState = ActionState.GoingShopping;
         this.transform.position = family.HouseEnteraceLoc;
         return true;

@@ -19,10 +19,10 @@ public class WorkPlace : Building
 
     //-----------------------------------------------------------
     //Runs before the first frame
-    private void Start()
+    private void Awake()
     {
         workers = new List<Person>();
-        Capacity = 50;
+        Capacity = UnityEngine.Random.Range(30, 50);
         CurrentSize = 0;
         BuildingType = BuildingType.WorkPlace;
     }

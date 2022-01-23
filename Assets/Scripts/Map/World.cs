@@ -71,7 +71,7 @@ public class World : MonoBehaviour
         QualitySettings.vSyncCount = 0;
 
         pathMaker = new PathMaker((byte)WorldGenerator.XSize, this);
-        FillWorldWithFamilies(WorldGenerator.Houses.Count);
+        FillWorldWithFamilies(WorldGenerator.Buildings[BuildingType.House].Count);
         ReadInViruses();
     }
 
@@ -119,19 +119,19 @@ public class World : MonoBehaviour
         people = new List<Person>();
         GameObject familiesParent = new GameObject("families");
         familiesParent.transform.parent = this.transform;
-        int houseIndex = Random.Range(0, WorldGenerator.Houses.Count);
+        int houseIndex = Random.Range(0, WorldGenerator.Buildings[BuildingType.House].Count);
         families = new List<Family>();
         for (int i = 0; i < familyCount; i++)
         {
-            if (WorldGenerator.Houses.Count <= i)
+            if (WorldGenerator.Buildings[BuildingType.House].Count <= i)
             {
                 break;
             }
             GameObject family = new GameObject("family" + i, typeof(Family));
             family.transform.parent = familiesParent.transform;
-            family.GetComponent<Family>().SetDefaultParams(WorldGenerator.Houses[i], (byte)Random.Range(Settings.MinSizeOfFamily, Settings.MaxSizeOfFamily + 1), this);
+            family.GetComponent<Family>().SetDefaultParams((House)WorldGenerator.Buildings[BuildingType.House][i], (byte)Random.Range(Settings.MinSizeOfFamily, Settings.MaxSizeOfFamily + 1), this);
             families.Add(family.GetComponent<Family>());
-            WorldGenerator.Houses[i].Occupy();
+            ((House)(WorldGenerator.Buildings[BuildingType.House][i])).Occupy();
             people.AddRange(families.Last().peopleInFamily);
             //  WorldGenerator.Houses.RemoveAt(houseIndex);
         }
@@ -194,6 +194,35 @@ public class World : MonoBehaviour
                 dir += 1;
             }
         } while (((float)length / 2f) <= maxSearchRange);
+        return null;
+    }
+
+    //-------------------------------------------------------------------
+    /// <summary>
+    /// Search for a buildig for the person to work at
+    /// So it isn't only the nearest building and virus can spread more realistically
+    /// </summary>
+    /// <param name="xCoord">Start of the search on the x axis</param>
+    /// <param name="yCoord">Start of the search on the y axis</param>
+    /// <param name="maxSearchRange">The maximum search range</param>
+    /// <param name="buildingType">The type of the building</param>
+    /// <returns>The building it found returns with null if it didn't found any</returns>
+    public Building GetOccupationBuilding(int xCoord, int yCoord, int maxSearchRange, BuildingType buildingType)
+    {
+        List<Building> tempBuildings = WorldGenerator.Buildings[buildingType].Select(x => x).ToList();
+
+        do
+        {
+            int randomIndex = Random.Range(0, tempBuildings.Count);
+
+            if (tempBuildings[randomIndex].HasFreeSpace())
+            {
+                return tempBuildings[randomIndex];
+            }
+
+            tempBuildings.RemoveAt(randomIndex);
+        } while (tempBuildings.Count != 0);
+
         return null;
     }
 

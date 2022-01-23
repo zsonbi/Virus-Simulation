@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class SettingsMenu : MonoBehaviour
 {
     public Slider RealTimeToSimulationTimeSlider;
+    public Slider InfectionRateSlider;
 
     public void SettingsClick()
     {
@@ -13,5 +14,10 @@ public class SettingsMenu : MonoBehaviour
     public void SpeedSlider()
     {
         Settings.RealTimeToSimulationTime = RealTimeToSimulationTimeSlider.value;
+    }
+
+    public void InfectionRateSliderChanged()
+    {
+        Settings.InfectionRateMultiplier = InfectionRateSlider.value;
     }
 }

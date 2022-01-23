@@ -40,6 +40,8 @@ public class VirusType
     /// </summary>
     public int NumberOfFamiliesToInfectOnStart { get; private set; }
 
+    public float InfectionRate { get; private set; } = 800f;
+
     /// <summary>
     /// Creates a new virus type
     /// </summary>

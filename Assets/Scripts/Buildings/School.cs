@@ -9,7 +9,7 @@ public class School : Building
 
     //-----------------------------------------------------------
     //Runs before the first frame
-    private void Start()
+    private void Awake()
     {
         students = new List<Person>();
         Capacity = 50;

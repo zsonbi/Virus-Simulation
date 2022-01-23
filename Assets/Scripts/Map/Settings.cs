@@ -3,7 +3,7 @@ public static class Settings
     /// <summary>
     /// The number of seconds should be elapsed in the simulation while 1 seconds elapse in the real world
     /// </summary>
-    public static float RealTimeToSimulationTime = 3600;
+    public static float RealTimeToSimulationTime = 1200;
 
     /// <summary>
     /// The possible work start times
@@ -35,5 +35,7 @@ public static class Settings
     /// </summary>
     public static float InfectionRateInside = RealTimeToSimulationTime * 0.5f;
 
-    public static float VirusVarience = 0.3f;
+    public static float VirusVarience = 0.7f;
+
+    public static float InfectionRateMultiplier = 1f;
 }

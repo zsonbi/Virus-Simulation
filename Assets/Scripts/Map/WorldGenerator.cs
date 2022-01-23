@@ -43,10 +43,7 @@ public class WorldGenerator : MonoBehaviour
     /// </summary>
     public WorldCell[,] worldCells;
 
-    /// <summary>
-    /// All of the houses
-    /// </summary>
-    public List<House> Houses { get; private set; }
+    public Dictionary<BuildingType, List<Building>> Buildings;
 
     //---------------------------------------------------------
     //Runs when the script is loaded
@@ -122,7 +119,12 @@ public class WorldGenerator : MonoBehaviour
         List<GameObject> markets = new List<GameObject>();
         List<GameObject> workPlaces = new List<GameObject>();
         List<GameObject> schools = new List<GameObject>();
-        Houses = new List<House>();
+
+        Buildings = new Dictionary<BuildingType, List<Building>>();
+        Buildings.Add(BuildingType.House, new List<Building>());
+        Buildings.Add(BuildingType.WorkPlace, new List<Building>());
+        Buildings.Add(BuildingType.School, new List<Building>());
+        Buildings.Add(BuildingType.Market, new List<Building>());
 
         GameObject buildings = new GameObject("Buildings");
         buildings.transform.parent = this.transform;
@@ -144,7 +146,6 @@ public class WorldGenerator : MonoBehaviour
                         cellType = CellType.House;
                         tempBuilding = houses.Last().GetComponent<Building>();
                         worldCells[i / CellSize, j / CellSize].AddBuilding(tempBuilding);
-                        Houses.Add((House)tempBuilding);
                     }
                     //Market
                     else if (noise > 0.15f)
@@ -173,7 +174,7 @@ public class WorldGenerator : MonoBehaviour
                         tempBuilding = workPlaces.Last().GetComponent<Building>();
                         worldCells[i / CellSize, j / CellSize].AddBuilding(tempBuilding);
                     }
-
+                    Buildings[tempBuilding.BuildingType].Add(tempBuilding);
                     //Get where is the building's enterance
                     if (0 <= i - 1 && cells[i - 1, j] == CellType.Road)
                     {
@@ -191,6 +192,5 @@ public class WorldGenerator : MonoBehaviour
                 }
             }
         }
-        Debug.Log(Houses.Count + " number of houses");
     }
 }

@@ -10,7 +10,7 @@ public class House : Building
 
     //-----------------------------------------------------------
     //Runs before the first frame
-    public void Start()
+    public void Awake()
     {
         Capacity = int.MaxValue;
         CurrentSize = 0;
