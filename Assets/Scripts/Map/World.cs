@@ -8,8 +8,13 @@ using System.Linq;
 /// </summary>
 public class World : MonoBehaviour
 {
+    [Header("The person to clone")]
     public GameObject DefaultPerson;
+
+    [Header("The world generator")]
     public WorldGenerator WorldGenerator;
+
+    [Header("Which will handle the status display")]
     public StatusHandler StatusHandler;
 
     /// <summary>
@@ -25,12 +30,12 @@ public class World : MonoBehaviour
     /// <summary>
     /// The X size of the map
     /// </summary>
-    public int XSize { get => WorldGenerator.XSize; }
+    public int XSize { get => WorldGenerator.Size; }
 
     /// <summary>
     /// The Y size of the map
     /// </summary>
-    public int YSize { get => WorldGenerator.YSize; }
+    public int YSize { get => WorldGenerator.Size; }
 
     /// <summary>
     /// The number of cells in the worldcells array on the x axis
@@ -70,7 +75,7 @@ public class World : MonoBehaviour
         Application.targetFrameRate = 60;
         QualitySettings.vSyncCount = 0;
 
-        pathMaker = new PathMaker((byte)WorldGenerator.XSize, this);
+        pathMaker = new PathMaker((byte)WorldGenerator.Size, this);
         FillWorldWithFamilies(WorldGenerator.Buildings[BuildingType.House].Count);
         ReadInViruses();
     }
@@ -135,8 +140,6 @@ public class World : MonoBehaviour
             people.AddRange(families.Last().peopleInFamily);
             //  WorldGenerator.Houses.RemoveAt(houseIndex);
         }
-
-        StatusHandler.SetInitialPeopleCount(people.Count);
     }
 
     //-------------------------------------------------------------------
@@ -304,24 +307,29 @@ public class World : MonoBehaviour
         return Mathf.Sqrt(Mathf.Pow((coord1.x - coord2.x), 2) + Mathf.Pow((coord1.y - coord2.y), 2));
     }
 
-    public void Infected()
+    public void Infected(AgeGroup ageGrp)
     {
-        StatusHandler.IncreaseInfectedCount();
+        StatusHandler.IncreaseInfectedCount(ageGrp);
     }
 
-    public void Recovered()
+    public void Recovered(AgeGroup ageGrp)
     {
-        StatusHandler.DecreaseInfectedCount();
+        StatusHandler.DecreaseInfectedCount(ageGrp);
     }
 
     public void Died(Person person)
     {
         if (person.IsInfected)
         {
-            StatusHandler.DecreaseInfectedCount();
+            StatusHandler.DecreaseInfectedCount(person.AgeGroup);
         }
 
         this.people.Remove(person);
-        StatusHandler.UpdatePeopleCount(people.Count);
+        StatusHandler.DecreasePeople(person.AgeGroup);
+    }
+
+    public void IncreasePeople(AgeGroup ageGrp)
+    {
+        StatusHandler.IncreasePeople(ageGrp);
     }
 }

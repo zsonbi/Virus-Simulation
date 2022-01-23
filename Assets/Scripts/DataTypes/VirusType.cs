@@ -40,6 +40,9 @@ public class VirusType
     /// </summary>
     public int NumberOfFamiliesToInfectOnStart { get; private set; }
 
+    /// <summary>
+    /// How many "attemps" it takes to get infected
+    /// </summary>
     public float InfectionRate { get; private set; } = 800f;
 
     /// <summary>

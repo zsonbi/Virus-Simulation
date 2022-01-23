@@ -1,3 +1,6 @@
+/// <summary>
+/// Stores all the global settings
+/// </summary>
 public static class Settings
 {
     /// <summary>
@@ -35,7 +38,13 @@ public static class Settings
     /// </summary>
     public static float InfectionRateInside = RealTimeToSimulationTime * 0.5f;
 
+    /// <summary>
+    /// What variance should the virus's parameters be for every person
+    /// </summary>
     public static float VirusVarience = 0.7f;
 
+    /// <summary>
+    /// How quick should the virus spread
+    /// </summary>
     public static float InfectionRateMultiplier = 1f;
 }

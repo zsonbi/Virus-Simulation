@@ -7,10 +7,28 @@ using System.Linq;
 /// </summary>
 public class WorldGenerator : MonoBehaviour
 {
-    public int XSize;
-    public int YSize;
-    public int XOffSet = 0;
-    public int YOffSet = 0;
+    [Header("The size of the world (should be (n%5==0)+1)")]
+    public int Size;
+
+    [Header("The house's prefab")]
+    public GameObject HousePrefab;
+
+    [Header("The market's prefab")]
+    public GameObject MarketPrefab;
+
+    [Header("The workplace's prefab")]
+    public GameObject WorkPlacePrefab;
+
+    [Header("The school's prefab")]
+    public GameObject SchoolPrefab;
+
+    [Header("The road's prefab")]
+    public GameObject RoadPrefab;
+
+    /// <summary>
+    /// The size of a single world cell
+    /// </summary>
+    public byte CellSize = 5;
 
     /// <summary>
     /// The number cells on the x axis
@@ -23,17 +41,6 @@ public class WorldGenerator : MonoBehaviour
     public int cellYCount { get; private set; }
 
     /// <summary>
-    /// The size of a single world cell
-    /// </summary>
-    public byte CellSize = 5;
-
-    public GameObject HousePrefab;
-    public GameObject MarketPrefab;
-    public GameObject WorkPlacePrefab;
-    public GameObject SchoolPrefab;
-    public GameObject RoadPrefab;
-
-    /// <summary>
     /// The type of every cell each cell is 1 by 1 size
     /// </summary>
     public CellType[,] cells;
@@ -43,15 +50,18 @@ public class WorldGenerator : MonoBehaviour
     /// </summary>
     public WorldCell[,] worldCells;
 
-    public Dictionary<BuildingType, List<Building>> Buildings;
+    /// <summary>
+    /// All of the building categorized
+    /// </summary>
+    public Dictionary<BuildingType, List<Building>> Buildings { get; private set; }
 
     //---------------------------------------------------------
     //Runs when the script is loaded
     private void Awake()
     {
-        cellXCount = UnityEngine.Mathf.CeilToInt(XSize / (float)CellSize);
-        cellYCount = UnityEngine.Mathf.CeilToInt(YSize / (float)CellSize);
-        cells = new CellType[YSize, XSize];
+        cellXCount = UnityEngine.Mathf.CeilToInt(Size / (float)CellSize);
+        cellYCount = UnityEngine.Mathf.CeilToInt(Size / (float)CellSize);
+        cells = new CellType[Size, Size];
         //Creates the world cells
         worldCells = new WorldCell[cellYCount, cellXCount];
         for (int i = 0; i < cellYCount; i++)
@@ -66,16 +76,6 @@ public class WorldGenerator : MonoBehaviour
         GenerateBuildings();
     }
 
-    public int ConvertWorldXCoordToCellIndex(int xCoord)
-    {
-        return (xCoord + XSize / 2) / CellSize;
-    }
-
-    public int ConvertWorldYCoordToCellIndex(int yCoord)
-    {
-        return (yCoord + YSize / 2) / CellSize;
-    }
-
     //--------------------------------------------------------
     //Generate the roads
     private void GenerateRoads()
@@ -84,9 +84,9 @@ public class WorldGenerator : MonoBehaviour
         GameObject Roads = new GameObject("roads");
         Roads.transform.parent = this.transform;
 
-        for (int i = 0; i < YSize; i += 5)
+        for (int i = 0; i < Size; i += 5)
         {
-            for (int j = 0; j < XSize; j++)
+            for (int j = 0; j < Size; j++)
             {
                 roads.Add(Instantiate(RoadPrefab, Roads.transform));
                 roads.Last().transform.position = new Vector2(j, i);
@@ -94,9 +94,9 @@ public class WorldGenerator : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < XSize; i += 13)
+        for (int i = 0; i < Size; i += 13)
         {
-            for (int j = 0; j < YSize; j++)
+            for (int j = 0; j < Size; j++)
             {
                 if (cells[j, i] == CellType.None)
                 {
@@ -128,9 +128,9 @@ public class WorldGenerator : MonoBehaviour
 
         GameObject buildings = new GameObject("Buildings");
         buildings.transform.parent = this.transform;
-        for (int i = 0; i < YSize - 1; i++)
+        for (int i = 0; i < Size - 1; i++)
         {
-            for (int j = 0; j < XSize - 1; j++)
+            for (int j = 0; j < Size - 1; j++)
             {
                 if (cells[i, j] == CellType.None)
                 {
@@ -180,7 +180,7 @@ public class WorldGenerator : MonoBehaviour
                     {
                         tempBuilding.SetNearestRoadLocation(new Vector2(j, i - 1));
                     }
-                    else if (YSize > i + 2 && cells[i + 2, j] == CellType.Road)
+                    else if (Size > i + 2 && cells[i + 2, j] == CellType.Road)
                     {
                         tempBuilding.SetNearestRoadLocation(new Vector2(j, i + 2));
                     }

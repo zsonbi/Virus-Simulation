@@ -117,6 +117,11 @@ public class Family : MonoBehaviour
         sentForFood = false;
     }
 
+    //-----------------------------------------------------------------
+    /// <summary>
+    /// Kill's the person (just removes him from the family)
+    /// </summary>
+    /// <param name="personToKill">Who to kill</param>
     public void KillPerson(Person personToKill)
     {
         this.peopleInFamily.Remove(personToKill);

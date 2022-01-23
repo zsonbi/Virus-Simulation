@@ -7,7 +7,10 @@ using System.Collections.Generic;
 /// </summary>
 public class Person : MonoBehaviour
 {
+    [Header("The sprite which will indicate the person's age")]
     public SpriteRenderer AgeCircle;
+
+    [Header("The sprite which will indicate the person's health")]
     public SpriteRenderer StatusCircle;
 
     /// <summary>
@@ -15,6 +18,11 @@ public class Person : MonoBehaviour
     /// This will determine his occupation mostly
     /// </summary>
     public byte Age { get; private set; }
+
+    /// <summary>
+    /// What age group does he belongs to
+    /// </summary>
+    public AgeGroup AgeGroup { get; private set; }
 
     /// <summary>
     /// The gender of the person
@@ -36,8 +44,14 @@ public class Person : MonoBehaviour
     /// </summary>
     public bool IsInfected { get; private set; } = false;
 
+    /// <summary>
+    /// Is the person in quarantine
+    /// </summary>
     public bool InQuarantine { get; private set; } = false;
 
+    /// <summary>
+    /// Is the person inside a building
+    /// </summary>
     public bool IsInside { get => (byte)currActionState % 2 == 1; }
 
     private World world; //Reference to the world where the 'person' lives
@@ -63,9 +77,9 @@ public class Person : MonoBehaviour
     private VirusType currentlyInfectedBy; //Reference to the virus which infected him
     private float recoveryTime = 0f; //The remaining time till full recovery
     private float immunityTime = 0f; //The remaining time from the immunity against the specific virus
-    private float virusDiscoveryTime = 0f;
-    private bool willHeDie = false;
-    private float infectionAttempts = 0;
+    private float virusDiscoveryTime = 0f; //How much time till he discover, that he's infected
+    private bool willHeDie = false; //Will he die at the end of recoveryTime
+    private float infectionAttempts = 0; //How close he is to getting infected
 
     //**************************************************************************************
     /// <summary>
@@ -80,6 +94,7 @@ public class Person : MonoBehaviour
             this.world = world;
             this.family = family;
             this.Age = age;
+            this.AgeGroup = age < 18 ? AgeGroup.Underage : AgeGroup.Adult;
         }
         else
             throw new Exception("Can't change world or family one of them is already set");
@@ -99,7 +114,7 @@ public class Person : MonoBehaviour
 
         this.Gender = (Gender)UnityEngine.Random.Range(0, 2);
         //Decide occupation based on age
-        if (Age <= 18)
+        if (Age < 18)
         {
             //If it didn't find a school try going to work
             if (!FindSchool())
@@ -107,17 +122,20 @@ public class Person : MonoBehaviour
                 FindWorkPlace();
             }
             this.AgeCircle.color = Color.blue;
+            this.AgeGroup = AgeGroup.Underage;
         }
         else
         {
             FindWorkPlace();
 
             this.AgeCircle.color = Color.magenta;
+            this.AgeGroup = AgeGroup.Adult;
         }
         currActionTimeLeft = workTime.GetTimeTillWorkStart(world.dayTime);
         currentBuilding = family.House;
         currentBuilding.Enter(this);
         this.immunityTime = UnityEngine.Random.Range(-1036800, 2592000);
+        world.IncreasePeople(AgeGroup);
     }
 
     //Called every frame
@@ -126,6 +144,7 @@ public class Person : MonoBehaviour
         //If the person is infected start recovering
         if (IsInfected)
         {
+            //While the virus is still hiding
             if (virusDiscoveryTime > 0)
             {
                 virusDiscoveryTime -= Time.deltaTime * Settings.RealTimeToSimulationTime;
@@ -134,11 +153,14 @@ public class Person : MonoBehaviour
                     DetectInfection();
                 }
             }
+            //When the virus has already been detected
             else
             {
+                //Start recovering
                 recoveryTime -= Time.deltaTime * Settings.RealTimeToSimulationTime;
                 if (recoveryTime <= 0f)
                 {
+                    //If this was his destiny die
                     if (willHeDie)
                     {
                         Die();
@@ -234,15 +256,15 @@ public class Person : MonoBehaviour
         }
     }
 
-    //--------------------------------------------------------------------
-    /// <summary>
-    /// Infects everyone who is on the same cell
-    /// </summary>
+    //----------------------------------------------------------
+    // Infects everyone who is on the same cell
     private void InfectOutside()
     {
         this.world.InfectInRange(this.worldCellIndex, this.transform.position, currentlyInfectedBy);
     }
 
+    //----------------------------------------------------------
+    //Calculates if he should get infected
     private bool CalculateIfHeGotInfected(VirusType virus)
     {
         infectionAttempts += 1f * (IsInside ? 4f : 1f) * Settings.InfectionRateMultiplier * UnityEngine.Random.Range(0.5f, 5f);
@@ -250,20 +272,19 @@ public class Person : MonoBehaviour
     }
 
     //------------------------------------------------------------------
-    /// <summary>
-    /// Infects everyone who is in infection range in the current building
-    /// </summary>
+    // Infects everyone who is in infection range in the current building
     private void InfectInside()
     {
         currentBuilding.InfectInRange(this.transform.position, currentlyInfectedBy.RangeInsideBuilding, currentlyInfectedBy);
     }
 
+    //--------------------------------------------------------------------------
+    //Die.
     private void Die()
     {
         world.Died(this);
         family.KillPerson(this);
         this.gameObject.SetActive(false);
-        Debug.Log("Died");
     }
 
     //---------------------------------------------------------------------
@@ -276,6 +297,8 @@ public class Person : MonoBehaviour
         return !this.IsInfected && immunityTime <= 0;
     }
 
+    //-------------------------------------------------------
+    //Realise that he has been infected
     private void DetectInfection()
     {
         //Make it so not everyone is a lawful citizen
@@ -285,6 +308,8 @@ public class Person : MonoBehaviour
         this.willHeDie = currentlyInfectedBy.DeathRate >= UnityEngine.Random.Range(0f, 1f);
     }
 
+    //------------------------------------------------------
+    //Recover from the virus
     private void Recovered()
     {
         this.infectionAttempts = 0;
@@ -294,12 +319,11 @@ public class Person : MonoBehaviour
         this.StatusCircle.color = Color.green;
         this.InQuarantine = false;
         this.currActionState = ActionState.RelaxingAtHome;
-        world.Recovered();
+        world.Recovered(AgeGroup);
         Debug.Log("Recovered");
     }
 
     //---------------------------------------------------------------------
-    //TODO add more conditions and stuff
     /// <summary>
     /// This should be called when someone tries to infect him
     /// </summary>
@@ -312,7 +336,7 @@ public class Person : MonoBehaviour
             this.IsInfected = true;
             StatusCircle.color = Color.yellow;
             this.virusDiscoveryTime = virus.TimeToDiscover * UnityEngine.Random.Range(1f - Settings.VirusVarience, 1f + Settings.VirusVarience);
-            world.Infected();
+            world.Infected(AgeGroup);
             Debug.Log("Got infected");
         }
     }
@@ -328,7 +352,7 @@ public class Person : MonoBehaviour
         this.IsInfected = true;
         StatusCircle.color = Color.yellow;
         this.virusDiscoveryTime = virus.TimeToDiscover * UnityEngine.Random.Range(1f - Settings.VirusVarience, 1f + Settings.VirusVarience);
-        world.Infected();
+        world.Infected(AgeGroup);
         Debug.Log("Got infected");
     }
 
