@@ -423,7 +423,6 @@ GameObject:
   - component: {fileID: 469611498}
   - component: {fileID: 469611497}
   - component: {fileID: 469611496}
-  - component: {fileID: 469611499}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -515,20 +514,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &469611499
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 469611494}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02c207ad0f79559418f3694e5a440d07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  world: {fileID: 1965620741}
-  DayText: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1309,7 +1294,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1538802045
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1418,14 +1403,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f94ededd31e38d4ca4b3865a790fd59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  world: {fileID: 1965620741}
   DayCountText: {fileID: 819866621}
   PeopleCountText: {fileID: 836416854}
-  UnderagePeopleCountText: {fileID: 0}
-  AdultPeopleCountText: {fileID: 0}
+  UnderagePeopleCountText: {fileID: 1623418672}
+  AdultPeopleCountText: {fileID: 428428666}
   InfectedCountText: {fileID: 62659928}
-  UnderageInfectedText: {fileID: 0}
-  AdultInfectedText: {fileID: 0}
+  UnderageInfectedText: {fileID: 1250518868}
+  AdultInfectedText: {fileID: 1819091438}
 --- !u!1 &1623418670
 GameObject:
   m_ObjectHideFlags: 0
@@ -1851,16 +1835,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 625db2a441d361b48a8ba89ac1a08be4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  XSize: 151
-  YSize: 151
-  XOffSet: 0
-  YOffSet: 0
-  CellSize: 5
+  Size: 151
   HousePrefab: {fileID: 1813634317561068078, guid: a5c17d52431b8cc4b9fb4eeb51593354, type: 3}
   MarketPrefab: {fileID: 7687680200355362616, guid: 0dcf015ef5278d54fba4d9d5a34910c0, type: 3}
   WorkPlacePrefab: {fileID: 189388127428550569, guid: 1897d56842037d44eb2ea63b12eec601, type: 3}
   SchoolPrefab: {fileID: 8617490065205328412, guid: 03fce7b4390693e479f76dc72f2c5c67, type: 3}
   RoadPrefab: {fileID: 3787246276047561473, guid: b993ba744d28e3646926be5f727db7cb, type: 3}
+  CellSize: 5
 --- !u!1 &2095321920
 GameObject:
   m_ObjectHideFlags: 0

@@ -87,7 +87,7 @@ public class Family : MonoBehaviour
         for (int i = 0; i < sizeOfFamily; i++)
         {
             GameObject person = Instantiate(world.DefaultPerson, this.transform);
-            byte age = (byte)Random.Range(i > 1 ? 6 : 18, 99);
+            byte age = (byte)Random.Range(i >= 1 ? 6 : 18, 80);
             peopleInFamily.Add(person.GetComponent<Person>());
             peopleInFamily.Last().SetDefaultParameters(world, this, age);
             person.transform.position = HouseLoc;

@@ -79,7 +79,7 @@ public class PathMaker
         }
     }
 
-    private const byte maxDepth = 255;
+    private const short maxDepth = 1024;
     private Node[,] map; //The grid
     private World world; //Reference to the world
     private List<Vector2> path; //Path which it will return
@@ -161,7 +161,7 @@ public class PathMaker
     //------------------------------------------------------------
     //Search for the node recursively
     //Returns true if it managed to find the goal, returns false if it didn't manage to find the goal
-    private bool SearchForGoal(Node current, byte depth)
+    private bool SearchForGoal(Node current, short depth)
     {
         current.Visit(); //Visit the node
         visitedNodes.Push(current);
@@ -206,7 +206,7 @@ public class PathMaker
         //Order them by the distance and try them each
         foreach (var item in possibleWays.OrderBy(x => x.DistanceFromGoal))
         {
-            if (SearchForGoal(item, (byte)(depth + 1)))
+            if (SearchForGoal(item, (short)(depth + 1)))
             {
                 path.Add(new Vector2(item.position.y, item.position.x));
                 return true;
