@@ -4,6 +4,11 @@
 public static class Settings
 {
     /// <summary>
+    /// The size of the soon be generated world
+    /// </summary>
+    public static int WorldSize = 151;
+
+    /// <summary>
     /// The number of seconds should be elapsed in the simulation while 1 seconds elapse in the real world
     /// </summary>
     public static float RealTimeToSimulationTime = 1200;

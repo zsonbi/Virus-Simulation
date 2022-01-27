@@ -9,6 +9,13 @@ public class MoveCamera : MonoBehaviour
     private float camXPos { get => Camera.main.transform.position.x; } //Reference to the camera's x position
     private float camYPos { get => Camera.main.transform.position.y; } //Reference to the camera's y position
 
+    //--------------------------------------------------------------------
+    //At the start of the script set the camera at the center of the map
+    private void Start()
+    {
+        Camera.main.transform.position = new Vector3(Settings.WorldSize / 3, Settings.WorldSize / 3, Camera.main.transform.position.z);
+    }
+
     //----------------------------------------------------------------
     //Called every frame
     public void Update()

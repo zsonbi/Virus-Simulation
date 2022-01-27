@@ -7,8 +7,7 @@ using System.Linq;
 /// </summary>
 public class WorldGenerator : MonoBehaviour
 {
-    [Header("The size of the world (should be (n%5==0)+1)")]
-    public int Size;
+    public int Size { get; private set; }
 
     [Header("The house's prefab")]
     public GameObject HousePrefab;
@@ -59,6 +58,7 @@ public class WorldGenerator : MonoBehaviour
     //Runs when the script is loaded
     private void Awake()
     {
+        Size = Settings.WorldSize;
         cellXCount = UnityEngine.Mathf.CeilToInt(Size / (float)CellSize);
         cellYCount = UnityEngine.Mathf.CeilToInt(Size / (float)CellSize);
         cells = new CellType[Size, Size];

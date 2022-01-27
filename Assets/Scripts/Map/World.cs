@@ -71,10 +71,6 @@ public class World : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        //Cap the fps to 60
-        Application.targetFrameRate = 60;
-        QualitySettings.vSyncCount = 0;
-
         pathMaker = new PathMaker((byte)WorldGenerator.Size, this);
         FillWorldWithFamilies(WorldGenerator.Buildings[BuildingType.House].Count);
         ReadInViruses();
@@ -296,6 +292,7 @@ public class World : MonoBehaviour
         return pathMaker.CreatePath(out path, startCoord, goalCoord);
     }
 
+    //-------------------------------------------------------------
     /// <summary>
     /// Calculates the distance between two vectors
     /// </summary>
@@ -307,16 +304,31 @@ public class World : MonoBehaviour
         return Mathf.Sqrt(Mathf.Pow((coord1.x - coord2.x), 2) + Mathf.Pow((coord1.y - coord2.y), 2));
     }
 
+    //----------------------------------------------------
+    /// <summary>
+    /// Updates the infected status (increase it by one)
+    /// </summary>
+    /// <param name="ageGrp">Which age group is the infected from</param>
     public void Infected(AgeGroup ageGrp)
     {
         StatusHandler.IncreaseInfectedCount(ageGrp);
     }
 
+    //-------------------------------------------------------
+    /// <summary>
+    /// Updates the infected status (decrease it by one)
+    /// </summary>
+    /// <param name="ageGrp">Which age group is the infected from</param>
     public void Recovered(AgeGroup ageGrp)
     {
         StatusHandler.DecreaseInfectedCount(ageGrp);
     }
 
+    //--------------------------------------------------------
+    /// <summary>
+    /// Updates the appropiate statuses when someone died
+    /// </summary>
+    /// <param name="person">Reference to who died</param>
     public void Died(Person person)
     {
         if (person.IsInfected)
@@ -328,6 +340,11 @@ public class World : MonoBehaviour
         StatusHandler.DecreasePeople(person.AgeGroup);
     }
 
+    //--------------------------------------------------------
+    /// <summary>
+    /// Increase the number of people in the status
+    /// </summary>
+    /// <param name="ageGrp">Which age group is the person from</param>
     public void IncreasePeople(AgeGroup ageGrp)
     {
         StatusHandler.IncreasePeople(ageGrp);

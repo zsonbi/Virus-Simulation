@@ -285,6 +285,7 @@ public class Person : MonoBehaviour
         world.Died(this);
         family.KillPerson(this);
         this.gameObject.SetActive(false);
+        GameObject.Destroy(this);
     }
 
     //---------------------------------------------------------------------

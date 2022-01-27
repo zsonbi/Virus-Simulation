@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
@@ -42,5 +43,14 @@ public class SettingsMenu : MonoBehaviour
     public void InfectionRateSliderChanged()
     {
         Settings.InfectionRateMultiplier = InfectionRateSlider.value;
+    }
+
+    //--------------------------------------------------------
+    /// <summary>
+    /// Returns the user back to the main menu
+    /// </summary>
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
 }
