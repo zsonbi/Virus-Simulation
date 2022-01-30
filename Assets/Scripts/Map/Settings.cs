@@ -6,7 +6,7 @@ public static class Settings
     /// <summary>
     /// The size of the soon be generated world
     /// </summary>
-    public static int WorldSize = 51;
+    public static int WorldSize = 101;
 
     /// <summary>
     /// The number of seconds should be elapsed in the simulation while 1 seconds elapse in the real world
