@@ -223,7 +223,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 409619614}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: VirusVarianceChanged
+        m_MethodName: FamiliesToInfectChanged
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1018,7 +1018,7 @@ MonoBehaviour:
   MinSizeOfFamilyText: {fileID: 1981486249}
   MaxSizeOfFamilyText: {fileID: 1545110697}
   VirusVarianceText: {fileID: 461721545}
-  NumberOfFamiliesToInfectOnStartText: {fileID: 0}
+  NumberOfFamiliesToInfectOnStartText: {fileID: 37394542}
 --- !u!1 &422398322
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ public static class Settings
     /// <summary>
     /// The size of the soon be generated world
     /// </summary>
-    public static int WorldSize = 151;
+    public static int WorldSize = 51;
 
     /// <summary>
     /// The number of seconds should be elapsed in the simulation while 1 seconds elapse in the real world
@@ -57,4 +57,14 @@ public static class Settings
     /// The number of families should get infected on the start of the simulation
     /// </summary>
     public static int NumberOfFamiliesToInfectOnStart = 20;
+
+    /// <summary>
+    /// The amount of daily vaccine production
+    /// </summary>
+    public static int DailyVaccineAmount = 0;
+
+    /// <summary>
+    /// The amount of immunity time the vaccine gives
+    /// </summary>
+    public static float VaccineImmunityTime = 86400f;
 }

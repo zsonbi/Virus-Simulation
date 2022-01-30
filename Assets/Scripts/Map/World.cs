@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 /// <summary>
 /// The world
@@ -66,6 +68,7 @@ public class World : MonoBehaviour
     private List<VirusType> viruses;
     private List<Family> families;
     private List<Person> people;
+    private bool newDay = false;
 
     //--------------------------------------------------------------------------
     // Start is called before the first frame update
@@ -74,6 +77,7 @@ public class World : MonoBehaviour
         pathMaker = new PathMaker((byte)WorldGenerator.Size, this);
         FillWorldWithFamilies(WorldGenerator.Buildings[BuildingType.House].Count);
         ReadInViruses();
+        Task.Run(() => Vaccinate());
     }
 
     //----------------------------------------------------------------------------
@@ -88,7 +92,46 @@ public class World : MonoBehaviour
             Debug.Log($"Day {DayCounter} complete");
             StatusHandler.UpdateDayTime(DayCounter);
             dayTime = 0f;
+            newDay = true;
         }
+    }
+
+    //--------------------------------------------------------------
+    /// <summary>
+    /// Handles the daily vaccination Task
+    /// </summary>
+    private async void Vaccinate()
+    {
+        System.Random rnd = new System.Random();
+        do
+        {
+            if (newDay)
+            {
+                newDay = false;
+                List<Person> unvaccinated = new List<Person>();
+
+                for (int i = 0; i < people.Count; i++)
+                {
+                    if (people[i].Infectable() && !people[i].AntiVacination)
+                    {
+                        unvaccinated.Add(people[i]);
+                    }
+                }
+
+                for (int i = 0; i < Settings.DailyVaccineAmount; i++)
+                {
+                    if (unvaccinated.Count == 0)
+                    {
+                        break;
+                    }
+                    int personIndex = rnd.Next(0, unvaccinated.Count);
+                    unvaccinated[personIndex].GetVaccinated();
+
+                    unvaccinated.RemoveAt(personIndex);
+                }
+            }
+            await Task.Delay(100);
+        } while (true);
     }
 
     //-------------------------------------------------------------------
