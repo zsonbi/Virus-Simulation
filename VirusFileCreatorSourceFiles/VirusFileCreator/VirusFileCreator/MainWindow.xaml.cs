@@ -81,12 +81,6 @@ namespace VirusFileCreator
                 return;
             }
 
-            if (NumberOfFamiliesToInfectOnStartInput.Text == "")
-            {
-                MessageBox.Show("Please specify how many families should the virus infect on start");
-                return;
-            }
-
             //Value conversions
             string name = NameInput.Text.Trim();
             float rangeInside = (float)Convert.ToDouble(InsideRangeInput.Text.Trim(' ').Replace('.', ','));
@@ -94,9 +88,8 @@ namespace VirusFileCreator
             float recoveryTime = (float)Convert.ToDouble(RecoveryTimeInput.Text.Trim(' ').Replace('.', ',')) * 86400;
             float immunityTime = (float)Convert.ToDouble(ImmunityTimeInput.Text.Trim(' ').Replace('.', ',')) * 86400;
             float timeToDiscover = (float)Convert.ToDouble(TimeToDiscoverInput.Text.Trim(' ').Replace('.', ',')) * 86400;
-            int numberOfStartingFamilies = Convert.ToInt32(NumberOfFamiliesToInfectOnStartInput.Text.Trim(' '));
 
-            this.viruses.Add(new VirusType(name, rangeInside, deathRate, recoveryTime, immunityTime, timeToDiscover, numberOfStartingFamilies));
+            this.viruses.Add(new VirusType(name, rangeInside, deathRate, recoveryTime, immunityTime, timeToDiscover));
             SaveViruses();
         }
 

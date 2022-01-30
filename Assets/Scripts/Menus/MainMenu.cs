@@ -23,6 +23,9 @@ public class MainMenu : MonoBehaviour
     [Header("The input field which stores the variance of the virus's parameters")]
     public InputField VirusVarianceText;
 
+    [Header("The input field which stores the number of families to infect on start of the simulation")]
+    public InputField NumberOfFamiliesToInfectOnStartText;
+
     //---------------------------------------------------------
     // Start is called before the first frame update
     private void Start()
@@ -37,6 +40,7 @@ public class MainMenu : MonoBehaviour
         MinSizeOfFamilyText.text = Settings.MinSizeOfFamily.ToString();
         MaxSizeOfFamilyText.text = Settings.MaxSizeOfFamily.ToString();
         VirusVarianceText.text = Settings.VirusVarience.ToString();
+        NumberOfFamiliesToInfectOnStartText.text = Settings.NumberOfFamiliesToInfectOnStart.ToString();
     }
 
     //-----------------------------------------------------------
@@ -102,5 +106,14 @@ public class MainMenu : MonoBehaviour
     public void VirusVarianceChanged()
     {
         Settings.VirusVarience = (float)Convert.ToDouble(VirusVarianceText.text.Replace('.', ','));
+    }
+
+    //------------------------------------------------------------------------------
+    /// <summary>
+    /// Updates the Number of families to infect on start varriable in the settings
+    /// </summary>
+    public void FamiliesToInfectChanged()
+    {
+        Settings.NumberOfFamiliesToInfectOnStart = Convert.ToInt32(NumberOfFamiliesToInfectOnStartText.text);
     }
 }

@@ -107,7 +107,7 @@ public class World : MonoBehaviour
     //Infect families according to the virus's number of families to infect property
     private void InfectRandomFamilies(VirusType virus)
     {
-        for (int i = 0; i < virus.NumberOfFamiliesToInfectOnStart; i++)
+        for (int i = 0; i < Settings.NumberOfFamiliesToInfectOnStart; i++)
         {
             families[Random.Range(0, families.Count)].GetInitialInfection(virus);
         }

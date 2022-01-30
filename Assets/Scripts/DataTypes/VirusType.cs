@@ -36,11 +36,6 @@ public class VirusType
     public float TimeToDiscover { get; private set; }
 
     /// <summary>
-    /// How many families should the virus infect on startup
-    /// </summary>
-    public int NumberOfFamiliesToInfectOnStart { get; private set; }
-
-    /// <summary>
     /// How many "attemps" it takes to get infected
     /// </summary>
     public float InfectionRate { get; private set; } = 800f;
@@ -54,7 +49,7 @@ public class VirusType
     /// <param name="recoveryTime">The time it takes for a complete recovery</param>
     /// <param name="ImmunityTime">The amount of immunity he/she recieves</param>
     [JsonConstructor]
-    public VirusType(string NameOfTheVirus, float RangeInsideBuilding, float DeathRate, float RecoveryTime, float ImmunityTime, float TimeToDiscover, int NumberOfFamiliesToInfectOnStart)
+    public VirusType(string NameOfTheVirus, float RangeInsideBuilding, float DeathRate, float RecoveryTime, float ImmunityTime, float TimeToDiscover)
     {
         this.NameOfTheVirus = NameOfTheVirus;
         this.RangeInsideBuilding = RangeInsideBuilding;
@@ -62,7 +57,6 @@ public class VirusType
         this.RecoveryTime = RecoveryTime;
         this.ImmunityTime = ImmunityTime;
         this.TimeToDiscover = TimeToDiscover;
-        this.NumberOfFamiliesToInfectOnStart = NumberOfFamiliesToInfectOnStart;
     }
 
     /// <summary>

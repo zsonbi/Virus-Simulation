@@ -1,11 +1,10 @@
 [
   {
-    "NameOfTheVirus": "COVID-19",
+    "NameOfTheVirus": "COVID",
     "RangeInsideBuilding": 1.0,
     "DeathRate": 0.016,
     "RecoveryTime": 1209600.0,
     "ImmunityTime": 5184000.0,
-    "TimeToDiscover": 518400.0,
-    "NumberOfFamiliesToInfectOnStart": 15
+    "TimeToDiscover": 518400.0
   }
 ]

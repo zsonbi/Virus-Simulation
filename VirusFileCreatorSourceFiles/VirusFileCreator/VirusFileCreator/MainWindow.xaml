@@ -52,10 +52,6 @@
                     <Label Content="Time to discover (days):" />
                     <TextBox x:Name="TimeToDiscoverInput" />
                 </DockPanel>
-                <DockPanel>
-                    <Label Content="Number of families to infect on start:" />
-                    <TextBox x:Name="NumberOfFamiliesToInfectOnStartInput" />
-                </DockPanel>
             </StackPanel>
 
             <!--Adds a new virus to the list-->

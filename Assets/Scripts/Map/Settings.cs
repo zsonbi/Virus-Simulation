@@ -52,4 +52,9 @@ public static class Settings
     /// How quick should the virus spread
     /// </summary>
     public static float InfectionRateMultiplier = 1f;
+
+    /// <summary>
+    /// The number of families should get infected on the start of the simulation
+    /// </summary>
+    public static int NumberOfFamiliesToInfectOnStart = 20;
 }
