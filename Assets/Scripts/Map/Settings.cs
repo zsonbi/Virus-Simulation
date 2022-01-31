@@ -67,4 +67,6 @@ public static class Settings
     /// The amount of immunity time the vaccine gives
     /// </summary>
     public static float VaccineImmunityTime = 86400f;
+
+    public static float BuildingDensity = 0.9f;
 }

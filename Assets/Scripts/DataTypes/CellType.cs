@@ -8,5 +8,6 @@ public enum CellType : byte
     House = 2,
     Market = 3,
     WorkPlace = 4,
-    School = 5
+    School = 5,
+    NotUsed = 6,
 }

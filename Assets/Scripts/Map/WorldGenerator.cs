@@ -21,6 +21,9 @@ public class WorldGenerator : MonoBehaviour
     [Header("The school's prefab")]
     public GameObject SchoolPrefab;
 
+    [Header("EmptyBuilding's prefab")]
+    public GameObject EmptyBuildingPrefab;
+
     [Header("The road's prefab")]
     public GameObject RoadPrefab;
 
@@ -137,9 +140,15 @@ public class WorldGenerator : MonoBehaviour
                     //   float noise = Mathf.PerlinNoise(((float)(j / (float)XSize * 5f) + XOffSet) * 10, ((float)(i / (float)YSize * 5f) + YOffSet) * 10 - 3.8f);
                     float noise = Random.Range(0f, 1f);
                     CellType cellType;
-                    Building tempBuilding;
+                    Building tempBuilding = null;
+                    if (noise > Settings.BuildingDensity)
+                    {
+                        cellType = CellType.NotUsed;
+                        GameObject emptyBuilding = Instantiate(EmptyBuildingPrefab, buildings.transform);
+                        emptyBuilding.transform.position = new Vector2(j + 0.5f, i + 0.5f);
+                    }
                     //House
-                    if (noise > 0.2f)
+                    else if (noise > (0.2f * Settings.BuildingDensity))
                     {
                         houses.Add(Instantiate(HousePrefab, buildings.transform));
                         houses.Last().transform.position = new Vector2(j + 0.5f, i + 0.5f);
@@ -148,7 +157,7 @@ public class WorldGenerator : MonoBehaviour
                         worldCells[i / CellSize, j / CellSize].AddBuilding(tempBuilding);
                     }
                     //Market
-                    else if (noise > 0.15f)
+                    else if (noise > (0.15f * Settings.BuildingDensity))
                     {
                         markets.Add(Instantiate(MarketPrefab, buildings.transform));
                         markets.Last().transform.position = new Vector2(j + 0.5f, i + 0.5f);
@@ -157,7 +166,7 @@ public class WorldGenerator : MonoBehaviour
                         worldCells[i / CellSize, j / CellSize].AddBuilding(tempBuilding);
                     }
                     //School
-                    else if (noise > 0.1f)
+                    else if (noise > (0.1 * Settings.BuildingDensity))
                     {
                         schools.Add(Instantiate(SchoolPrefab, buildings.transform));
                         schools.Last().transform.position = new Vector2(j + 0.5f, i + 0.5f);
@@ -174,17 +183,20 @@ public class WorldGenerator : MonoBehaviour
                         tempBuilding = workPlaces.Last().GetComponent<Building>();
                         worldCells[i / CellSize, j / CellSize].AddBuilding(tempBuilding);
                     }
-                    Buildings[tempBuilding.BuildingType].Add(tempBuilding);
-                    //Get where is the building's enterance
-                    if (0 <= i - 1 && cells[i - 1, j] == CellType.Road)
+                    //So we don't try to add a not used spot
+                    if (cellType != CellType.NotUsed)
                     {
-                        tempBuilding.SetNearestRoadLocation(new Vector2(j, i - 1));
+                        Buildings[tempBuilding.BuildingType].Add(tempBuilding);
+                        //Get where is the building's enterance
+                        if (0 <= i - 1 && cells[i - 1, j] == CellType.Road)
+                        {
+                            tempBuilding.SetNearestRoadLocation(new Vector2(j, i - 1));
+                        }
+                        else if (Size > i + 2 && cells[i + 2, j] == CellType.Road)
+                        {
+                            tempBuilding.SetNearestRoadLocation(new Vector2(j, i + 2));
+                        }
                     }
-                    else if (Size > i + 2 && cells[i + 2, j] == CellType.Road)
-                    {
-                        tempBuilding.SetNearestRoadLocation(new Vector2(j, i + 2));
-                    }
-
                     cells[i, j] = cellType;
                     cells[i + 1, j] = cellType;
                     cells[i, j + 1] = cellType;

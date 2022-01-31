@@ -26,6 +26,9 @@ public class MainMenu : MonoBehaviour
     [Header("The input field which stores the number of families to infect on start of the simulation")]
     public InputField NumberOfFamiliesToInfectOnStartText;
 
+    [Header("The slider which provides the building density")]
+    public Slider BuildingDensitySlider;
+
     //---------------------------------------------------------
     // Start is called before the first frame update
     private void Start()
@@ -41,6 +44,7 @@ public class MainMenu : MonoBehaviour
         MaxSizeOfFamilyText.text = Settings.MaxSizeOfFamily.ToString();
         VirusVarianceText.text = Settings.VirusVarience.ToString();
         NumberOfFamiliesToInfectOnStartText.text = Settings.NumberOfFamiliesToInfectOnStart.ToString();
+        BuildingDensitySlider.value = Settings.BuildingDensity * 100f;
     }
 
     //-----------------------------------------------------------
@@ -115,5 +119,14 @@ public class MainMenu : MonoBehaviour
     public void FamiliesToInfectChanged()
     {
         Settings.NumberOfFamiliesToInfectOnStart = Convert.ToInt32(NumberOfFamiliesToInfectOnStartText.text);
+    }
+
+    //------------------------------------------------------------------------------------
+    /// <summary>
+    /// Updates the building density settings value
+    /// </summary>
+    public void BuildingDensitySliderChanged()
+    {
+        Settings.BuildingDensity = BuildingDensitySlider.value / 100f;
     }
 }
