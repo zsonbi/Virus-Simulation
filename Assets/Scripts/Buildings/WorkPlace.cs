@@ -22,6 +22,7 @@ public class WorkPlace : Building
     private void Awake()
     {
         workers = new List<Person>();
+        this.Necessary = UnityEngine.Random.Range(0f, 1f) <= Settings.BuildingNecessity;
         Capacity = UnityEngine.Random.Range(30, 50);
         CurrentSize = 0;
         BuildingType = BuildingType.WorkPlace;

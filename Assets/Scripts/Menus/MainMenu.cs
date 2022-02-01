@@ -29,6 +29,9 @@ public class MainMenu : MonoBehaviour
     [Header("The slider which provides the building density")]
     public Slider BuildingDensitySlider;
 
+    [Header("The slider which provides the building necessity")]
+    public Slider BuildingNecessitySlider;
+
     //---------------------------------------------------------
     // Start is called before the first frame update
     private void Start()
@@ -45,6 +48,7 @@ public class MainMenu : MonoBehaviour
         VirusVarianceText.text = Settings.VirusVarience.ToString();
         NumberOfFamiliesToInfectOnStartText.text = Settings.NumberOfFamiliesToInfectOnStart.ToString();
         BuildingDensitySlider.value = Settings.BuildingDensity * 100f;
+        BuildingNecessitySlider.value = Settings.BuildingNecessity * 100f;
     }
 
     //-----------------------------------------------------------
@@ -128,5 +132,14 @@ public class MainMenu : MonoBehaviour
     public void BuildingDensitySliderChanged()
     {
         Settings.BuildingDensity = BuildingDensitySlider.value / 100f;
+    }
+
+    //------------------------------------------------------------------------------------
+    /// <summary>
+    /// Updates the building necessity settings value
+    /// </summary>
+    public void BuildingNecessitySliderChanged()
+    {
+        Settings.BuildingNecessity = BuildingNecessitySlider.value / 100f;
     }
 }

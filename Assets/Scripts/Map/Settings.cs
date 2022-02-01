@@ -68,5 +68,18 @@ public static class Settings
     /// </summary>
     public static float VaccineImmunityTime = 86400f;
 
+    /// <summary>
+    /// The densiy of the buildings
+    /// </summary>
     public static float BuildingDensity = 0.9f;
+
+    /// <summary>
+    /// Locks down the world
+    /// </summary>
+    public static bool Lockdown = false;
+
+    /// <summary>
+    /// The rate which the work places are necessary
+    /// </summary>
+    public static float BuildingNecessity = 0.2f;
 }

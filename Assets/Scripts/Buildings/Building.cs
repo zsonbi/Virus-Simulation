@@ -17,6 +17,11 @@ public abstract class Building : MonoBehaviour
     public int CurrentSize { get; protected set; }
 
     /// <summary>
+    /// Stores if this building is a necessity for the society
+    /// </summary>
+    public bool Necessary { get; protected set; } = false;
+
+    /// <summary>
     /// The type of the building
     /// </summary>
     public BuildingType BuildingType { get; protected set; }

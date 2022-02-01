@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.IO;
 
 /// <summary>
 /// The world
@@ -69,6 +70,7 @@ public class World : MonoBehaviour
     private List<Family> families;
     private List<Person> people;
     private bool newDay = false;
+    private System.Random rnd = new System.Random();
 
     //--------------------------------------------------------------------------
     // Start is called before the first frame update
@@ -77,7 +79,7 @@ public class World : MonoBehaviour
         pathMaker = new PathMaker((byte)WorldGenerator.Size, this);
         FillWorldWithFamilies(WorldGenerator.Buildings[BuildingType.House].Count);
         ReadInViruses();
-        Task.Run(() => Vaccinate());
+        Task.Run(() => HandleDailyTasks());
     }
 
     //----------------------------------------------------------------------------
@@ -98,40 +100,63 @@ public class World : MonoBehaviour
 
     //--------------------------------------------------------------
     /// <summary>
-    /// Handles the daily vaccination Task
+    /// Handles all of the daily tasks
     /// </summary>
-    private async void Vaccinate()
+    private async void HandleDailyTasks()
     {
-        System.Random rnd = new System.Random();
+        StreamWriter streamWriter = new StreamWriter("dailyData.txt");
+        streamWriter.AutoFlush = true;
+        await streamWriter.WriteLineAsync("Day;Current people count;Underage people count;" +
+            "Adult people count;Infected count;Underage infected count; Adult infected count");
         do
         {
             if (newDay)
             {
                 newDay = false;
-                List<Person> unvaccinated = new List<Person>();
 
-                for (int i = 0; i < people.Count; i++)
-                {
-                    if (people[i].Infectable() && !people[i].AntiVacination)
-                    {
-                        unvaccinated.Add(people[i]);
-                    }
-                }
-
-                for (int i = 0; i < Settings.DailyVaccineAmount; i++)
-                {
-                    if (unvaccinated.Count == 0)
-                    {
-                        break;
-                    }
-                    int personIndex = rnd.Next(0, unvaccinated.Count);
-                    unvaccinated[personIndex].GetVaccinated();
-
-                    unvaccinated.RemoveAt(personIndex);
-                }
+                Vaccinate();
+                await WriteOutDailyData(streamWriter);
+                await Task.Delay(100);
             }
-            await Task.Delay(100);
         } while (true);
+    }
+
+    //--------------------------------------------------------------------
+    /// <summary>
+    /// Handles the daily vaccination Task
+    /// </summary>
+    private void Vaccinate()
+    {
+        List<Person> unvaccinated = new List<Person>();
+
+        for (int i = 0; i < people.Count; i++)
+        {
+            if (people[i].Infectable() && !people[i].AntiVacination)
+            {
+                unvaccinated.Add(people[i]);
+            }
+        }
+
+        for (int i = 0; i < Settings.DailyVaccineAmount; i++)
+        {
+            if (unvaccinated.Count == 0)
+            {
+                break;
+            }
+            int personIndex = rnd.Next(0, unvaccinated.Count);
+            unvaccinated[personIndex].GetVaccinated();
+
+            unvaccinated.RemoveAt(personIndex);
+        }
+    }
+
+    //-------------------------------------------------------
+    /// <summary>
+    /// Writes out the current statuses into a file
+    /// </summary>
+    private async Task WriteOutDailyData(StreamWriter streamWriter)
+    {
+        await streamWriter.WriteLineAsync(StatusHandler.ToString());
     }
 
     //-------------------------------------------------------------------

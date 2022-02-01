@@ -37,6 +37,15 @@ public class SettingsMenu : MonoBehaviour
         this.gameObject.SetActive(!this.gameObject.activeSelf);
     }
 
+    //-----------------------------------------------------------
+    /// <summary>
+    /// Sets the lockdown varriable to true or false
+    /// </summary>
+    public void LockDownClick()
+    {
+        Settings.Lockdown = !Settings.Lockdown;
+    }
+
     //---------------------------------------------------------
     /// <summary>
     /// Adjusts the speed to the slider's value

@@ -28,6 +28,7 @@ public class StatusHandler : MonoBehaviour
     [Header("The Label which will display the adult infected count")]
     public Text AdultInfectedText;
 
+    private int dayCounter = 0;
     private int initialPeopleCount = 0; //The starting number of people
     private int initialAdultPeopleCount = 0; //The starting number of adults
     private int adultPeopleCount = 0; //The current number of adult people
@@ -113,6 +114,7 @@ public class StatusHandler : MonoBehaviour
     public void UpdateDayTime(int dayCount)
     {
         DayCountText.text = $"Day: {dayCount}";
+        this.dayCounter = dayCount;
     }
 
     //------------------------------------------------------
@@ -209,5 +211,21 @@ public class StatusHandler : MonoBehaviour
                 break;
         }
         UpdateInfectedCount();
+    }
+
+    //------------------------------------------------------------------------
+    /// <summary>
+    /// Writes out every status varriable in a string separated by a ';'
+    /// </summary>
+    /// <returns>The string</returns>
+    public override string ToString()
+    {
+        return $"{dayCounter}" +
+            $";{currPeople}" +
+            $";{underagePeopleCount}" +
+            $";{adultPeopleCount}" +
+            $";{infectedCount}" +
+            $";{underAgeInfectedCount}" +
+            $";{adultInfectedCount}";
     }
 }

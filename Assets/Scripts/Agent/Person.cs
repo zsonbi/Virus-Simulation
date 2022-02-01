@@ -400,11 +400,19 @@ public class Person : MonoBehaviour
         switch (currActionState)
         {
             case ActionState.RelaxingAtHome:
-                if (InQuarantine)
+                //If the world is currently in lockdown and the person's work isn't necessary for the society
+                if (Settings.Lockdown && !occupationBuilding.Necessary)
+                {
+                    currActionState = ActionState.RelaxingAtHome;
+                    currActionTimeLeft = Settings.RealTimeToSimulationTime;
+                }
+                //If the person in quarantine
+                else if (InQuarantine)
                 {
                     currActionState = ActionState.InQuarantine;
                     currActionTimeLeft = recoveryTime;
                 }
+                //Go to work just as usual
                 else
                 {
                     currActionState = ActionState.GoingToWork;
