@@ -107,7 +107,8 @@ public class World : MonoBehaviour
         StreamWriter streamWriter = new StreamWriter("dailyData.txt");
         streamWriter.AutoFlush = true;
         await streamWriter.WriteLineAsync("Day;Current people count;Underage people count;" +
-            "Adult people count;Infected count;Underage infected count; Adult infected count");
+            "Adult people count;Infected count;Underage infected count; Adult infected count" +
+            "Lockdown status");
         do
         {
             if (newDay)

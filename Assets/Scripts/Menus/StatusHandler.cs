@@ -10,6 +10,9 @@ public class StatusHandler : MonoBehaviour
     [Header("The Label which will display the day count")]
     public Text DayCountText;
 
+    [Header("The Label which will display the lockdown state")]
+    public Text LockDownText;
+
     [Header("The Label which will display the people count")]
     public Text PeopleCountText;
 
@@ -215,6 +218,15 @@ public class StatusHandler : MonoBehaviour
 
     //------------------------------------------------------------------------
     /// <summary>
+    /// Updates the lockdown text
+    /// </summary>
+    public void UpdateLockDownState()
+    {
+        LockDownText.text = $"Lockdown {(Settings.Lockdown ? "on" : "off")}";
+    }
+
+    //------------------------------------------------------------------------
+    /// <summary>
     /// Writes out every status varriable in a string separated by a ';'
     /// </summary>
     /// <returns>The string</returns>
@@ -226,6 +238,7 @@ public class StatusHandler : MonoBehaviour
             $";{adultPeopleCount}" +
             $";{infectedCount}" +
             $";{underAgeInfectedCount}" +
-            $";{adultInfectedCount}";
+            $";{adultInfectedCount}" +
+            $"{(Settings.Lockdown ? "on" : "off")}";
     }
 }
