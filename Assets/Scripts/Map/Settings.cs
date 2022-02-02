@@ -82,4 +82,14 @@ public static class Settings
     /// The rate which the work places are necessary
     /// </summary>
     public static float BuildingNecessity = 0.2f;
+
+    /// <summary>
+    /// The rate which people are anti vacinated
+    /// </summary>
+    public static float AntiVacinationRate = 0.1f;
+
+    /// <summary>
+    /// Should the tasks run (only system can set it)
+    /// </summary>
+    public static bool TaskRun = false;
 }

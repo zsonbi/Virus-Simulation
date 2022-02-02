@@ -79,6 +79,7 @@ public class World : MonoBehaviour
         pathMaker = new PathMaker((byte)WorldGenerator.Size, this);
         FillWorldWithFamilies(WorldGenerator.Buildings[BuildingType.House].Count);
         ReadInViruses();
+        Settings.TaskRun = true;
         Task.Run(() => HandleDailyTasks());
     }
 
@@ -104,6 +105,7 @@ public class World : MonoBehaviour
     /// </summary>
     private async void HandleDailyTasks()
     {
+        Debug.Log("Started task");
         StreamWriter streamWriter = new StreamWriter("dailyData.txt");
         streamWriter.AutoFlush = true;
         await streamWriter.WriteLineAsync("Day;Current people count;Underage people count;" +
@@ -111,15 +113,17 @@ public class World : MonoBehaviour
             "Lockdown status");
         do
         {
+            Debug.Log("Task is running");
             if (newDay)
             {
+                Debug.Log("New day");
                 newDay = false;
 
                 Vaccinate();
                 await WriteOutDailyData(streamWriter);
-                await Task.Delay(100);
             }
-        } while (true);
+            await Task.Delay(100);
+        } while (Settings.TaskRun);
     }
 
     //--------------------------------------------------------------------
@@ -417,5 +421,14 @@ public class World : MonoBehaviour
     public void IncreasePeople(AgeGroup ageGrp)
     {
         StatusHandler.IncreasePeople(ageGrp);
+    }
+
+    //--------------------------------------------------------
+    /// <summary>
+    /// Handle zombies
+    /// </summary>
+    private void OnApplicationQuit()
+    {
+        Settings.TaskRun = false;
     }
 }

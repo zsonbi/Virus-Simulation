@@ -32,6 +32,9 @@ public class MainMenu : MonoBehaviour
     [Header("The slider which provides the building necessity")]
     public Slider BuildingNecessitySlider;
 
+    [Header("The slider which provides the anti vacination rate")]
+    public Slider AntiVacinationRateSlider;
+
     //---------------------------------------------------------
     // Start is called before the first frame update
     private void Start()
@@ -49,6 +52,7 @@ public class MainMenu : MonoBehaviour
         NumberOfFamiliesToInfectOnStartText.text = Settings.NumberOfFamiliesToInfectOnStart.ToString();
         BuildingDensitySlider.value = Settings.BuildingDensity * 100f;
         BuildingNecessitySlider.value = Settings.BuildingNecessity * 100f;
+        AntiVacinationRateSlider.value = Settings.AntiVacinationRate * 100f;
     }
 
     //-----------------------------------------------------------
@@ -141,5 +145,14 @@ public class MainMenu : MonoBehaviour
     public void BuildingNecessitySliderChanged()
     {
         Settings.BuildingNecessity = BuildingNecessitySlider.value / 100f;
+    }
+
+    //------------------------------------------------------------------------------------
+    /// <summary>
+    /// Updates the building necessity settings value
+    /// </summary>
+    public void AntiVacinationSliderChanged()
+    {
+        Settings.AntiVacinationRate = AntiVacinationRateSlider.value / 100f;
     }
 }

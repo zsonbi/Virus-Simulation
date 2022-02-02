@@ -117,7 +117,7 @@ public class Person : MonoBehaviour
         this.worldCellIndex = new Vector2(XPos / world.CellSize, YPos / world.CellSize);
         this.world.AddPersonToWorldCell(worldCellIndex, this);
         this.Gender = (Gender)UnityEngine.Random.Range(0, 2);
-        this.AntiVacination = UnityEngine.Random.Range(0, 10) == 0;
+        this.AntiVacination = UnityEngine.Random.Range(0f, 1f) <= Settings.AntiVacinationRate;
 
         //Decide occupation based on age
         if (Age < 18)

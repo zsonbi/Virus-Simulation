@@ -89,5 +89,6 @@ public class SettingsMenu : MonoBehaviour
     public void BackToMainMenu()
     {
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        Settings.TaskRun = false; //Stops all of the tasks
     }
 }
