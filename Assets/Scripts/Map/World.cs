@@ -72,6 +72,7 @@ public class World : MonoBehaviour
     private List<Person> people;
     private bool newDay = false;
     private System.Random rnd = new System.Random();
+    private FamilyTask familyTask;
 
     //--------------------------------------------------------------------------
     // Start is called before the first frame update
@@ -82,6 +83,8 @@ public class World : MonoBehaviour
         ReadInViruses();
         Settings.TaskRun = true;
         Task.Run(() => HandleDailyTasks());
+        familyTask = new FamilyTask(families);
+        familyTask.Start();
     }
 
     //----------------------------------------------------------------------------
@@ -107,12 +110,12 @@ public class World : MonoBehaviour
     private async void HandleDailyTasks()
     {
         Debug.Log("Started task");
-        StreamWriter streamWriter = new StreamWriter("dailyData.txt");
+        StreamWriter streamWriter = new StreamWriter("dailyData.csv");
         streamWriter.AutoFlush = true;
         await streamWriter.WriteLineAsync("Day;Current people count;Underage people count;" +
             "Adult people count;Infected count;Underage infected count; Adult infected count" +
             "Lockdown status");
-        do
+        while (Settings.TaskRun)
         {
             Debug.Log("Task is running");
             if (newDay)
@@ -121,10 +124,10 @@ public class World : MonoBehaviour
                 newDay = false;
 
                 Vaccinate();
-                await WriteOutDailyData(streamWriter);
+                WriteOutDailyData(streamWriter);
             }
             await Task.Delay(100);
-        } while (Settings.TaskRun);
+        }
     }
 
     //--------------------------------------------------------------------
@@ -160,9 +163,9 @@ public class World : MonoBehaviour
     /// <summary>
     /// Writes out the current statuses into a file
     /// </summary>
-    private async Task WriteOutDailyData(StreamWriter streamWriter)
+    private void WriteOutDailyData(StreamWriter streamWriter)
     {
-        await streamWriter.WriteLineAsync(StatusHandler.ToString());
+        streamWriter.WriteLine(StatusHandler.ToString());
     }
 
     //-------------------------------------------------------------------

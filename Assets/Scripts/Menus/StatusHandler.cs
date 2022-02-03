@@ -239,6 +239,6 @@ public class StatusHandler : MonoBehaviour
             $";{infectedCount}" +
             $";{underAgeInfectedCount}" +
             $";{adultInfectedCount}" +
-            $"{(Settings.Lockdown ? "on" : "off")}";
+            $";{(Settings.Lockdown ? "on" : "off")}";
     }
 }

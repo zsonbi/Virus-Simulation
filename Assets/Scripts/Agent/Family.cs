@@ -8,8 +8,6 @@ using System.Linq;
 public class Family : MonoBehaviour
 {
     private World world; //Reference to the world
-
-    private float time = 0f; //Timer
     private bool sentForFood = false; //Had someone gone to the shop
 
     /// <summary>
@@ -87,7 +85,7 @@ public class Family : MonoBehaviour
         for (int i = 0; i < sizeOfFamily; i++)
         {
             GameObject person = Instantiate(world.DefaultPerson, this.transform);
-            byte age = (byte)Random.Range(i >= 1 ? 6 : 18, 80);
+            byte age = (byte)Random.Range(i >= 1 ? 3 : 18, 80);
             peopleInFamily.Add(person.GetComponent<Person>());
             peopleInFamily.Last().SetDefaultParameters(world, this, age);
             person.transform.position = HouseLoc;
@@ -129,30 +127,25 @@ public class Family : MonoBehaviour
 
     //------------------------------------------------------------------
     //Runs every frame
-    private void Update()
+    public void UpdateFamilySupplies(float elapsedTime)
     {
         //Decrease the amount of supplies
         if (SupplyAmount > 0)
         {
-            SupplyAmount -= Time.deltaTime * Settings.RealTimeToSimulationTime * peopleInFamily.Count;
+            SupplyAmount -= elapsedTime * Settings.RealTimeToSimulationTime * peopleInFamily.Count;
         }
 
         //If it is time send someone for supplies
         if (Settings.familyFoodStockCritAmount >= SupplyAmount && !sentForFood)
         {
-            time += Time.deltaTime;
-
-            if (time >= 1f)
+            for (int i = 0; i < peopleInFamily.Count; i++)
             {
-                for (int i = 0; i < peopleInFamily.Count; i++)
+                if (peopleInFamily[i].SendToTheShop())
                 {
-                    if (peopleInFamily[i].SendToTheShop())
-                    {
-                        sentForFood = true;
-                        break;
-                    }
+                    sentForFood = true;
+                    Debug.Log("Sent for food!");
+                    break;
                 }
-                time = 0f;
             }
         }
     }
