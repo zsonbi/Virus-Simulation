@@ -404,7 +404,7 @@ public class Person : MonoBehaviour
                 if (Settings.Lockdown && !occupationBuilding.Necessary)
                 {
                     currActionState = ActionState.RelaxingAtHome;
-                    currActionTimeLeft = Settings.RealTimeToSimulationTime;
+                    currActionTimeLeft = Settings.RealTimeToSimulationTime * 4;
                 }
                 //If the person in quarantine
                 else if (InQuarantine)
@@ -546,12 +546,11 @@ public class Person : MonoBehaviour
     /// <returns>True if the person accepts false if he/she refuses</returns>
     public bool SendToTheShop()
     {
-        if (this.currActionState != ActionState.RelaxingAtHome && this.currActionTimeLeft <= 10800f)
+        if (this.currActionState != ActionState.RelaxingAtHome && this.currActionTimeLeft >= 10800f)
         {
             return false;
         }
         this.currActionState = ActionState.GoingShopping;
-        this.transform.position = family.HouseEnteraceLoc;
         return true;
     }
 
