@@ -90,7 +90,7 @@ public class MainMenu : MonoBehaviour
     /// </summary>
     public void SupplyAmountChanged()
     {
-        Settings.FamilySuppliesStock = (float)(Convert.ToDouble(WorldSizeText.text.Replace('.', ',')) * 86400);
+        Settings.FamilySuppliesStock = (float)(Convert.ToDouble(FamilySuppliesText.text.Replace('.', ',')) * 86400);
     }
 
     //----------------------------------------------------------------
