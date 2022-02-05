@@ -13,7 +13,7 @@ public class PathMaker
         public bool Visited; //Was it already visited before
         public bool passable; //Is it passable
         public Vector2 position; //It's position
-        public byte[] indices = new byte[2]; //The index it is in the grid
+        public short[] indices = new short[2]; //The index it is in the grid
 
         //----------------------------------------------------------------------
         /// <summary>
@@ -23,13 +23,13 @@ public class PathMaker
         /// <param name="yPos">The y position in the world</param>
         /// <param name="passable">Is it passable</param>
         /// <param name="indices">It's position in the grid</param>
-        public Node(byte[] indices)
+        public Node(short[] indices)
         {
             this.indices = indices;
             this.position = new Vector2();
         }
 
-        public Node(byte[] indices, int xPos, int yPos, bool passable)
+        public Node(short[] indices, int xPos, int yPos, bool passable)
         {
             this.indices = indices;
             this.passable = passable;
@@ -85,7 +85,7 @@ public class PathMaker
     private List<Vector2> path; //Path which it will return
     private Node start; //Start of the path
     private Node goal; //The target
-    private byte size; //The size of the allocated map
+    private short size; //The size of the allocated map
     private Stack<Node> visitedNodes = new Stack<Node>();
 
     /// <summary>
@@ -95,17 +95,17 @@ public class PathMaker
     /// <param name="goal">The target's position</param>
     /// <param name="size">The size of the grid (x size = Size *2, y size = Size*2)</param>
     /// <param name="world">The world it is in</param>
-    public PathMaker(byte size, World world)
+    public PathMaker(short size, World world)
     {
         this.world = world;
         this.size = size;
         map = new Node[world.XSize, world.YSize];
         //Fill in the grid
-        for (byte i = 0; i < map.GetLength(0); i++)
+        for (short i = 0; i < map.GetLength(0); i++)
         {
-            for (byte j = 0; j < map.GetLength(1); j++)
+            for (short j = 0; j < map.GetLength(1); j++)
             {
-                map[i, j] = new Node(new byte[] { i, j }, i, j, world.Cells[i, j] == CellType.Road);
+                map[i, j] = new Node(new short[] { i, j }, i, j, world.Cells[i, j] == CellType.Road);
             }
         }
     }

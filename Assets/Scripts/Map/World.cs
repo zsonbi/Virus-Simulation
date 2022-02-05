@@ -78,7 +78,7 @@ public class World : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        pathMaker = new PathMaker((byte)WorldGenerator.Size, this);
+        pathMaker = new PathMaker((short)WorldGenerator.Size, this);
         FillWorldWithFamilies(WorldGenerator.Buildings[BuildingType.House].Count);
         ReadInViruses();
         Settings.TaskRun = true;
