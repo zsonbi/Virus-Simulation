@@ -90,5 +90,6 @@ public class SettingsMenu : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
         Settings.TaskRun = false; //Stops all of the tasks
+        Resources.UnloadUnusedAssets();
     }
 }
