@@ -32,12 +32,12 @@ public class Person : MonoBehaviour
     /// <summary>
     /// The person's position on the x axis
     /// </summary>
-    public float XPos { get => this.gameObject.transform.position.x; }
+    public float XPos { get => this.transform.position.x; }
 
     /// <summary>
     /// The person's position on the y axis
     /// </summary>
-    public float YPos { get => this.gameObject.transform.position.y; }
+    public float YPos { get => this.transform.position.y; }
 
     /// <summary>
     /// Is the person infected
@@ -65,9 +65,15 @@ public class Person : MonoBehaviour
     private Building currentBuilding; //The building which the person is currently inside
     private float time = float.MaxValue; //Timer
     private ActionState currActionState = ActionState.RelaxingAtHome; //Currently what action is the person doing for example going to work
-    private Occupation occupation = Occupation.None; //The person occupation
     private float currActionTimeLeft = 0f; //The remaining time from the waiting during actions
     private WorkTime workTime; //When the person's work start and end
+    private VirusType currentlyInfectedBy; //Reference to the virus which infected him
+    private float recoveryTime = 0f; //The remaining time till full recovery
+    private float immunityTime = 0f; //The remaining time from the immunity against the specific virus
+    private float virusDiscoveryTime = 0f; //How much time till he discover, that he's infected
+    private bool willHeDie = false; //Will he die at the end of recoveryTime
+    private float infectionAttempts = 0; //How close he is to getting infected
+    private Queue<Action> functions = new Queue<Action>();
 
     //Movement varriables
 
@@ -79,12 +85,6 @@ public class Person : MonoBehaviour
     private bool generatedPath = false; //Is there already a generated path
     private short pathIndex = -1; //The index of the cell in the path list
     private Vector2 worldCellIndex; //The index of the world cell where the person is
-    private VirusType currentlyInfectedBy; //Reference to the virus which infected him
-    private float recoveryTime = 0f; //The remaining time till full recovery
-    private float immunityTime = 0f; //The remaining time from the immunity against the specific virus
-    private float virusDiscoveryTime = 0f; //How much time till he discover, that he's infected
-    private bool willHeDie = false; //Will he die at the end of recoveryTime
-    private float infectionAttempts = 0; //How close he is to getting infected
 
     //**************************************************************************************
     /// <summary>
@@ -142,59 +142,23 @@ public class Person : MonoBehaviour
         currentBuilding.Enter(this);
         this.immunityTime = UnityEngine.Random.Range(-1036800, 2592000);
         world.IncreasePeople(AgeGroup);
+        CreatePaths();
     }
 
+    //----------------------------------------------------------
     //Called every frame
     private void Update()
     {
-        //If the person is infected start recovering
-        if (IsInfected)
+        //Runs all of the functions which was requested by the worker thread
+        while (functions.Count != 0)
         {
-            //While the virus is still hiding
-            if (virusDiscoveryTime > 0)
-            {
-                virusDiscoveryTime -= Time.deltaTime * Settings.RealTimeToSimulationTime;
-                if (virusDiscoveryTime <= 0)
-                {
-                    DetectInfection();
-                }
-            }
-            //When the virus has already been detected
-            else
-            {
-                //Start recovering
-                recoveryTime -= Time.deltaTime * Settings.RealTimeToSimulationTime;
-                if (recoveryTime <= 0f)
-                {
-                    //If this was his destiny die
-                    if (willHeDie)
-                    {
-                        Die();
-                    }
-                    else
-                    {
-                        Recovered();
-                    }
-                }
-            }
-        }
-        //Else decrease his/her immunity
-        else
-        {
-            if (immunityTime > 0)
-            {
-                immunityTime -= Time.deltaTime * Settings.RealTimeToSimulationTime;
-            }
-            if (infectionAttempts > 0f)
-            {
-                infectionAttempts -= Time.deltaTime * Settings.InfectionRateInside * 0.01f;
-            }
+            functions.Dequeue().Invoke();
         }
 
         //Increase the timer by the elapsed time
         time += Time.deltaTime * Settings.RealTimeToSimulationTime;
         //If it's an action which doesn't require movement wait till the currActionTimeLeft goes to 0
-        if ((byte)currActionState % 2 == 1)
+        if (((byte)currActionState & 1) == 1)
         {
             if (IsInfected)
             {
@@ -223,21 +187,75 @@ public class Person : MonoBehaviour
         }
     }
 
+    //-------------------------------------------------------------
+    /// <summary>
+    /// Updates every thread safe parameter's of the person's (can be called from a thread)
+    /// </summary>
+    /// <param name="elapsedTime">The time since last call</param>
+    public void UpdatePersonParametersOnThread(float elapsedTime)
+    {
+        //If the Start didn't run yet
+        if (pathToOccupation == null)
+            return;
+
+        //If the person is infected start recovering
+        if (IsInfected)
+        {
+            //While the virus is still hiding
+            if (virusDiscoveryTime > 0)
+            {
+                virusDiscoveryTime -= elapsedTime * Settings.RealTimeToSimulationTime;
+                if (virusDiscoveryTime <= 0)
+                {
+                    functions.Enqueue(new Action(DetectInfection));
+                }
+            }
+            //When the virus has already been detected
+            else
+            {
+                //Start recovering
+                recoveryTime -= elapsedTime * Settings.RealTimeToSimulationTime;
+                if (recoveryTime <= 0f)
+                {
+                    //If this was his destiny die
+                    if (willHeDie)
+                    {
+                        functions.Enqueue(new Action(Die));
+                    }
+                    else
+                    {
+                        functions.Enqueue(new Action(Recovered));
+                    }
+                }
+            }
+        }
+        //Else decrease his/her immunity
+        else
+        {
+            if (immunityTime > 0)
+            {
+                immunityTime -= elapsedTime * Settings.RealTimeToSimulationTime;
+            }
+            if (infectionAttempts > 0f)
+            {
+                infectionAttempts -= elapsedTime * Settings.InfectionRateInside * 0.01f;
+            }
+        }
+    }
+
     //---------------------------------------------------------
     //Tries to find a school true-found, false-didn't found
     private bool FindSchool()
     {
-        occupationBuilding = world.GetOccupationBuilding((int)XPos, (int)YPos, 100, BuildingType.School);
+        occupationBuilding = world.GetOccupationBuilding((int)XPos, (int)YPos, BuildingType.School);
         if (occupationBuilding == null)
         {
-            Debug.Log("Can't find school");
             return false;
         }
         else
         {
-            Debug.Log("Found school");
             (occupationBuilding as School).NewStudent(this);
-            occupation = Occupation.Learning;
+
             workTime = new WorkTime(28800f);
             return true;
         }
@@ -247,17 +265,15 @@ public class Person : MonoBehaviour
     //Tries to find a work place
     private void FindWorkPlace()
     {
-        occupationBuilding = world.GetOccupationBuilding((int)XPos, (int)YPos, 100, BuildingType.WorkPlace);
+        occupationBuilding = world.GetOccupationBuilding((int)XPos, (int)YPos, BuildingType.WorkPlace);
         if (occupationBuilding == null)
         {
             Debug.Log("Can't find job");
-            occupation = Occupation.Unemployed;
         }
         else
         {
             Debug.Log("Found job");
             (occupationBuilding as WorkPlace).GiveJob(this);
-            occupation = Occupation.Working;
             workTime = new WorkTime(Settings.PossibleWorkStartTimes[UnityEngine.Random.Range(0, Settings.PossibleWorkStartTimes.Length)]);
         }
     }
@@ -344,7 +360,6 @@ public class Person : MonoBehaviour
             StatusCircle.color = Color.yellow;
             this.virusDiscoveryTime = virus.TimeToDiscover * UnityEngine.Random.Range(1f - Settings.VirusVarience, 1f + Settings.VirusVarience);
             world.Infected(AgeGroup);
-            Debug.Log("Got infected");
         }
     }
 
@@ -360,7 +375,6 @@ public class Person : MonoBehaviour
         StatusCircle.color = Color.yellow;
         this.virusDiscoveryTime = virus.TimeToDiscover * UnityEngine.Random.Range(1f - Settings.VirusVarience, 1f + Settings.VirusVarience);
         world.Infected(AgeGroup);
-        Debug.Log("Got infected");
     }
 
     //---------------------------------------------------------------------
@@ -390,6 +404,7 @@ public class Person : MonoBehaviour
         }
 
         nextMoveTarget = path[pathIndex];
+
         pathIndex--;
     }
 
@@ -416,7 +431,6 @@ public class Person : MonoBehaviour
                 else
                 {
                     currActionState = ActionState.GoingToWork;
-                    this.transform.position = family.HouseEnteraceLoc;
                     currentBuilding.Leave(this);
                 }
 
@@ -427,20 +441,17 @@ public class Person : MonoBehaviour
 
             case ActionState.GoingToWork:
                 currActionTimeLeft = workTime.GetActionTime();
-                this.transform.position = new Vector2(occupationBuilding.transform.position.x + UnityEngine.Random.Range(-0.5f, 0.5f), occupationBuilding.transform.position.y + UnityEngine.Random.Range(-0.5f, 0.5f));
                 currActionState = ActionState.Working;
                 currentBuilding = occupationBuilding;
                 currentBuilding.Enter(this);
                 break;
 
             case ActionState.Working:
-                this.transform.position = occupationBuilding.NearestRoad;
                 currActionState = ActionState.GoingHome;
                 currentBuilding.Leave(this);
                 break;
 
             case ActionState.GoingShopping:
-                this.transform.position = this.transform.position = new Vector2(family.MarketLoc.x + UnityEngine.Random.Range(-0.5f, 0.5f), family.MarketLoc.y + UnityEngine.Random.Range(-0.5f, 0.5f));
                 currentBuilding = family.FavoriteMarket;
                 currActionTimeLeft = 3600f;
                 currActionState = ActionState.Shopping;
@@ -448,14 +459,11 @@ public class Person : MonoBehaviour
                 break;
 
             case ActionState.Shopping:
-                this.transform.position = family.MarketEnteranceLoc;
                 currActionState = ActionState.GoingHomeFromShopping;
                 currentBuilding.Leave(this);
                 break;
 
             case ActionState.GoingHomeFromShopping:
-                this.transform.position = new Vector2(family.HouseLoc.x + UnityEngine.Random.Range(-0.5f, 0.5f), family.HouseLoc.y + UnityEngine.Random.Range(-0.5f, 0.5f));
-
                 if (InQuarantine)
                 {
                     currActionState = ActionState.InQuarantine;
@@ -472,8 +480,6 @@ public class Person : MonoBehaviour
                 break;
 
             case ActionState.GoingHome:
-                this.transform.position = new Vector2(family.HouseLoc.x + UnityEngine.Random.Range(-0.5f, 0.5f), family.HouseLoc.y + UnityEngine.Random.Range(-0.5f, 0.5f));
-
                 if (InQuarantine)
                 {
                     currActionState = ActionState.InQuarantine;
@@ -491,7 +497,17 @@ public class Person : MonoBehaviour
             default:
                 break;
         }
-        MoveInWorldCellGrid();
+    }
+
+    //----------------------------------------------------------
+    //Creates the paths from-to the buildings
+    private void CreatePaths()
+    {
+        world.CreatePath(out pathFromOccupation, occupationBuilding.NearestRoad, family.HouseEnteraceLoc);
+        pathFromOccupation.Insert(0, new Vector2(family.HouseLoc.x + UnityEngine.Random.Range(-0.5f, 0.5f), family.HouseLoc.y + UnityEngine.Random.Range(-0.5f, 0.5f)));
+
+        world.CreatePath(out pathToOccupation, family.HouseEnteraceLoc, occupationBuilding.NearestRoad);
+        pathToOccupation.Insert(0, new Vector2(occupationBuilding.transform.position.x + UnityEngine.Random.Range(-0.5f, 0.5f), occupationBuilding.transform.position.y + UnityEngine.Random.Range(-0.5f, 0.5f)));
     }
 
     //-----------------------------------------------------------------
@@ -499,22 +515,15 @@ public class Person : MonoBehaviour
     public void GetPath(ActionState nextActionState)
     {
         generatedPath = true;
-        bool foundPath = true;
         switch (nextActionState)
         {
             case ActionState.GoingHome:
-                if (pathFromOccupation == null)
-                {
-                    foundPath = world.CreatePath(out pathFromOccupation, occupationBuilding.NearestRoad, family.HouseEnteraceLoc);
-                }
+
                 path = pathFromOccupation;
                 break;
 
             case ActionState.GoingToWork:
-                if (pathToOccupation == null)
-                {
-                    foundPath = world.CreatePath(out pathToOccupation, family.HouseEnteraceLoc, occupationBuilding.NearestRoad);
-                }
+
                 path = pathToOccupation;
                 break;
 
@@ -530,7 +539,7 @@ public class Person : MonoBehaviour
                 break;
         }
 
-        if (!foundPath)
+        if (path == null)
         {
             Debug.Log("Can't find path");
             currActionState = ActionState.Waiting;
@@ -572,9 +581,9 @@ public class Person : MonoBehaviour
         {
             // this.transform.position = Vector2.Lerp(this.transform.position, nextMoveTarget, time);
             this.transform.position = nextMoveTarget;
-            MoveInWorldCellGrid();
             if (IsInfected)
                 InfectOutside();
+            MoveInWorldCellGrid();
         }
     }
 

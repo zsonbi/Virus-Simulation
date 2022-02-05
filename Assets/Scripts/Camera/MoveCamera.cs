@@ -6,14 +6,17 @@ using UnityEngine;
 public class MoveCamera : MonoBehaviour
 {
     private float speed = 1; //The speed of the camera
-    private float camXPos { get => Camera.main.transform.position.x; } //Reference to the camera's x position
-    private float camYPos { get => Camera.main.transform.position.y; } //Reference to the camera's y position
+    private float camXPos { get => mainCam.transform.position.x; } //Reference to the camera's x position
+    private float camYPos { get => mainCam.transform.position.y; } //Reference to the camera's y position
+
+    private Camera mainCam; //Reference to the main camera
 
     //--------------------------------------------------------------------
     //At the start of the script set the camera at the center of the map
     private void Start()
     {
-        Camera.main.transform.position = new Vector3(Settings.WorldSize / 3, Settings.WorldSize / 3, Camera.main.transform.position.z);
+        mainCam = Camera.main;
+        mainCam.transform.position = new Vector3(Settings.WorldSize / 3, Settings.WorldSize / 3, Camera.main.transform.position.z);
     }
 
     //----------------------------------------------------------------
@@ -29,30 +32,30 @@ public class MoveCamera : MonoBehaviour
         //Handles wasd movement
         if (Input.GetKey(KeyCode.W))
         {
-            Camera.main.transform.position = new Vector3(camXPos, camYPos + (0.1f * speed), -10);
+            mainCam.transform.position = new Vector3(camXPos, camYPos + (0.1f * speed), -10);
         }
         if (Input.GetKey(KeyCode.S))
         {
-            Camera.main.transform.position = new Vector3(camXPos, camYPos - (0.1f * speed), -10);
+            mainCam.transform.position = new Vector3(camXPos, camYPos - (0.1f * speed), -10);
         }
         if (Input.GetKey(KeyCode.A))
         {
-            Camera.main.transform.position = new Vector3(camXPos - (0.1f * speed), camYPos, -10);
+            mainCam.transform.position = new Vector3(camXPos - (0.1f * speed), camYPos, -10);
         }
         if (Input.GetKey(KeyCode.D))
         {
-            Camera.main.transform.position = new Vector3(camXPos + (0.1f * speed), camYPos, -10);
+            mainCam.transform.position = new Vector3(camXPos + (0.1f * speed), camYPos, -10);
         }
         //Handles zooming
         if (Input.GetKey(KeyCode.KeypadPlus))
         {
-            if (Camera.main.orthographicSize > 5)
-                Camera.main.orthographicSize = Camera.main.orthographicSize - (0.1f * speed);
+            if (mainCam.orthographicSize > 5)
+                mainCam.orthographicSize = Camera.main.orthographicSize - (0.1f * speed);
         }
         if (Input.GetKey(KeyCode.KeypadMinus))
         {
-            if (Camera.main.orthographicSize < 1000)
-                Camera.main.orthographicSize = Camera.main.orthographicSize + (0.1f * speed);
+            if (mainCam.orthographicSize < 1000)
+                mainCam.orthographicSize = Camera.main.orthographicSize + (0.1f * speed);
         }
         //Reset speed back
         speed = 1;

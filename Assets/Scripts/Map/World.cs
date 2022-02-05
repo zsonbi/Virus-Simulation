@@ -73,18 +73,23 @@ public class World : MonoBehaviour
     private bool newDay = false;
     private System.Random rnd = new System.Random();
     private FamilyTask familyTask;
+    private PersonTasks personTasks;
 
     //--------------------------------------------------------------------------
     // Start is called before the first frame update
     private void Start()
     {
-        pathMaker = new PathMaker((byte)WorldGenerator.Size, this);
+        pathMaker = new PathMaker((short)WorldGenerator.Size, this);
         FillWorldWithFamilies(WorldGenerator.Buildings[BuildingType.House].Count);
         ReadInViruses();
         Settings.TaskRun = true;
         Task.Run(() => HandleDailyTasks());
+        //Starts the tasks for the families
         familyTask = new FamilyTask(families);
         familyTask.Start();
+        //Starts the tasks for the persons
+        personTasks = new PersonTasks(people);
+        personTasks.Start();
     }
 
     //----------------------------------------------------------------------------
@@ -96,7 +101,6 @@ public class World : MonoBehaviour
         if (dayTime >= 86400f)
         {
             DayCounter++;
-            Debug.Log($"Day {DayCounter} complete");
             StatusHandler.UpdateDayTime(DayCounter);
             dayTime = 0f;
             newDay = true;
@@ -117,10 +121,8 @@ public class World : MonoBehaviour
             "Lockdown status");
         while (Settings.TaskRun)
         {
-            Debug.Log("Task is running");
             if (newDay)
             {
-                Debug.Log("New day");
                 newDay = false;
 
                 Vaccinate();
@@ -283,7 +285,7 @@ public class World : MonoBehaviour
     /// <param name="maxSearchRange">The maximum search range</param>
     /// <param name="buildingType">The type of the building</param>
     /// <returns>The building it found returns with null if it didn't found any</returns>
-    public Building GetOccupationBuilding(int xCoord, int yCoord, int maxSearchRange, BuildingType buildingType)
+    public Building GetOccupationBuilding(int xCoord, int yCoord, BuildingType buildingType)
     {
         List<Building> tempBuildings = WorldGenerator.Buildings[buildingType].Select(x => x).ToList();
 
@@ -350,6 +352,11 @@ public class World : MonoBehaviour
     /// <param name="newPos">The new worldCell position</param>
     public void MovePerson(Vector2 oldPos, Vector2 newPos, Person personToMove)
     {
+        if (personToMove == null)
+        {
+            return;
+        }
+
         this.worldCells[(int)oldPos.y, (int)oldPos.x].RemovePerson(personToMove);
 
         this.worldCells[(int)newPos.y, (int)newPos.x].AddPerson(personToMove);
@@ -415,6 +422,7 @@ public class World : MonoBehaviour
 
         this.people.Remove(person);
         StatusHandler.DecreasePeople(person.AgeGroup);
+        personTasks.DecreaseLastRunningEndIndex();
     }
 
     //--------------------------------------------------------
