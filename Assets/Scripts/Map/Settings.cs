@@ -3,6 +3,8 @@
 /// </summary>
 public static class Settings
 {
+    public static readonly System.Random rnd = new System.Random();
+
     /// <summary>
     /// The size of the soon be generated world
     /// </summary>
@@ -92,4 +94,6 @@ public static class Settings
     /// Should the tasks run (only system can set it)
     /// </summary>
     public static bool TaskRun = false;
+
+    public static byte PersonTaskCount = 4;
 }

@@ -80,7 +80,10 @@ public class Family : MonoBehaviour
         this.FavoriteMarket = (Market)this.world.LookForBuilding((int)HouseLoc.x, (int)HouseLoc.y, 100, BuildingType.Market);
 
         world.CreatePath(out pathToShop, HouseEnteraceLoc, MarketEnteranceLoc);
+        pathToShop.Insert(0, new Vector2(MarketLoc.x + UnityEngine.Random.Range(-0.5f, 0.5f), MarketLoc.y + UnityEngine.Random.Range(-0.5f, 0.5f)));
+
         world.CreatePath(out pathFromShop, MarketEnteranceLoc, HouseEnteraceLoc);
+        pathFromShop.Insert(0, new Vector2(HouseLoc.x + UnityEngine.Random.Range(-0.5f, 0.5f), HouseLoc.y + UnityEngine.Random.Range(-0.5f, 0.5f)));
 
         for (int i = 0; i < sizeOfFamily; i++)
         {

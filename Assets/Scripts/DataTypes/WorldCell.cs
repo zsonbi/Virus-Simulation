@@ -96,11 +96,11 @@ public class WorldCell
     /// <param name="virus">The type of the virus</param>
     public void TryToInfectEveryOneInRange(UnityEngine.Vector2 source, VirusType virus)
     {
-        foreach (var person in this.persons)
+        for (int i = 0; i < persons.Count; i++)
         {
-            if (person.Infectable() && source.Equals(person.transform.position))
+            if (persons[i].Infectable() && source.Equals(persons[i].transform.position))
             {
-                person.InfectedInRange(virus);
+                persons[i].InfectedInRange(virus);
             }
         }
     }

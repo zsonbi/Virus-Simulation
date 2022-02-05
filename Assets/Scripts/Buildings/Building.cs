@@ -62,11 +62,11 @@ public abstract class Building : MonoBehaviour
     /// <param name="virus">Reference to the virus</param>
     public void InfectInRange(Vector2 source, float range, VirusType virus)
     {
-        foreach (var person in PersonsInside)
+        for (int i = 0; i < PersonsInside.Count; i++)
         {
-            if (person.Infectable() && Vector2.Distance(source, person.transform.position) < range)
+            if (PersonsInside[i].Infectable() && Vector2.Distance(source, PersonsInside[i].transform.position) < range)
             {
-                person.InfectedInRange(virus);
+                PersonsInside[i].InfectedInRange(virus);
             }
         }
     }
