@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -61,7 +62,19 @@ public class MainMenu : MonoBehaviour
     /// </summary>
     public void StartSimulation()
     {
-        SceneManager.LoadScene("Simulation", LoadSceneMode.Single);
+        StartCoroutine(LoadSimulationCoorutine());
+    }
+
+    private IEnumerator LoadSimulationCoorutine()
+    {
+        AsyncOperation loading = SceneManager.LoadSceneAsync("Simulation", LoadSceneMode.Single);
+
+        while (true)
+        {
+            Debug.Log(loading.progress);
+
+            yield return null;
+        }
     }
 
     //--------------------------------------------------------------

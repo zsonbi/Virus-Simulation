@@ -58,8 +58,8 @@ public class WorldGenerator : MonoBehaviour
     public Dictionary<BuildingType, List<Building>> Buildings { get; private set; }
 
     //---------------------------------------------------------
-    //Runs when the script is loaded
-    private void Awake()
+    //Generates a new world
+    public void GenerateWorld()
     {
         Size = Settings.WorldSize;
         cellXCount = UnityEngine.Mathf.CeilToInt(Size / (float)CellSize);
