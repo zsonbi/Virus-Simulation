@@ -207,7 +207,7 @@ public class Person : MonoBehaviour
                 virusDiscoveryTime -= elapsedTime * Settings.RealTimeToSimulationTime;
                 if (virusDiscoveryTime <= 0)
                 {
-                    functions.Enqueue(new Action(DetectInfection));
+                    AddToFunctionQueue(new Action(DetectInfection));
                 }
             }
             //When the virus has already been detected
@@ -220,11 +220,11 @@ public class Person : MonoBehaviour
                     //If this was his destiny die
                     if (willHeDie)
                     {
-                        functions.Enqueue(new Action(Die));
+                        AddToFunctionQueue(new Action(Die));
                     }
                     else
                     {
-                        functions.Enqueue(new Action(Recovered));
+                        AddToFunctionQueue(new Action(Recovered));
                     }
                 }
             }
@@ -259,6 +259,12 @@ public class Person : MonoBehaviour
             workTime = new WorkTime(28800f);
             return true;
         }
+    }
+
+    private void AddToFunctionQueue(Action action)
+    {
+        if (!functions.Contains(action))
+            functions.Enqueue(action);
     }
 
     //--------------------------------------------------------------------
