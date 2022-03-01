@@ -95,5 +95,8 @@ public static class Settings
     /// </summary>
     public static bool TaskRun = false;
 
+    /// <summary>
+    /// The number of tasks for the persons
+    /// </summary>
     public static byte PersonTaskCount = 4;
 }
