@@ -73,7 +73,6 @@ public class World : MonoBehaviour
     private bool newDay = false;
     private System.Random rnd = new System.Random();
     private FamilyTask familyTask;
-    private PersonTasks personTasks;
 
     //--------------------------------------------------------------------------
     // Start is called before the first frame update
@@ -88,9 +87,6 @@ public class World : MonoBehaviour
         //Starts the tasks for the families
         familyTask = new FamilyTask(families);
         familyTask.Start();
-        //Starts the tasks for the persons
-        personTasks = new PersonTasks(people);
-        personTasks.Start();
     }
 
     //----------------------------------------------------------------------------
@@ -423,7 +419,6 @@ public class World : MonoBehaviour
 
         this.people.Remove(person);
         StatusHandler.DecreasePeople(person.AgeGroup);
-        personTasks.DecreaseLastRunningEndIndex();
     }
 
     //--------------------------------------------------------

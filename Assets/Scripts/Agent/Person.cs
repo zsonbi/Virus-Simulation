@@ -73,7 +73,6 @@ public class Person : MonoBehaviour
     private float virusDiscoveryTime = 0f; //How much time till he discover, that he's infected
     private bool willHeDie = false; //Will he die at the end of recoveryTime
     private float infectionAttempts = 0; //How close he is to getting infected
-    private Queue<Action> functions = new Queue<Action>();
 
     //Movement varriables
 
@@ -149,10 +148,48 @@ public class Person : MonoBehaviour
     //Called every frame
     private void Update()
     {
-        //Runs all of the functions which was requested by the worker thread
-        while (functions.Count != 0)
+        //If the person is infected start recovering
+        if (IsInfected)
         {
-            functions.Dequeue().Invoke();
+            //While the virus is still hiding
+            if (virusDiscoveryTime > 0)
+            {
+                virusDiscoveryTime -= Time.deltaTime * Settings.RealTimeToSimulationTime;
+                if (virusDiscoveryTime <= 0)
+                {
+                    DetectInfection();
+                }
+            }
+            //When the virus has already been detected
+            else
+            {
+                //Start recovering
+                recoveryTime -= Time.deltaTime * Settings.RealTimeToSimulationTime;
+                if (recoveryTime <= 0f)
+                {
+                    //If this was his destiny die
+                    if (willHeDie)
+                    {
+                        Die();
+                    }
+                    else
+                    {
+                        Recovered();
+                    }
+                }
+            }
+        }
+        //Else decrease his/her immunity
+        else
+        {
+            if (immunityTime > 0)
+            {
+                immunityTime -= Time.deltaTime * Settings.RealTimeToSimulationTime;
+            }
+            if (infectionAttempts > 0f)
+            {
+                infectionAttempts -= Time.deltaTime * Settings.InfectionRateInside * 0.01f;
+            }
         }
 
         //Increase the timer by the elapsed time
@@ -187,62 +224,6 @@ public class Person : MonoBehaviour
         }
     }
 
-    //-------------------------------------------------------------
-    /// <summary>
-    /// Updates every thread safe parameter's of the person's (can be called from a thread)
-    /// </summary>
-    /// <param name="elapsedTime">The time since last call</param>
-    public void UpdatePersonParametersOnThread(float elapsedTime)
-    {
-        //If the Start didn't run yet
-        if (pathToOccupation == null)
-            return;
-
-        //If the person is infected start recovering
-        if (IsInfected)
-        {
-            //While the virus is still hiding
-            if (virusDiscoveryTime > 0)
-            {
-                virusDiscoveryTime -= elapsedTime * Settings.RealTimeToSimulationTime;
-                if (virusDiscoveryTime <= 0)
-                {
-                    AddToFunctionQueue(new Action(DetectInfection));
-                }
-            }
-            //When the virus has already been detected
-            else
-            {
-                //Start recovering
-                recoveryTime -= elapsedTime * Settings.RealTimeToSimulationTime;
-                if (recoveryTime <= 0f)
-                {
-                    //If this was his destiny die
-                    if (willHeDie)
-                    {
-                        AddToFunctionQueue(new Action(Die));
-                    }
-                    else
-                    {
-                        AddToFunctionQueue(new Action(Recovered));
-                    }
-                }
-            }
-        }
-        //Else decrease his/her immunity
-        else
-        {
-            if (immunityTime > 0)
-            {
-                immunityTime -= elapsedTime * Settings.RealTimeToSimulationTime;
-            }
-            if (infectionAttempts > 0f)
-            {
-                infectionAttempts -= elapsedTime * Settings.InfectionRateInside * 0.01f;
-            }
-        }
-    }
-
     //---------------------------------------------------------
     //Tries to find a school true-found, false-didn't found
     private bool FindSchool()
@@ -259,12 +240,6 @@ public class Person : MonoBehaviour
             workTime = new WorkTime(28800f);
             return true;
         }
-    }
-
-    private void AddToFunctionQueue(Action action)
-    {
-        if (!functions.Contains(action))
-            functions.Enqueue(action);
     }
 
     //--------------------------------------------------------------------
