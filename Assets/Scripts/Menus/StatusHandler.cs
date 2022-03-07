@@ -56,6 +56,7 @@ public class StatusHandler : MonoBehaviour
         initialUnderagePeopleCount = underagePeopleCount;
         UpdatePeopleCount();
         graph.InitGraph(InitialPeopleCount);
+        graph.AddValue(infectedCount);
     }
 
     //----------------------------------------------------------
