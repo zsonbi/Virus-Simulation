@@ -31,8 +31,11 @@ public class StatusHandler : MonoBehaviour
     [Header("The Label which will display the adult infected count")]
     public Text AdultInfectedText;
 
+    [Header("The graph where the infected count will be showed"), SerializeField]
+    private GraphWindow graph;
+
     private int dayCounter = 0;
-    private int initialPeopleCount = 0; //The starting number of people
+    public int InitialPeopleCount { get; private set; } = 0; //The starting number of people
     private int initialAdultPeopleCount = 0; //The starting number of adults
     private int adultPeopleCount = 0; //The current number of adult people
     private int initialUnderagePeopleCount = 0; //The starting number of underage people
@@ -42,14 +45,17 @@ public class StatusHandler : MonoBehaviour
     private int adultInfectedCount = 0; //The current number of adult infected
     private int currPeople = 0; //The current people
 
-    //--------------------------------------------------------------------------
-    //Runs before first frame update
-    private void Start()
+    //-----------------------------------------------------------------------
+    /// <summary>
+    /// Inits the status's properties
+    /// </summary>
+    public void InitStatus()
     {
-        initialPeopleCount = adultPeopleCount + underagePeopleCount;
+        InitialPeopleCount = adultPeopleCount + underagePeopleCount;
         initialAdultPeopleCount = adultPeopleCount;
         initialUnderagePeopleCount = underagePeopleCount;
         UpdatePeopleCount();
+        graph.InitGraph(InitialPeopleCount);
     }
 
     //----------------------------------------------------------
@@ -118,13 +124,14 @@ public class StatusHandler : MonoBehaviour
     {
         DayCountText.text = $"Day: {dayCount}";
         this.dayCounter = dayCount;
+        graph.AddValue(infectedCount);
     }
 
     //------------------------------------------------------
     // Updates the people count text
     private void UpdatePeopleCount()
     {
-        PeopleCountText.text = $"People: {currPeople}/{initialPeopleCount}";
+        PeopleCountText.text = $"People: {currPeople}/{InitialPeopleCount}";
         UpdateInfectedCount();
         UpdateAdultPeopleCount();
         UpdateUnderAgePeopleCount();

@@ -66,6 +66,8 @@ public class World : MonoBehaviour
     /// </summary>
     public CellType[,] Cells { get => WorldGenerator.cells; }
 
+    public int PeopleCount { get => people.Count; }
+
     private PathMaker pathMaker; //The pathmaker algorithm
     private List<VirusType> viruses;
     private List<Family> families;
@@ -87,6 +89,8 @@ public class World : MonoBehaviour
         //Starts the tasks for the families
         familyTask = new FamilyTask(families);
         familyTask.Start();
+        StatusHandler.InitStatus();
+        Debug.Log(people.Count);
     }
 
     //----------------------------------------------------------------------------

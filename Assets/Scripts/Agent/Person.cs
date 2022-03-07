@@ -87,7 +87,7 @@ public class Person : MonoBehaviour
 
     //**************************************************************************************
     /// <summary>
-    /// Sets the person's world and family variable
+    /// Sets the person's initial states
     /// </summary>
     /// <param name="world">Reference to the world class</param>
     /// <param name="family">Reference to the person's family</param>
@@ -102,17 +102,7 @@ public class Person : MonoBehaviour
         }
         else
             throw new Exception("Can't change world or family one of them is already set");
-    }
 
-    //-------------------------------------------------------------------
-    //Called just before the first frame
-    private void Start()
-    {
-        //Error detection
-        if (world == null)
-        {
-            throw new Exception("Please set the world for this poor person");
-        }
         this.worldCellIndex = new Vector2(XPos / world.CellSize, YPos / world.CellSize);
         this.world.AddPersonToWorldCell(worldCellIndex, this);
         this.Gender = (Gender)UnityEngine.Random.Range(0, 2);
