@@ -80,7 +80,7 @@ public class GraphWindow : MonoBehaviour
         xSeparator.localScale = new Vector3(1, 1, 1);
         xSeparator.sizeDelta = new Vector2(graphRect.rect.width, 1);
         xSeparator.anchoredPosition = new Vector3(graphRect.rect.width / 2, 0, 1);
-        xSeparator.GetComponent<Image>().color = graphElementColor;
+        xSeparator.GetComponent<Image>().color = new Color(1, 1, 1, 0.4f);
         for (int i = 1; i < maxNumberOfPoints; i++)
         {
             RectTransform newXline = Instantiate<RectTransform>(xSeparator, graphRect, false);
@@ -121,10 +121,10 @@ public class GraphWindow : MonoBehaviour
             GameObject circle = new GameObject("circle", typeof(Image));
             circle.transform.SetParent(graphRect, false);
             circle.GetComponent<Image>().sprite = circleSprite;
-            circle.GetComponent<Image>().color = graphElementColor;
+            circle.GetComponent<Image>().color = Color.yellow;
             RectTransform rectTransform = circle.GetComponent<RectTransform>();
             rectTransform.anchoredPosition = anchoredPos;
-            rectTransform.sizeDelta = new Vector2(5, 5);
+            rectTransform.sizeDelta = new Vector2(10, 10);
             rectTransform.anchorMin = new Vector2(0, 0);
             rectTransform.anchorMax = new Vector2(0, 0);
             points.Add(rectTransform);
@@ -177,7 +177,7 @@ public class GraphWindow : MonoBehaviour
         RectTransform rectTransform = line.GetComponent<RectTransform>();
         Vector2 dir = (endPosition - startPosition).normalized;
         float dist = Vector2.Distance(startPosition, endPosition);
-        rectTransform.sizeDelta = new Vector2(dist, 1.5f);
+        rectTransform.sizeDelta = new Vector2(dist, 2.5f);
         rectTransform.anchorMin = new Vector2(0, 0);
         rectTransform.anchorMax = new Vector2(0, 0);
         rectTransform.localScale = new Vector3(1f, 1f, 1f);
