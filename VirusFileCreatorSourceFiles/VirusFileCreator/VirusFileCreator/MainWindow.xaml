@@ -61,7 +61,7 @@
             <Label Content="Recorded viruses" Grid.Row="0" Grid.Column="1" FontSize="16" VerticalAlignment="Bottom" HorizontalAlignment="Center"></Label>
 
             <!--All of the curently stored viruses-->
-            <ListBox Grid.Column="1" Grid.Row="1" Margin="10px,0px" Background="DarkGray" Name="RecordedVirusesLB">
+            <ListBox Grid.Column="1" Grid.Row="1" Margin="10px,0px" Background="DarkGray" Name="RecordedVirusesLB" SelectionChanged="RecordedVirusesLB_SelectionChanged">
             </ListBox>
             <!--Removes the currently selected virus-->
             <Button Content="Remove selected" Grid.Column="1" Grid.Row="2" Margin="5px" Click="RemoveSelectedVirus_Click" />
