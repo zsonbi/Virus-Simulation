@@ -131,5 +131,23 @@ namespace VirusFileCreator
         {
             this.AddVirus();
         }
+
+        //------------------------------------------------------------------
+        //When the selection changed
+        private void RecordedVirusesLB_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            int virusIndex = RecordedVirusesLB.SelectedIndex;
+            if (virusIndex == -1 || virusIndex >= RecordedVirusesLB.Items.Count)
+            {
+                return;
+            }
+
+            NameInput.Text = viruses[virusIndex].NameOfTheVirus;
+            InsideRangeInput.Text = viruses[virusIndex].RangeInsideBuilding.ToString();
+            DeathRateInput.Text = (viruses[virusIndex].DeathRate * 100f).ToString();
+            RecoveryTimeInput.Text = (viruses[virusIndex].RecoveryTime / 86400f).ToString();
+            ImmunityTimeInput.Text = (viruses[virusIndex].ImmunityTime / 86400f).ToString();
+            TimeToDiscoverInput.Text = (viruses[virusIndex].TimeToDiscover / 86400f).ToString();
+        }
     }
 }

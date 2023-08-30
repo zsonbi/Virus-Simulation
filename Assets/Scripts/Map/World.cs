@@ -98,7 +98,6 @@ public class World : MonoBehaviour
     private void Update()
     {
         dayTime += Time.deltaTime * Settings.RealTimeToSimulationTime;
-
         if (dayTime >= 86400f)
         {
             DayCounter++;
