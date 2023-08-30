@@ -3304,7 +3304,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 464592284750934232, guid: 30f089a7ec40e2c43ae533f9d441e059, type: 3}
       propertyPath: m_Text
-      value: Anti vacination rate
+      value: Anti vaccination rate
       objectReference: {fileID: 0}
     - target: {fileID: 1081210809498075416, guid: 30f089a7ec40e2c43ae533f9d441e059, type: 3}
       propertyPath: m_StaticEditorFlags
