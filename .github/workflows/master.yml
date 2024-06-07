@@ -175,20 +175,12 @@ jobs:
               buildName: WebGL
           - run: 
               sudo mkdir -p release;
-              sudo mkdir -p release/game;
-              sudo mkdir -p release/documentation;
               sudo chmod -R 777 release;
          
-          - name: "Create docs"
-            run: 
-              sudo apt-get update && sudo apt-get install -y doxygen graphviz;
-              doxygen ./DoxygenConf;
-              sudo mv ./docs/html/*  ./release/documentation;
-              ls -la
+
           - name: "Move the folders"
             run: 
-              sudo mv build/WebGL/WebGLWebGL/* release/game/;
-              sudo mv .github/index.html ./release/index.html;
+              sudo mv build/WebGL/WebGLWebGL/* release/;
  
           # - uses: actions/upload-artifact@v3
           #   with:
