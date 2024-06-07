@@ -44,7 +44,7 @@ public class GraphWindow : MonoBehaviour
         label.text = "day";
         label.color = graphElementColor;
         label.alignment = TextAnchor.MiddleCenter;
-        label.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+        label.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
 
         //X axis
         for (int i = 1; i <= maxNumberOfPoints; i++)
