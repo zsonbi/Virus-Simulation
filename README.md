@@ -27,4 +27,4 @@ If you wish to add other viruses or modify the current one you can do that with 
 Controls:
 WASD movement and +/- zoom
 
-If you don't want to download the demo version you can try it this the website: https://zsonbi.github.io/Virus-Simulation/
+If you don't want to download the demo version you can try it on this website: https://zsonbi.github.io/Virus-Simulation/
