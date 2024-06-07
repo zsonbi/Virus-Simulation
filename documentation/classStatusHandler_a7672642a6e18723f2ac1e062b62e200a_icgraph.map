@@ -1,0 +1,6 @@
+<map id="StatusHandler.IncreaseInfectedCount" name="StatusHandler.IncreaseInfectedCount">
+<area shape="rect" id="node1" title="Increase infected count in the specified age group" alt="" coords="393,23,619,65"/>
+<area shape="rect" id="node2" href="$classWorld.html#ac0c690767993d6217831098de4c58b2e" title="Updates the infected status (increase it by one)" alt="" coords="229,31,345,57"/>
+<area shape="rect" id="node3" href="$classPerson.html#a13750bea747900f942fc4ffc17a0f879" title="This should be called when someone tries to infect him" alt="" coords="5,5,181,32"/>
+<area shape="rect" id="node4" href="$classPerson.html#a29ecb938b790a8e741c679a8c26dd136" title="He is one of the many who rolled badly :(" alt="" coords="6,56,181,83"/>
+</map>

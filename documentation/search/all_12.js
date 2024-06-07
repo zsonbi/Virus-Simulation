@@ -1,0 +1,21 @@
+var searchData=
+[
+  ['underage_304',['Underage',['../AgeGroup_8cs.html#a0b2a3d478bfe8901f53e7bf18e4fa63da22a97a77819867561f5d737a461bb01f',1,'AgeGroup.cs']]],
+  ['underageinfectedcount_305',['underAgeInfectedCount',['../classStatusHandler.html#a7c567793316096750856ab808e3f22c6',1,'StatusHandler']]],
+  ['underageinfectedtext_306',['UnderageInfectedText',['../classStatusHandler.html#af5863969d798b52cdb9ed766b3908394',1,'StatusHandler']]],
+  ['underagepeoplecount_307',['underagePeopleCount',['../classStatusHandler.html#a1f953d3cd284e38f9053a126c64c2dd9',1,'StatusHandler']]],
+  ['underagepeoplecounttext_308',['UnderagePeopleCountText',['../classStatusHandler.html#a01accf06060a7306f4391b613c42de5b',1,'StatusHandler']]],
+  ['unemployed_309',['Unemployed',['../Occupation_8cs.html#ab0b50b46bdaff1720b80ae9069fb2d2ca4d611277231c5b496a83a637c2b67b19',1,'Occupation.cs']]],
+  ['up_310',['Up',['../Direction_8cs.html#a224b9163917ac32fc95a60d8c1eec3aaa258f49887ef8d14ac268c92b02503aaa',1,'Direction.cs']]],
+  ['update_311',['Update',['../classWorld.html#a96ef19621aee9c8c006534ad2b6ef149',1,'World.Update()'],['../classMoveCamera.html#affeef6f3d06318a700d52789dc8c9aef',1,'MoveCamera.Update()'],['../classPerson.html#a629ff5cfbf40f45af9b18b0b21ccba53',1,'Person.Update()']]],
+  ['updateadultinfectedcount_312',['UpdateAdultInfectedCount',['../classStatusHandler.html#a857ce9fd95a4a3630bd94720fc38a39e',1,'StatusHandler']]],
+  ['updateadultpeoplecount_313',['UpdateAdultPeopleCount',['../classStatusHandler.html#a0ad7826f339f25a582a27b9b3764e41f',1,'StatusHandler']]],
+  ['updatedaytime_314',['UpdateDayTime',['../classStatusHandler.html#a7a4dc072cb11acc6a49ea46bcb3fd3d6',1,'StatusHandler']]],
+  ['updatefamilysupplies_315',['UpdateFamilySupplies',['../classFamily.html#ab6f75143b3ac9ca2d7b361291cf17b71',1,'Family']]],
+  ['updateinfectedcount_316',['UpdateInfectedCount',['../classStatusHandler.html#abc7248d3565ebe125e87e552f7d0ea92',1,'StatusHandler']]],
+  ['updatelabel_317',['UpdateLabel',['../classMenuSlider.html#acbf132c1827dc9ca2ae7e2567de99083',1,'MenuSlider']]],
+  ['updatelockdownstate_318',['UpdateLockDownState',['../classStatusHandler.html#aeea5a5603dcac28d12b8cdbc8b5250ee',1,'StatusHandler']]],
+  ['updatepeoplecount_319',['UpdatePeopleCount',['../classStatusHandler.html#ac08c5f6e2134ab6c155e7485b46d52a7',1,'StatusHandler']]],
+  ['updateunderageinfectedcount_320',['UpdateUnderAgeInfectedCount',['../classStatusHandler.html#a86eda248d1f03f32f2342bda754ce589',1,'StatusHandler']]],
+  ['updateunderagepeoplecount_321',['UpdateUnderAgePeopleCount',['../classStatusHandler.html#ae80918724e73beb272a7af2f83c06757',1,'StatusHandler']]]
+];

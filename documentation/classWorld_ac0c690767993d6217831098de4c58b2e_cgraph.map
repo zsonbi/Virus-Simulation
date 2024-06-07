@@ -1,0 +1,7 @@
+<map id="World.Infected" name="World.Infected">
+<area shape="rect" id="node1" title="Updates the infected status (increase it by one)" alt="" coords="5,46,121,73"/>
+<area shape="rect" id="node2" href="$classStatusHandler.html#a7672642a6e18723f2ac1e062b62e200a" title="Increase infected count in the specified age group" alt="" coords="169,39,395,80"/>
+<area shape="rect" id="node3" href="$classStatusHandler.html#abc7248d3565ebe125e87e552f7d0ea92" title=" " alt="" coords="443,39,660,80"/>
+<area shape="rect" id="node4" href="$classStatusHandler.html#a857ce9fd95a4a3630bd94720fc38a39e" title=" " alt="" coords="710,5,909,47"/>
+<area shape="rect" id="node5" href="$classStatusHandler.html#a86eda248d1f03f32f2342bda754ce589" title=" " alt="" coords="708,71,911,112"/>
+</map>

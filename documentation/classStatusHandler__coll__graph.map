@@ -1,0 +1,5 @@
+<map id="StatusHandler" name="StatusHandler">
+<area shape="rect" id="node1" title="Handles the status informations Also updates the labels if necessary" alt="" coords="5,624,245,1288"/>
+<area shape="rect" id="node2" title=" " alt="" coords="58,5,182,83"/>
+<area shape="rect" id="node3" href="$classGraphWindow.html" title=" " alt="" coords="141,132,357,561"/>
+</map>

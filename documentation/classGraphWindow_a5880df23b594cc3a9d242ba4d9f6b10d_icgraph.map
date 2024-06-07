@@ -1,0 +1,10 @@
+<map id="GraphWindow.CreateDotConnection" name="GraphWindow.CreateDotConnection">
+<area shape="rect" id="node1" title=" " alt="" coords="900,71,1155,98"/>
+<area shape="rect" id="node2" href="$classGraphWindow.html#ab91df59020f324c2f51576d941709b8c" title=" " alt="" coords="660,71,852,98"/>
+<area shape="rect" id="node3" href="$classGraphWindow.html#af6b69bdd488c2d46ad6b83426dcefdce" title="Adds a value to the graph" alt="" coords="435,71,612,98"/>
+<area shape="rect" id="node4" href="$classGraphWindow.html#af64d77a3c296f2d36512da76461813d3" title=" " alt="" coords="166,5,385,47"/>
+<area shape="rect" id="node5" href="$classStatusHandler.html#a7ab2c2b227e320e53c9f0053d64a4d4a" title="Inits the status&#39;s properties" alt="" coords="186,71,365,98"/>
+<area shape="rect" id="node7" href="$classStatusHandler.html#a7a4dc072cb11acc6a49ea46bcb3fd3d6" title="Updates the day time" alt="" coords="164,122,387,149"/>
+<area shape="rect" id="node6" href="$classWorld.html#ab668c048ad0797574c8c50f06acfc4a8" title=" " alt="" coords="7,71,114,98"/>
+<area shape="rect" id="node8" href="$classWorld.html#a96ef19621aee9c8c006534ad2b6ef149" title=" " alt="" coords="5,122,116,149"/>
+</map>

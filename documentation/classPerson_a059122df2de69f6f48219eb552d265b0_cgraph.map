@@ -1,0 +1,6 @@
+<map id="Person.MoveInWorldCellGrid" name="Person.MoveInWorldCellGrid">
+<area shape="rect" id="node1" title="Moves the person in the world cell grid" alt="" coords="5,31,212,57"/>
+<area shape="rect" id="node2" href="$classWorld.html#af140d289f732ce20df93d244da104d86" title="Moves a person from the old position to the new position int the world cells" alt="" coords="260,31,403,57"/>
+<area shape="rect" id="node3" href="$classWorldCell.html#acd1fb69c08227dbf81c86c0a102ef3c9" title="Adds a person to the cell" alt="" coords="465,5,623,32"/>
+<area shape="rect" id="node4" href="$classWorldCell.html#a427d6594b12c4b42e019590830ca3a99" title="Remove the person from the cell" alt="" coords="451,56,637,83"/>
+</map>

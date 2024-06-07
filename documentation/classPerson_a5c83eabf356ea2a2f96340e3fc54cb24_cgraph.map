@@ -1,0 +1,10 @@
+<map id="Person.MoveToMoveTarget" name="Person.MoveToMoveTarget">
+<area shape="rect" id="node1" title=" " alt="" coords="5,42,201,69"/>
+<area shape="rect" id="node2" href="$classPerson.html#ab64ac37c80a5bc865b4214e104433ab4" title=" " alt="" coords="274,15,431,42"/>
+<area shape="rect" id="node5" href="$classPerson.html#a059122df2de69f6f48219eb552d265b0" title="Moves the person in the world cell grid" alt="" coords="249,67,456,94"/>
+<area shape="rect" id="node3" href="$classWorld.html#a25dfd73318e0184c3f4ef1c2187bdfb1" title="Infect everyone on the same cell" alt="" coords="504,14,657,41"/>
+<area shape="rect" id="node4" href="$classWorldCell.html#a0f5cb888f899f5dd754a1c1faaec237e" title="Tries to infect everyone who is on the same cell" alt="" coords="705,5,900,47"/>
+<area shape="rect" id="node6" href="$classWorld.html#af140d289f732ce20df93d244da104d86" title="Moves a person from the old position to the new position int the world cells" alt="" coords="509,71,652,98"/>
+<area shape="rect" id="node7" href="$classWorldCell.html#acd1fb69c08227dbf81c86c0a102ef3c9" title="Adds a person to the cell" alt="" coords="724,71,881,98"/>
+<area shape="rect" id="node8" href="$classWorldCell.html#a427d6594b12c4b42e019590830ca3a99" title="Remove the person from the cell" alt="" coords="709,122,896,149"/>
+</map>

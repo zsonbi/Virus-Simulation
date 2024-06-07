@@ -1,0 +1,4 @@
+<map id="World.InfectInRange" name="World.InfectInRange">
+<area shape="rect" id="node1" title="Infect everyone on the same cell" alt="" coords="5,13,159,39"/>
+<area shape="rect" id="node2" href="$classWorldCell.html#a0f5cb888f899f5dd754a1c1faaec237e" title="Tries to infect everyone who is on the same cell" alt="" coords="207,5,401,47"/>
+</map>

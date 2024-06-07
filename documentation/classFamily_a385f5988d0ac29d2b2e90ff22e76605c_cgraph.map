@@ -1,0 +1,13 @@
+<map id="Family.SetDefaultParams" name="Family.SetDefaultParams">
+<area shape="rect" id="node1" title="Set the default parameters for the family" alt="" coords="5,69,189,96"/>
+<area shape="rect" id="node2" href="$classWorld.html#a842edaf5f8721197eec54aff4474ed0a" title="Creates a path from the start vector to the goal vector" alt="" coords="253,44,388,71"/>
+<area shape="rect" id="node10" href="$classWorld.html#a61ea73916648b973479936e1f21a4955" title="Looks for the nearest building with the specified type" alt="" coords="237,95,404,121"/>
+<area shape="rect" id="node3" href="$classPathMaker.html#a8137c22821bb22b039fe5c51a8aebfb0" title="Creates a new path" alt="" coords="478,44,642,71"/>
+<area shape="rect" id="node4" href="$classPathMaker.html#a35dec5872b502dbf563ebb815f79ce53" title="Resets the goal and start back to what it should be and reverses the visited nodes state to not visit..." alt="" coords="728,19,891,45"/>
+<area shape="rect" id="node6" href="$classPathMaker.html#a4af8e550a20aa4dd93009a81340069a4" title=" " alt="" coords="716,95,903,121"/>
+<area shape="rect" id="node5" href="$classPathMaker_1_1Node.html#ad5fec2fa9c3d3bbd83edce078affa874" title=" " alt="" coords="954,5,1122,32"/>
+<area shape="rect" id="node7" href="$classWorld.html#adf1cd6650215369c0afae2ed24cacde5" title="Calculates the distance between two vectors" alt="" coords="964,56,1112,83"/>
+<area shape="rect" id="node8" href="$classPathMaker.html#a5037c2247c946597cc0ad989febd6cc7" title=" " alt="" coords="951,107,1125,133"/>
+<area shape="rect" id="node9" href="$classPathMaker_1_1Node.html#a0101372317a6712caeb8a8d54c76e150" title="Sets the visited property" alt="" coords="958,157,1118,184"/>
+<area shape="rect" id="node11" href="$classWorldCell.html#a931d435abffc3dff7197eaf00e6eee76" title="Returns an avalible building" alt="" coords="452,95,668,121"/>
+</map>

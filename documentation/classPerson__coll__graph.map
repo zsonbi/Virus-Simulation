@@ -1,0 +1,17 @@
+<map id="Person" name="Person">
+<area shape="rect" id="node1" title="A single worthless person" alt="" coords="501,3349,755,4204"/>
+<area shape="rect" id="node2" title=" " alt="" coords="590,145,714,222"/>
+<area shape="rect" id="node4" href="$classFamily.html" title="A whole family" alt="" coords="383,2916,623,3287"/>
+<area shape="rect" id="node5" href="$classWorld.html" title="The world" alt="" coords="646,1911,906,2824"/>
+<area shape="rect" id="node8" href="$classStatusHandler.html" title="Handles the status informations Also updates the labels if necessary" alt="" coords="425,1184,665,1848"/>
+<area shape="rect" id="node9" href="$classGraphWindow.html" title=" " alt="" coords="399,424,615,853"/>
+<area shape="rect" id="node10" href="$classWorldGenerator.html" title="Generates a new world" alt="" coords="963,490,1195,787"/>
+<area shape="rect" id="node15" href="$classBuilding.html" title="Some kind of building" alt="" coords="5,877,235,1160"/>
+<area shape="rect" id="node3" href="$classVirusType.html" title="One type of the virus" alt="" coords="53,2989,358,3213"/>
+<area shape="rect" id="node6" href="$classPathMaker.html" title=" " alt="" coords="975,2960,1195,3243"/>
+<area shape="rect" id="node7" href="$classPathMaker_1_1Node.html" title="Each cell in the grid is a node" alt="" coords="982,2226,1189,2509"/>
+<area shape="rect" id="node11" href="$classWorldCell.html" title="A bigger cell" alt="" coords="1156,5,1399,361"/>
+<area shape="rect" id="node12" title=" " alt="" coords="741,1477,811,1555"/>
+<area shape="rect" id="node13" href="$classFamilyTask.html" title="Handles the family&#39;s update on a separate core" alt="" coords="836,1455,1031,1577"/>
+<area shape="rect" id="node14" href="$structWorkTime.html" title="Stores the work time of a person" alt="" coords="740,3026,951,3177"/>
+</map>

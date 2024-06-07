@@ -1,0 +1,13 @@
+<map id="Family" name="Family">
+<area shape="rect" id="node1" title="A whole family" alt="" coords="5,2648,245,3019"/>
+<area shape="rect" id="node2" title=" " alt="" coords="87,145,211,222"/>
+<area shape="rect" id="node3" href="$classWorld.html" title="The world" alt="" coords="230,1643,490,2556"/>
+<area shape="rect" id="node6" href="$classStatusHandler.html" title="Handles the status informations Also updates the labels if necessary" alt="" coords="136,916,376,1580"/>
+<area shape="rect" id="node7" href="$classGraphWindow.html" title=" " alt="" coords="187,424,403,853"/>
+<area shape="rect" id="node8" href="$classWorldGenerator.html" title="Generates a new world" alt="" coords="427,490,659,787"/>
+<area shape="rect" id="node4" href="$classPathMaker.html" title=" " alt="" coords="326,2692,546,2975"/>
+<area shape="rect" id="node5" href="$classPathMaker_1_1Node.html" title="Each cell in the grid is a node" alt="" coords="514,1958,721,2241"/>
+<area shape="rect" id="node9" href="$classWorldCell.html" title="A bigger cell" alt="" coords="421,5,664,361"/>
+<area shape="rect" id="node10" title=" " alt="" coords="566,1209,637,1287"/>
+<area shape="rect" id="node11" href="$classFamilyTask.html" title="Handles the family&#39;s update on a separate core" alt="" coords="661,1187,856,1309"/>
+</map>

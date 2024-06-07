@@ -1,0 +1,5 @@
+<map id="Building.InfectInRange" name="Building.InfectInRange">
+<area shape="rect" id="node1" title="Infects everyone in range" alt="" coords="365,5,535,32"/>
+<area shape="rect" id="node2" href="$classPerson.html#ab1d30ff9a4e312bf1298fbb6fa8afb79" title=" " alt="" coords="171,5,317,32"/>
+<area shape="rect" id="node3" href="$classPerson.html#a629ff5cfbf40f45af9b18b0b21ccba53" title=" " alt="" coords="5,5,123,32"/>
+</map>

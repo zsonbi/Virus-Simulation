@@ -1,0 +1,4 @@
+<map id="FamilyTask.Start" name="FamilyTask.Start">
+<area shape="rect" id="node1" title="Starts the family task" alt="" coords="5,5,135,32"/>
+<area shape="rect" id="node2" href="$classFamilyTask.html#ad11a9fbe901977d425c62113fb077708" title="The family task repeats endlessly" alt="" coords="183,5,360,32"/>
+</map>

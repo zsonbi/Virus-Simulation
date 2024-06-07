@@ -1,0 +1,4 @@
+<map id="MainMenu.LoadSimulationCoorutine" name="MainMenu.LoadSimulationCoorutine">
+<area shape="rect" id="node1" title=" " alt="" coords="248,5,507,32"/>
+<area shape="rect" id="node2" href="$classMainMenu.html#ac90ce61d283aada709f1f0b54d788ff5" title="Loads the simulation scene" alt="" coords="5,5,200,32"/>
+</map>

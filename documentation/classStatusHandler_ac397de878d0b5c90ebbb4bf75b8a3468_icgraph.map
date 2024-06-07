@@ -1,0 +1,6 @@
+<map id="StatusHandler.ToString" name="StatusHandler.ToString">
+<area shape="rect" id="node1" title="Writes out every status varriable in a string separated by a &#39;;&#39;" alt="" coords="621,5,791,32"/>
+<area shape="rect" id="node2" href="$classWorld.html#ae8432244b8f903997d82baee1d89c567" title="Writes out the current statuses into a file" alt="" coords="387,5,573,32"/>
+<area shape="rect" id="node3" href="$classWorld.html#a393ca739528d0ccfb97c6e0a387d67a0" title="Handles all of the daily tasks" alt="" coords="160,5,339,32"/>
+<area shape="rect" id="node4" href="$classWorld.html#ab668c048ad0797574c8c50f06acfc4a8" title=" " alt="" coords="5,5,112,32"/>
+</map>

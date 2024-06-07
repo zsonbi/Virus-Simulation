@@ -1,0 +1,11 @@
+<map id="Person.CreatePaths" name="Person.CreatePaths">
+<area shape="rect" id="node1" title=" " alt="" coords="5,56,153,83"/>
+<area shape="rect" id="node2" href="$classWorld.html#a842edaf5f8721197eec54aff4474ed0a" title="Creates a path from the start vector to the goal vector" alt="" coords="201,56,336,83"/>
+<area shape="rect" id="node3" href="$classPathMaker.html#a8137c22821bb22b039fe5c51a8aebfb0" title="Creates a new path" alt="" coords="384,56,548,83"/>
+<area shape="rect" id="node4" href="$classPathMaker.html#a35dec5872b502dbf563ebb815f79ce53" title="Resets the goal and start back to what it should be and reverses the visited nodes state to not visit..." alt="" coords="608,19,771,45"/>
+<area shape="rect" id="node6" href="$classPathMaker.html#a4af8e550a20aa4dd93009a81340069a4" title=" " alt="" coords="596,81,783,108"/>
+<area shape="rect" id="node5" href="$classPathMaker_1_1Node.html#ad5fec2fa9c3d3bbd83edce078affa874" title=" " alt="" coords="834,5,1002,32"/>
+<area shape="rect" id="node7" href="$classWorld.html#adf1cd6650215369c0afae2ed24cacde5" title="Calculates the distance between two vectors" alt="" coords="844,56,992,83"/>
+<area shape="rect" id="node8" href="$classPathMaker.html#a5037c2247c946597cc0ad989febd6cc7" title=" " alt="" coords="831,107,1005,133"/>
+<area shape="rect" id="node9" href="$classPathMaker_1_1Node.html#a0101372317a6712caeb8a8d54c76e150" title="Sets the visited property" alt="" coords="838,157,998,184"/>
+</map>

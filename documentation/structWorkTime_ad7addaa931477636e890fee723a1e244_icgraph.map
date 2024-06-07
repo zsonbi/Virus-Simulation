@@ -1,0 +1,7 @@
+<map id="WorkTime.GetTimeTillWorkStart" name="WorkTime.GetTimeTillWorkStart">
+<area shape="rect" id="node1" title="Returns the time remaining until the start of the shift" alt="" coords="688,49,889,90"/>
+<area shape="rect" id="node2" href="$classPerson.html#a5c3afc64c1118bded4854890c1e42c4c" title=" " alt="" coords="419,31,640,57"/>
+<area shape="rect" id="node5" href="$classPerson.html#a42f59e8ab8e003023e98c6e5cf782e02" title="Sets the person&#39;s initial states" alt="" coords="423,81,636,108"/>
+<area shape="rect" id="node3" href="$classPerson.html#a18d2be8e997048a4559a2eb75a5088fa" title=" " alt="" coords="171,5,371,32"/>
+<area shape="rect" id="node4" href="$classPerson.html#a629ff5cfbf40f45af9b18b0b21ccba53" title=" " alt="" coords="5,31,123,57"/>
+</map>

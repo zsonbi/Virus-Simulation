@@ -1,0 +1,5 @@
+<map id="WorldGenerator.GenerateBuildings" name="WorldGenerator.GenerateBuildings">
+<area shape="rect" id="node1" title=" " alt="" coords="5,31,252,57"/>
+<area shape="rect" id="node2" href="$classWorldCell.html#adb86d5b1ae0e54409d4d596918281119" title="Adds a building to the cell" alt="" coords="336,5,503,32"/>
+<area shape="rect" id="node3" href="$classBuilding.html#af3b2b9b6cba29d2584f476a88ce647e2" title="Set the enterance" alt="" coords="300,56,539,83"/>
+</map>

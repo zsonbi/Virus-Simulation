@@ -1,0 +1,6 @@
+<map id="PathMaker.SearchForGoal" name="PathMaker.SearchForGoal">
+<area shape="rect" id="node1" title=" " alt="" coords="5,56,192,83"/>
+<area shape="rect" id="node2" href="$classWorld.html#adf1cd6650215369c0afae2ed24cacde5" title="Calculates the distance between two vectors" alt="" coords="253,5,401,32"/>
+<area shape="rect" id="node3" href="$classPathMaker.html#a5037c2247c946597cc0ad989febd6cc7" title=" " alt="" coords="240,56,415,83"/>
+<area shape="rect" id="node4" href="$classPathMaker_1_1Node.html#a0101372317a6712caeb8a8d54c76e150" title="Sets the visited property" alt="" coords="247,107,407,133"/>
+</map>

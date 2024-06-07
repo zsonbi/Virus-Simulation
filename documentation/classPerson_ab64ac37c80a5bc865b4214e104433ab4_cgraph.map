@@ -1,0 +1,5 @@
+<map id="Person.InfectOutside" name="Person.InfectOutside">
+<area shape="rect" id="node1" title=" " alt="" coords="5,13,163,39"/>
+<area shape="rect" id="node2" href="$classWorld.html#a25dfd73318e0184c3f4ef1c2187bdfb1" title="Infect everyone on the same cell" alt="" coords="211,13,364,39"/>
+<area shape="rect" id="node3" href="$classWorldCell.html#a0f5cb888f899f5dd754a1c1faaec237e" title="Tries to infect everyone who is on the same cell" alt="" coords="412,5,607,47"/>
+</map>

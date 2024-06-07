@@ -1,0 +1,11 @@
+<map id="World.Died" name="World.Died">
+<area shape="rect" id="node1" title="Updates the appropiate statuses when someone died" alt="" coords="5,78,99,105"/>
+<area shape="rect" id="node2" href="$classStatusHandler.html#a81874c6f37ba6bc3709396bc77e9cb1e" title="Decrease infected count in the specified age group" alt="" coords="417,37,648,79"/>
+<area shape="rect" id="node6" href="$classStatusHandler.html#ac15ccea4686f68424150ecbdbf291957" title="Decreases the number of people in the specified age group" alt="" coords="147,103,369,130"/>
+<area shape="rect" id="node3" href="$classStatusHandler.html#abc7248d3565ebe125e87e552f7d0ea92" title=" " alt="" coords="696,37,913,79"/>
+<area shape="rect" id="node4" href="$classStatusHandler.html#a857ce9fd95a4a3630bd94720fc38a39e" title=" " alt="" coords="963,5,1162,47"/>
+<area shape="rect" id="node5" href="$classStatusHandler.html#a86eda248d1f03f32f2342bda754ce589" title=" " alt="" coords="961,71,1164,112"/>
+<area shape="rect" id="node7" href="$classStatusHandler.html#ac08c5f6e2134ab6c155e7485b46d52a7" title=" " alt="" coords="429,103,637,144"/>
+<area shape="rect" id="node8" href="$classStatusHandler.html#a0ad7826f339f25a582a27b9b3764e41f" title=" " alt="" coords="705,103,904,144"/>
+<area shape="rect" id="node9" href="$classStatusHandler.html#ae80918724e73beb272a7af2f83c06757" title=" " alt="" coords="703,168,906,209"/>
+</map>

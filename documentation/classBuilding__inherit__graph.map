@@ -1,0 +1,8 @@
+<map id="Building" name="Building">
+<area shape="rect" id="node1" title="Some kind of building" alt="" coords="227,131,457,413"/>
+<area shape="rect" id="node3" href="$classHouse.html" title="A single house" alt="" coords="5,483,135,575"/>
+<area shape="rect" id="node4" href="$classMarket.html" title="A market" alt="" coords="159,476,322,583"/>
+<area shape="rect" id="node5" href="$classSchool.html" title="A school" alt="" coords="346,461,543,597"/>
+<area shape="rect" id="node6" href="$classWorkPlace.html" title="The work place" alt="" coords="568,476,751,583"/>
+<area shape="rect" id="node2" title=" " alt="" coords="280,5,404,83"/>
+</map>

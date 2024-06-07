@@ -1,0 +1,9 @@
+<map id="PathMaker.Node.Reset" name="PathMaker.Node.Reset">
+<area shape="rect" id="node1" title=" " alt="" coords="1104,31,1272,57"/>
+<area shape="rect" id="node2" href="$classPathMaker.html#a35dec5872b502dbf563ebb815f79ce53" title="Resets the goal and start back to what it should be and reverses the visited nodes state to not visit..." alt="" coords="893,31,1056,57"/>
+<area shape="rect" id="node3" href="$classPathMaker.html#a8137c22821bb22b039fe5c51a8aebfb0" title="Creates a new path" alt="" coords="681,31,845,57"/>
+<area shape="rect" id="node4" href="$classWorld.html#a842edaf5f8721197eec54aff4474ed0a" title="Creates a path from the start vector to the goal vector" alt="" coords="499,31,633,57"/>
+<area shape="rect" id="node5" href="$classPerson.html#ad46f71e60948d4687026e60e173d424a" title=" " alt="" coords="285,5,433,32"/>
+<area shape="rect" id="node7" href="$classFamily.html#a385f5988d0ac29d2b2e90ff22e76605c" title="Set the default parameters for the family" alt="" coords="267,56,451,83"/>
+<area shape="rect" id="node6" href="$classPerson.html#a42f59e8ab8e003023e98c6e5cf782e02" title="Sets the person&#39;s initial states" alt="" coords="5,5,219,32"/>
+</map>

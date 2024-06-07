@@ -1,0 +1,4 @@
+<map id="PathMaker.ResetBack" name="PathMaker.ResetBack">
+<area shape="rect" id="node1" title="Resets the goal and start back to what it should be and reverses the visited nodes state to not visit..." alt="" coords="5,5,168,32"/>
+<area shape="rect" id="node2" href="$classPathMaker_1_1Node.html#ad5fec2fa9c3d3bbd83edce078affa874" title=" " alt="" coords="216,5,384,32"/>
+</map>

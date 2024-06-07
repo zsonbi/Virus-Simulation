@@ -1,0 +1,25 @@
+var classMainMenu =
+[
+    [ "Start", "classMainMenu.html#ad629921d8cbec1c1bf97e6bc6ad65902", null ],
+    [ "StartSimulation", "classMainMenu.html#ac90ce61d283aada709f1f0b54d788ff5", null ],
+    [ "LoadSimulationCoorutine", "classMainMenu.html#a978b9bf049cb53f39ea4193a4039b171", null ],
+    [ "Exit", "classMainMenu.html#a2a6f329d1d69aa2ccd1703b061c4d51e", null ],
+    [ "WorldSizeChanged", "classMainMenu.html#a3ddcd802dbdd1d4c0fb72c386488af99", null ],
+    [ "SupplyAmountChanged", "classMainMenu.html#a465f052d281287a54e602da0f796ebfd", null ],
+    [ "MinFamilySizeChanged", "classMainMenu.html#a190493bd0fbc965d0d78242a5566d8fa", null ],
+    [ "MaxFamilySizeChanged", "classMainMenu.html#a5dcd78eae8c455ec966e613907b88a12", null ],
+    [ "VirusVarianceChanged", "classMainMenu.html#a93454fe4bffc2619535b2f8ead0145e9", null ],
+    [ "FamiliesToInfectChanged", "classMainMenu.html#ae68abbe3c55857a44ea75bedb6317147", null ],
+    [ "BuildingDensitySliderChanged", "classMainMenu.html#a9b1ef3e441e2acec331faa30ed88e64a", null ],
+    [ "BuildingNecessitySliderChanged", "classMainMenu.html#ac84eb5e643e4e36e963bc9793918b7b5", null ],
+    [ "AntiVacinationSliderChanged", "classMainMenu.html#a22c6f0afad68f1818585e4b412c4ebb0", null ],
+    [ "WorldSizeText", "classMainMenu.html#a72a97304cb3dfb9171709c32930a9e47", null ],
+    [ "FamilySuppliesText", "classMainMenu.html#aea72a243304524e145d368fd00193d4f", null ],
+    [ "MinSizeOfFamilyText", "classMainMenu.html#a0ad1534d80621b5d595e6886ca4c52e9", null ],
+    [ "MaxSizeOfFamilyText", "classMainMenu.html#a2b486a0fa85ad2aa0ec7109e5003ce08", null ],
+    [ "VirusVarianceText", "classMainMenu.html#af7259714081e71df9195eb59c4f7ebfc", null ],
+    [ "NumberOfFamiliesToInfectOnStartText", "classMainMenu.html#a2274d87ad9d6f6d438a1511d63ed9dd8", null ],
+    [ "BuildingDensitySlider", "classMainMenu.html#a2460e102737e78c387807146b8bf33d0", null ],
+    [ "BuildingNecessitySlider", "classMainMenu.html#a9245ba7a164fa4b5ae9268b2f473b92e", null ],
+    [ "AntiVacinationRateSlider", "classMainMenu.html#aa8b2d440d9e2581642947c6eae7eb998", null ]
+];

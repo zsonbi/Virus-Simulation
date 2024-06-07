@@ -1,0 +1,4 @@
+<map id="MainMenu.StartSimulation" name="MainMenu.StartSimulation">
+<area shape="rect" id="node1" title="Loads the simulation scene" alt="" coords="5,5,200,32"/>
+<area shape="rect" id="node2" href="$classMainMenu.html#a978b9bf049cb53f39ea4193a4039b171" title=" " alt="" coords="248,5,507,32"/>
+</map>
