@@ -1,4 +1,0 @@
-<map id="World.WriteOutDailyData" name="World.WriteOutDailyData">
-<area shape="rect" id="node1" title="Writes out the current statuses into a file" alt="" coords="5,5,192,32"/>
-<area shape="rect" id="node2" href="$classStatusHandler.html#ac397de878d0b5c90ebbb4bf75b8a3468" title="Writes out every status varriable in a string separated by a &#39;;&#39;" alt="" coords="240,5,409,32"/>
-</map>

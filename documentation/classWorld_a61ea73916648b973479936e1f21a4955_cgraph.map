@@ -1,4 +1,0 @@
-<map id="World.LookForBuilding" name="World.LookForBuilding">
-<area shape="rect" id="node1" title="Looks for the nearest building with the specified type" alt="" coords="5,5,172,32"/>
-<area shape="rect" id="node2" href="$classWorldCell.html#a931d435abffc3dff7197eaf00e6eee76" title="Returns an avalible building" alt="" coords="220,5,436,32"/>
-</map>

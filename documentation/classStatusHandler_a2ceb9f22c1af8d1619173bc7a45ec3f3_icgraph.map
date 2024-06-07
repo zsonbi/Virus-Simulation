@@ -1,5 +1,0 @@
-<map id="StatusHandler.IncreasePeople" name="StatusHandler.IncreasePeople">
-<area shape="rect" id="node1" title="Increases the number of people in the specified age group" alt="" coords="477,5,693,32"/>
-<area shape="rect" id="node2" href="$classWorld.html#a3a711364f18d6b61ea0872ab221cc0a5" title="Increase the number of people in the status" alt="" coords="267,5,429,32"/>
-<area shape="rect" id="node3" href="$classPerson.html#a42f59e8ab8e003023e98c6e5cf782e02" title="Sets the person&#39;s initial states" alt="" coords="5,5,219,32"/>
-</map>

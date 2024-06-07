@@ -1,5 +1,0 @@
-<map id="World.Died" name="World.Died">
-<area shape="rect" id="node1" title="Updates the appropiate statuses when someone died" alt="" coords="311,5,404,32"/>
-<area shape="rect" id="node2" href="$classPerson.html#a50badbd6d50532781a1e3667d9f20eda" title=" " alt="" coords="171,5,263,32"/>
-<area shape="rect" id="node3" href="$classPerson.html#a629ff5cfbf40f45af9b18b0b21ccba53" title=" " alt="" coords="5,5,123,32"/>
-</map>

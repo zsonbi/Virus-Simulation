@@ -1,6 +1,0 @@
-<map id="World.GetOccupationBuilding" name="World.GetOccupationBuilding">
-<area shape="rect" id="node1" title="Search for a buildig for the person to work at So it isn&#39;t only the nearest building and virus can sp..." alt="" coords="480,31,692,57"/>
-<area shape="rect" id="node2" href="$classPerson.html#a4f4d79a0849c9b7275a57a3a629d4e17" title=" " alt="" coords="279,5,419,32"/>
-<area shape="rect" id="node4" href="$classPerson.html#a4881ffcb6ea989cc695610bf26ecc6a7" title=" " alt="" coords="267,56,432,83"/>
-<area shape="rect" id="node3" href="$classPerson.html#a42f59e8ab8e003023e98c6e5cf782e02" title="Sets the person&#39;s initial states" alt="" coords="5,31,219,57"/>
-</map>

@@ -1,8 +1,0 @@
-<map id="Person.DecideNextActionState" name="Person.DecideNextActionState">
-<area shape="rect" id="node1" title=" " alt="" coords="5,115,227,141"/>
-<area shape="rect" id="node2" href="$classBuilding.html#a6f095d91194b0b7f32875d4cc7b8af85" title="Enter the building" alt="" coords="323,5,437,32"/>
-<area shape="rect" id="node3" href="$structWorkTime.html#a47b40e3ecc342a796ac638c39fc2fe8b" title="Gets the length of the shift" alt="" coords="285,56,475,83"/>
-<area shape="rect" id="node4" href="$structWorkTime.html#ad7addaa931477636e890fee723a1e244" title="Returns the time remaining until the start of the shift" alt="" coords="279,107,481,149"/>
-<area shape="rect" id="node5" href="$classFamily.html#acffa9fd6da4ab185c8527f9ed75a5c15" title="Gives a sign that one of the family members returned with the supplies" alt="" coords="275,173,485,200"/>
-<area shape="rect" id="node6" href="$classBuilding.html#aaba7484453fb528be54eed679bb7f7f2" title="Leave the building" alt="" coords="321,224,439,251"/>
-</map>

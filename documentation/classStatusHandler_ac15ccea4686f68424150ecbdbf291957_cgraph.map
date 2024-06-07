@@ -1,9 +1,0 @@
-<map id="StatusHandler.DecreasePeople" name="StatusHandler.DecreasePeople">
-<area shape="rect" id="node1" title="Decreases the number of people in the specified age group" alt="" coords="5,78,228,105"/>
-<area shape="rect" id="node2" href="$classStatusHandler.html#ac08c5f6e2134ab6c155e7485b46d52a7" title=" " alt="" coords="276,71,484,112"/>
-<area shape="rect" id="node3" href="$classStatusHandler.html#a0ad7826f339f25a582a27b9b3764e41f" title=" " alt="" coords="541,5,740,47"/>
-<area shape="rect" id="node4" href="$classStatusHandler.html#abc7248d3565ebe125e87e552f7d0ea92" title=" " alt="" coords="532,71,749,112"/>
-<area shape="rect" id="node7" href="$classStatusHandler.html#ae80918724e73beb272a7af2f83c06757" title=" " alt="" coords="539,136,742,177"/>
-<area shape="rect" id="node5" href="$classStatusHandler.html#a857ce9fd95a4a3630bd94720fc38a39e" title=" " alt="" coords="799,39,998,80"/>
-<area shape="rect" id="node6" href="$classStatusHandler.html#a86eda248d1f03f32f2342bda754ce589" title=" " alt="" coords="797,104,1000,145"/>
-</map>

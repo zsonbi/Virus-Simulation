@@ -1,5 +1,0 @@
-<map id="World.MovePerson" name="World.MovePerson">
-<area shape="rect" id="node1" title="Moves a person from the old position to the new position int the world cells" alt="" coords="5,31,148,57"/>
-<area shape="rect" id="node2" href="$classWorldCell.html#acd1fb69c08227dbf81c86c0a102ef3c9" title="Adds a person to the cell" alt="" coords="211,5,368,32"/>
-<area shape="rect" id="node3" href="$classWorldCell.html#a427d6594b12c4b42e019590830ca3a99" title="Remove the person from the cell" alt="" coords="196,56,383,83"/>
-</map>

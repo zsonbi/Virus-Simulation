@@ -1,6 +1,0 @@
-<map id="WorldCell.AddBuilding" name="WorldCell.AddBuilding">
-<area shape="rect" id="node1" title="Adds a building to the cell" alt="" coords="727,5,893,32"/>
-<area shape="rect" id="node2" href="$classWorldGenerator.html#ab166d46471f922cac0ddfa3de25c44c0" title=" " alt="" coords="432,5,679,32"/>
-<area shape="rect" id="node3" href="$classWorldGenerator.html#a47dd67a7b3128d3601c8de9e9482453a" title=" " alt="" coords="160,5,384,32"/>
-<area shape="rect" id="node4" href="$classWorld.html#ab668c048ad0797574c8c50f06acfc4a8" title=" " alt="" coords="5,5,112,32"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="World.Recovered" name="World.Recovered">
-<area shape="rect" id="node1" title="Updates the infected status (decrease it by one)" alt="" coords="5,46,137,73"/>
-<area shape="rect" id="node2" href="$classStatusHandler.html#a81874c6f37ba6bc3709396bc77e9cb1e" title="Decrease infected count in the specified age group" alt="" coords="185,39,416,80"/>
-<area shape="rect" id="node3" href="$classStatusHandler.html#abc7248d3565ebe125e87e552f7d0ea92" title=" " alt="" coords="464,39,681,80"/>
-<area shape="rect" id="node4" href="$classStatusHandler.html#a857ce9fd95a4a3630bd94720fc38a39e" title=" " alt="" coords="731,5,930,47"/>
-<area shape="rect" id="node5" href="$classStatusHandler.html#a86eda248d1f03f32f2342bda754ce589" title=" " alt="" coords="729,71,932,112"/>
-</map>

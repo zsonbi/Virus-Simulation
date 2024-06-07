@@ -1,4 +1,0 @@
-<map id="World.IncreasePeople" name="World.IncreasePeople">
-<area shape="rect" id="node1" title="Increase the number of people in the status" alt="" coords="5,5,168,32"/>
-<area shape="rect" id="node2" href="$classStatusHandler.html#a2ceb9f22c1af8d1619173bc7a45ec3f3" title="Increases the number of people in the specified age group" alt="" coords="216,5,432,32"/>
-</map>

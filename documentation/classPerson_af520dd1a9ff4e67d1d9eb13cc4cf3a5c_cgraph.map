@@ -1,8 +1,0 @@
-<map id="Person.Recovered" name="Person.Recovered">
-<area shape="rect" id="node1" title=" " alt="" coords="5,46,144,73"/>
-<area shape="rect" id="node2" href="$classWorld.html#af4f97a903f31d936e90d73cd05002874" title="Updates the infected status (decrease it by one)" alt="" coords="192,46,324,73"/>
-<area shape="rect" id="node3" href="$classStatusHandler.html#a81874c6f37ba6bc3709396bc77e9cb1e" title="Decrease infected count in the specified age group" alt="" coords="372,39,603,80"/>
-<area shape="rect" id="node4" href="$classStatusHandler.html#abc7248d3565ebe125e87e552f7d0ea92" title=" " alt="" coords="651,39,868,80"/>
-<area shape="rect" id="node5" href="$classStatusHandler.html#a857ce9fd95a4a3630bd94720fc38a39e" title=" " alt="" coords="918,5,1117,47"/>
-<area shape="rect" id="node6" href="$classStatusHandler.html#a86eda248d1f03f32f2342bda754ce589" title=" " alt="" coords="916,71,1119,112"/>
-</map>

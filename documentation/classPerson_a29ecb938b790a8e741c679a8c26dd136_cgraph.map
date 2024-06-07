@@ -1,8 +1,0 @@
-<map id="Person.StartingInfected" name="Person.StartingInfected">
-<area shape="rect" id="node1" title="He is one of the many who rolled badly :(" alt="" coords="5,46,180,73"/>
-<area shape="rect" id="node2" href="$classWorld.html#ac0c690767993d6217831098de4c58b2e" title="Updates the infected status (increase it by one)" alt="" coords="228,46,344,73"/>
-<area shape="rect" id="node3" href="$classStatusHandler.html#a7672642a6e18723f2ac1e062b62e200a" title="Increase infected count in the specified age group" alt="" coords="392,39,617,80"/>
-<area shape="rect" id="node4" href="$classStatusHandler.html#abc7248d3565ebe125e87e552f7d0ea92" title=" " alt="" coords="665,39,883,80"/>
-<area shape="rect" id="node5" href="$classStatusHandler.html#a857ce9fd95a4a3630bd94720fc38a39e" title=" " alt="" coords="933,5,1131,47"/>
-<area shape="rect" id="node6" href="$classStatusHandler.html#a86eda248d1f03f32f2342bda754ce589" title=" " alt="" coords="931,71,1133,112"/>
-</map>

@@ -1,4 +1,0 @@
-<map id="World.LookForBuilding" name="World.LookForBuilding">
-<area shape="rect" id="node1" title="Looks for the nearest building with the specified type" alt="" coords="237,5,404,32"/>
-<area shape="rect" id="node2" href="$classFamily.html#a385f5988d0ac29d2b2e90ff22e76605c" title="Set the default parameters for the family" alt="" coords="5,5,189,32"/>
-</map>

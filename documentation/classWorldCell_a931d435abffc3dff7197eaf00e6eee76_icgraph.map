@@ -1,5 +1,0 @@
-<map id="WorldCell.GetAvalibleBuilding" name="WorldCell.GetAvalibleBuilding">
-<area shape="rect" id="node1" title="Returns an avalible building" alt="" coords="452,5,668,32"/>
-<area shape="rect" id="node2" href="$classWorld.html#a61ea73916648b973479936e1f21a4955" title="Looks for the nearest building with the specified type" alt="" coords="237,5,404,32"/>
-<area shape="rect" id="node3" href="$classFamily.html#a385f5988d0ac29d2b2e90ff22e76605c" title="Set the default parameters for the family" alt="" coords="5,5,189,32"/>
-</map>

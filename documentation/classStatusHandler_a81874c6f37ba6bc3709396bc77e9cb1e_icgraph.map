@@ -1,8 +1,0 @@
-<map id="StatusHandler.DecreaseInfectedCount" name="StatusHandler.DecreaseInfectedCount">
-<area shape="rect" id="node1" title="Decrease infected count in the specified age group" alt="" coords="537,23,768,65"/>
-<area shape="rect" id="node2" href="$classWorld.html#aeb0c3b05e76c8010c8e2443ddc6161e8" title="Updates the appropiate statuses when someone died" alt="" coords="377,5,470,32"/>
-<area shape="rect" id="node5" href="$classWorld.html#af4f97a903f31d936e90d73cd05002874" title="Updates the infected status (decrease it by one)" alt="" coords="357,56,489,83"/>
-<area shape="rect" id="node3" href="$classPerson.html#a50badbd6d50532781a1e3667d9f20eda" title=" " alt="" coords="194,5,286,32"/>
-<area shape="rect" id="node4" href="$classPerson.html#a629ff5cfbf40f45af9b18b0b21ccba53" title=" " alt="" coords="5,31,123,57"/>
-<area shape="rect" id="node6" href="$classPerson.html#af520dd1a9ff4e67d1d9eb13cc4cf3a5c" title=" " alt="" coords="171,56,309,83"/>
-</map>

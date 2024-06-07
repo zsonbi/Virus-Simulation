@@ -1,7 +1,0 @@
-<map id="WorldCell.TryToInfectEveryOneInRange" name="WorldCell.TryToInfectEveryOneInRange">
-<area shape="rect" id="node1" title="Tries to infect everyone who is on the same cell" alt="" coords="821,5,1016,47"/>
-<area shape="rect" id="node2" href="$classWorld.html#a25dfd73318e0184c3f4ef1c2187bdfb1" title="Infect everyone on the same cell" alt="" coords="620,13,773,39"/>
-<area shape="rect" id="node3" href="$classPerson.html#ab64ac37c80a5bc865b4214e104433ab4" title=" " alt="" coords="415,13,572,39"/>
-<area shape="rect" id="node4" href="$classPerson.html#a5c83eabf356ea2a2f96340e3fc54cb24" title=" " alt="" coords="171,13,367,39"/>
-<area shape="rect" id="node5" href="$classPerson.html#a629ff5cfbf40f45af9b18b0b21ccba53" title=" " alt="" coords="5,13,123,39"/>
-</map>

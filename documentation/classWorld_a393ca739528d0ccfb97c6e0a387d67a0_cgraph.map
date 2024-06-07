@@ -1,6 +1,0 @@
-<map id="World.HandleDailyTasks" name="World.HandleDailyTasks">
-<area shape="rect" id="node1" title="Handles all of the daily tasks" alt="" coords="5,31,184,57"/>
-<area shape="rect" id="node2" href="$classWorld.html#afe970fb1d67f009cb85627391fddce9a" title="Handles the daily vaccination Task" alt="" coords="262,5,389,32"/>
-<area shape="rect" id="node3" href="$classWorld.html#ae8432244b8f903997d82baee1d89c567" title="Writes out the current statuses into a file" alt="" coords="232,56,419,83"/>
-<area shape="rect" id="node4" href="$classStatusHandler.html#ac397de878d0b5c90ebbb4bf75b8a3468" title="Writes out every status varriable in a string separated by a &#39;;&#39;" alt="" coords="467,56,636,83"/>
-</map>

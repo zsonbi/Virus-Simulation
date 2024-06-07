@@ -1,9 +1,0 @@
-<map id="WorldCell.AddPerson" name="WorldCell.AddPerson">
-<area shape="rect" id="node1" title="Adds a person to the cell" alt="" coords="932,31,1089,57"/>
-<area shape="rect" id="node2" href="$classWorld.html#a5fce39a130514531e9c8ec7f8481444d" title="Adds a person to the world cell" alt="" coords="676,5,884,32"/>
-<area shape="rect" id="node4" href="$classWorld.html#af140d289f732ce20df93d244da104d86" title="Moves a person from the old position to the new position int the world cells" alt="" coords="709,56,851,83"/>
-<area shape="rect" id="node3" href="$classPerson.html#a42f59e8ab8e003023e98c6e5cf782e02" title="Sets the person&#39;s initial states" alt="" coords="415,5,628,32"/>
-<area shape="rect" id="node5" href="$classPerson.html#a059122df2de69f6f48219eb552d265b0" title="Moves the person in the world cell grid" alt="" coords="418,56,625,83"/>
-<area shape="rect" id="node6" href="$classPerson.html#a5c83eabf356ea2a2f96340e3fc54cb24" title=" " alt="" coords="171,56,367,83"/>
-<area shape="rect" id="node7" href="$classPerson.html#a629ff5cfbf40f45af9b18b0b21ccba53" title=" " alt="" coords="5,56,123,83"/>
-</map>

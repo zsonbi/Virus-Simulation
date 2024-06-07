@@ -1,8 +1,0 @@
-<map id="World.Update" name="World.Update">
-<area shape="rect" id="node1" title=" " alt="" coords="5,31,116,57"/>
-<area shape="rect" id="node2" href="$classStatusHandler.html#a7a4dc072cb11acc6a49ea46bcb3fd3d6" title="Updates the day time" alt="" coords="164,31,387,57"/>
-<area shape="rect" id="node3" href="$classGraphWindow.html#af6b69bdd488c2d46ad6b83426dcefdce" title="Adds a value to the graph" alt="" coords="435,31,612,57"/>
-<area shape="rect" id="node4" href="$classGraphWindow.html#ab91df59020f324c2f51576d941709b8c" title=" " alt="" coords="660,31,852,57"/>
-<area shape="rect" id="node5" href="$classGraphWindow.html#a5880df23b594cc3a9d242ba4d9f6b10d" title=" " alt="" coords="900,5,1155,32"/>
-<area shape="rect" id="node6" href="$classGraphWindow.html#a1ad119dd7c47abd1c61e1d18be233986" title=" " alt="" coords="923,56,1132,83"/>
-</map>
