@@ -178,9 +178,9 @@ internal static class BuildCommand
     private static void PerformBuild()
     {
         var buildTarget = GetBuildTarget();
+        if(buildTarget==BuildTarget.WebGL){
         PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat.Disabled;
-
-        Console.WriteLine(":: Performing build");
+         } Console.WriteLine(":: Performing build");
         if (TryGetEnv(VERSION_NUMBER_VAR, out var bundleVersionNumber))
         {
             if (buildTarget == BuildTarget.iOS)
