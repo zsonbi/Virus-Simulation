@@ -177,14 +177,8 @@ jobs:
               sudo mkdir -p release;
               sudo mkdir -p release/game;
               sudo mkdir -p release/documentation;
-              sudo mkdir -p Report;
               sudo chmod -R 777 release;
-              sudo chmod -R 777 Report;
          
-          - uses: actions/download-artifact@v4.1.7
-            with:
-              name: Coverage_results
-              path: ./Report
           - name: "Create docs"
             run: 
               sudo apt-get update && sudo apt-get install -y doxygen graphviz;
@@ -194,7 +188,6 @@ jobs:
           - name: "Move the folders"
             run: 
               sudo mv build/WebGL/WebGLWebGL/* release/game/;
-              sudo mv Report/Report/ release/;
               sudo mv .github/index.html ./release/index.html;
  
           # - uses: actions/upload-artifact@v3
