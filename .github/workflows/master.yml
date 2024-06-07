@@ -148,7 +148,7 @@ jobs:
 
   buildForWebGL:
         needs: test
-        if: contains(github.ref, 'master') || contains(github.ref, 'workflow-setup')
+        if: contains(github.ref, 'master') || contains(github.ref, 'ReleaseAutomation')
         name: Build for ${{ matrix.targetPlatform }}
         runs-on: ubuntu-latest
         strategy:
