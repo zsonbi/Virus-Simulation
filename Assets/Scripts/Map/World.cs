@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
 using Unity.Jobs;
+using UnityEngine.UI;
 
 /// <summary>
 /// The world
@@ -174,7 +175,15 @@ public class World : MonoBehaviour
     // Reads in the viruses from the json
     private void ReadInViruses(string nameOfTheFile = "viruses.json")
     {
-        viruses = JsonConvert.DeserializeObject<List<VirusType>>(System.IO.File.ReadAllText(nameOfTheFile));
+        //bandaid fix
+        if (System.IO.File.Exists(nameOfTheFile))
+        {
+            viruses = JsonConvert.DeserializeObject<List<VirusType>>(System.IO.File.ReadAllText(nameOfTheFile));
+        }
+        else
+        {
+            viruses = JsonConvert.DeserializeObject<List<VirusType>>(Resources.Load("viruses").ToString());
+        }
 
         foreach (var virus in viruses)
         {
